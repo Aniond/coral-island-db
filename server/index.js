@@ -22,6 +22,7 @@ app.use('/api/caves', require('./routes/caves'));
 app.use('/api/forageables', require('./routes/foraging'));
 app.use('/api/npcs', require('./routes/npcs'));
 app.use('/api/search', require('./routes/search'));
+app.use('/api/admin',  require('./routes/admin'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

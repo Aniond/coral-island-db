@@ -83,10 +83,13 @@ export async function fetchForageables() { return (await getJson('/forageables')
 export async function fetchNpcs()        { return (await getJson('/npcs')).map(mapNpc); }
 
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
-export async function streamSearch(query, onChunk) {
+// token: optional Supabase access_token — included as Bearer for server-side logging.
+export async function streamSearch(query, onChunk, token) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
   const res = await fetch(`${API_BASE}/search`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ query }),
   });
   if (!res.ok) {

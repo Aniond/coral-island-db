@@ -1,12 +1,12 @@
 // ── AI Search — Floating chat panel ──────────────────────────────────────────
 // (a.k.a. the "AI Guide" — talks only to our Express backend at POST /api/search;
 //  the Anthropic call is server-side, never in the browser.)
-console.log('[AISearch] VITE_API_URL:', import.meta.env.VITE_API_URL);
 import React from 'react';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch } from '../data/api.js';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 // renders markdown-style **bold** inline
 function MsgLine({ text }) {
@@ -86,6 +86,7 @@ function TypingBubble() {
 }
 
 export default function AISearch({ isOpen, onToggle }) {
+  const { session } = useAuth();
   const [messages, setMessages] = React.useState([]);
   const [input,    setInput]    = React.useState('');
   const [typing,   setTyping]   = React.useState(false);
@@ -118,7 +119,7 @@ export default function AISearch({ isOpen, onToggle }) {
         } else {
           setMessages(prev => prev.map(m => (m.id === aiId ? { ...m, content: m.content + chunk } : m)));
         }
-      });
+      }, session?.access_token);
       if (!started) {
         setTyping(false);
         setMessages(prev => [...prev, { role: 'assistant', content: '(No response received.)', id: aiId }]);

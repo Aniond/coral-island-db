@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+const supabase = require('../lib/supabase');
 
 // @anthropic-ai/sdk exports the client under different shapes across versions;
 // resolve defensively so this works regardless.
@@ -50,8 +51,18 @@ async function buildContext() {
   ].join('\n\n');
 }
 
+// Resolve caller's user_id from Bearer token if present (best-effort, non-blocking).
+async function resolveUserId(req) {
+  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
+  if (!token) return null;
+  try {
+    const { data: { user } } = await supabase.auth.getUser(token);
+    return user?.id || null;
+  } catch { return null; }
+}
+
 // POST /api/search  { query }
-// Streams the AI answer back as plain text.
+// Streams the AI answer back as plain text. Requires a valid auth token.
 router.post('/', async (req, res) => {
   const query = req.body && req.body.query;
   if (!query || !query.trim()) {
@@ -60,6 +71,17 @@ router.post('/', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not configured' });
   }
+
+  // Require auth — AI features are locked behind registered accounts.
+  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
+  if (!token) {
+    return res.status(401).json({ error: 'Sign in to use AI search' });
+  }
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+  if (authErr || !user) {
+    return res.status(401).json({ error: 'Invalid or expired session' });
+  }
+  const userId = user.id;
 
   try {
     const context = await buildContext();
@@ -77,6 +99,10 @@ router.post('/', async (req, res) => {
       ],
       stream: true,
     });
+
+    // Log the search (fire-and-forget — don't block the stream)
+    pool.query('INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW())', [userId, query.trim()])
+      .catch(e => console.error('search log insert failed:', e.message));
 
     for await (const event of stream) {
       if (event.type === 'content_block_delta' && event.delta && event.delta.type === 'text_delta') {
