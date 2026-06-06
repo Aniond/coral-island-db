@@ -1,6 +1,7 @@
 // ── Sidebar + Mobile Bottom Tab Bar ─────────────────────────────────────────
 import React from 'react';
 import Icon from './Icon.jsx';
+import AuthButton from './AuthButton.jsx';
 
 const NAV_ITEMS = [
   { id: 'crops',    label: 'Crops & Plants', shortLabel: 'Crops',  icon: 'leaf'     },
@@ -103,13 +104,12 @@ export default function Sidebar({ activePage, onNavigate, aiChatOpen }) {
         {/* Divider */}
         <div style={{ height: 1, background: 'rgba(94,234,212,0.12)', margin: '0 18px 14px' }} />
 
-        {/* Version */}
-        <div style={{
-          padding: '0 20px 20px',
-          color: 'rgba(94,234,212,0.4)',
-          fontSize: 11, fontFamily: "'Inter', sans-serif",
-        }}>
-          v1.0.0 · Coral Island DB
+        {/* Auth + version */}
+        <div style={{ padding: '0 14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <AuthButton />
+          <div style={{ color: 'rgba(94,234,212,0.35)', fontSize: 10.5, fontFamily: "'Inter', sans-serif", textAlign: 'center' }}>
+            v1.0.0 · Coral Island DB
+          </div>
         </div>
       </div>
 
