@@ -1,4 +1,6 @@
-// ── AI Guide — Floating chat panel ───────────────────────────────────────────
+// ── AI Search — Floating chat panel ──────────────────────────────────────────
+// (a.k.a. the "AI Guide" — talks only to our Express backend at POST /api/search;
+//  the Anthropic call is server-side, never in the browser.)
 import React from 'react';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
@@ -82,7 +84,7 @@ function TypingBubble() {
   );
 }
 
-export default function AIGuide({ isOpen, onToggle }) {
+export default function AISearch({ isOpen, onToggle }) {
   const [messages, setMessages] = React.useState([]);
   const [input,    setInput]    = React.useState('');
   const [typing,   setTyping]   = React.useState(false);

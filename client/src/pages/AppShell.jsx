@@ -4,7 +4,7 @@
 // density fixed to 'comfortable', --accent/--radius defaults live in index.css).
 import React from 'react';
 import Sidebar from '../components/Sidebar.jsx';
-import AIGuide from '../components/AIGuide.jsx';
+import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
 import CropsPage from './CropsPage.jsx';
 import CavesPage from './CavesPage.jsx';
@@ -50,7 +50,7 @@ export default function AppShell() {
         <CurrentPage density={density} />
       </main>
 
-      <AIGuide isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} />
+      <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} />
     </div>
   );
 }
