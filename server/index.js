@@ -3,7 +3,12 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());            // allow all origins (fine for dev; tighten in prod if desired)
+app.use(cors({
+  origin: [
+    'https://coral-island-db.vercel.app',
+    /^http:\/\/localhost(:\d+)?$/,
+  ],
+}));
 app.use(express.json());
 
 // Health check
