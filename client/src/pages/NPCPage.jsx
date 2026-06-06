@@ -2,8 +2,8 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { FilterSelect, EmptyState } from '../components/ui.jsx';
-import { npcs } from '../data/index.js';
+import { FilterSelect, EmptyState, LoadingDots } from '../components/ui.jsx';
+import { fetchNpcs } from '../data/api.js';
 
 function NPCCard({ npc, density }) {
   const [hov, setHov] = React.useState(false);
@@ -65,48 +65,66 @@ function NPCCard({ npc, density }) {
       </div>
 
       {/* Loved gifts */}
-      <div>
-        <div style={{
-          fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
-          textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
-        }}>
-          Loved Gifts
+      {npc.lovedGifts.length > 0 && (
+        <div>
+          <div style={{
+            fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
+            textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
+          }}>
+            Loved Gifts
+          </div>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+            {npc.lovedGifts.map(gift => (
+              <span key={gift} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+                background: '#fff1f2', color: '#be123c',
+                border: '1px solid #fecdd3',
+                padding: '3px 9px', borderRadius: 999,
+                fontSize: 11, fontWeight: 500,
+              }}>
+                <Icon name="heart" size={10} color="#be123c" />
+                {gift}
+              </span>
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-          {npc.lovedGifts.map(gift => (
-            <span key={gift} style={{
-              display: 'inline-flex', alignItems: 'center', gap: 4,
-              background: '#fff1f2', color: '#be123c',
-              border: '1px solid #fecdd3',
-              padding: '3px 9px', borderRadius: 999,
-              fontSize: 11, fontWeight: 500,
-            }}>
-              <Icon name="heart" size={10} color="#be123c" />
-              {gift}
-            </span>
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Quest */}
-      <div style={{
-        padding: '10px 13px', borderRadius: 8,
-        background: THEME.primaryXLight,
-        border: `1px solid ${THEME.primaryLight}`,
-        fontSize: 12.5, color: THEME.textDark, lineHeight: 1.55,
-      }}>
-        <span style={{ fontWeight: 700, color: THEME.primary }}>📜 Quest: </span>
-        {npc.quest}
-      </div>
+      {npc.quest && (
+        <div style={{
+          padding: '10px 13px', borderRadius: 8,
+          background: THEME.primaryXLight,
+          border: `1px solid ${THEME.primaryLight}`,
+          fontSize: 12.5, color: THEME.textDark, lineHeight: 1.55,
+        }}>
+          <span style={{ fontWeight: 700, color: THEME.primary }}>📜 Quest: </span>
+          {npc.quest}
+        </div>
+      )}
     </div>
   );
 }
 
 export default function NPCPage({ density }) {
+  const [npcs,    setNpcs]    = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error,   setError]   = React.useState(null);
+
   const [search, setSearch] = React.useState('');
   const [role,   setRole]   = React.useState('');
 
-  const roles = React.useMemo(() => [...new Set(npcs.map(n => n.role))].sort(), []);
+  React.useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchNpcs()
+      .then(rows => { if (alive) { setNpcs(rows); setError(null); } })
+      .catch(e => { if (alive) setError(e.message); })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
+  const roles = React.useMemo(() => [...new Set(npcs.map(n => n.role))].sort(), [npcs]);
 
   const filtered = npcs.filter(n => {
     if (role && n.role !== role) return false;
@@ -170,7 +188,11 @@ export default function NPCPage({ density }) {
         )}
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <LoadingDots />
+      ) : error ? (
+        <EmptyState message="Couldn't load residents" sub={error} />
+      ) : filtered.length === 0 ? (
         <EmptyState message="No residents found" sub="Try a different search or role filter" />
       ) : (
         <div style={{

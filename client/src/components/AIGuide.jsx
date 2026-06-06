@@ -2,7 +2,8 @@
 import React from 'react';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { SUGGESTED_QS, getResponse } from '../ai/responses.js';
+import { SUGGESTED_QS } from '../ai/responses.js';
+import { streamSearch } from '../data/api.js';
 
 // renders markdown-style **bold** inline
 function MsgLine({ text }) {
@@ -93,21 +94,36 @@ export default function AIGuide({ isOpen, onToggle }) {
     }
   }, [messages, typing]);
 
-  function send(text) {
+  async function send(text) {
     const t = text.trim();
     if (!t) return;
-    setMessages(prev => [...prev, { role: 'user', content: t, id: Date.now() }]);
+    const userId = Date.now();
+    const aiId = userId + 1;
+    setMessages(prev => [...prev, { role: 'user', content: t, id: userId }]);
     setInput('');
     setTyping(true);
-    const delay = 700 + Math.random() * 600;
-    // NOTE: swap this local lookup for a POST to /api/search once the backend exists.
-    setTimeout(() => {
+
+    let started = false;
+    try {
+      // Streams the answer from POST /api/search; the typing indicator shows
+      // until the first chunk arrives, then the bubble grows as tokens stream in.
+      await streamSearch(t, (chunk) => {
+        if (!started) {
+          started = true;
+          setTyping(false);
+          setMessages(prev => [...prev, { role: 'assistant', content: chunk, id: aiId }]);
+        } else {
+          setMessages(prev => prev.map(m => (m.id === aiId ? { ...m, content: m.content + chunk } : m)));
+        }
+      });
+      if (!started) {
+        setTyping(false);
+        setMessages(prev => [...prev, { role: 'assistant', content: '(No response received.)', id: aiId }]);
+      }
+    } catch (err) {
       setTyping(false);
-      setMessages(prev => [
-        ...prev,
-        { role: 'assistant', content: getResponse(t), id: Date.now() + 1 },
-      ]);
-    }, delay);
+      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${err.message}`, id: aiId }]);
+    }
   }
 
   return (

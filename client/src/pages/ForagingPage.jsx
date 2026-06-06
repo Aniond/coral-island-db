@@ -2,8 +2,8 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { SeasonPill, FilterSelect, EmptyState } from '../components/ui.jsx';
-import { foraging } from '../data/index.js';
+import { SeasonPill, FilterSelect, EmptyState, LoadingDots, prettifyTag } from '../components/ui.jsx';
+import { fetchForageables } from '../data/api.js';
 
 function ForagingCard({ item, density }) {
   const [hov, setHov] = React.useState(false);
@@ -44,22 +44,40 @@ function ForagingCard({ item, density }) {
         padding: '3px 10px', borderRadius: 6,
         fontSize: 11, fontWeight: 600,
       }}>
-        {item.area}
+        {prettifyTag(item.area)}
       </span>
+
+      {item.notes && (
+        <div style={{ fontSize: 12, color: THEME.textMuted, lineHeight: 1.45 }}>{item.notes}</div>
+      )}
     </div>
   );
 }
 
 export default function ForagingPage({ density }) {
+  const [forageables, setForageables] = React.useState([]);
+  const [loading,     setLoading]     = React.useState(true);
+  const [error,       setError]       = React.useState(null);
+
   const [season, setSeason] = React.useState('');
   const [area,   setArea]   = React.useState('');
   const [search, setSearch] = React.useState('');
 
+  React.useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchForageables()
+      .then(rows => { if (alive) { setForageables(rows); setError(null); } })
+      .catch(e => { if (alive) setError(e.message); })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
   const seasons = ['spring', 'summer', 'fall', 'winter'];
-  const areas   = React.useMemo(() => [...new Set(foraging.map(f => f.area))].sort(), []);
+  const areas   = React.useMemo(() => [...new Set(forageables.map(f => f.area))].sort(), [forageables]);
   const cap     = s => s.charAt(0).toUpperCase() + s.slice(1);
 
-  const filtered = foraging.filter(f => {
+  const filtered = forageables.filter(f => {
     if (season && f.season !== season && f.season !== 'all') return false;
     if (area   && f.area   !== area)   return false;
     if (search && !f.name.toLowerCase().includes(search.toLowerCase())) return false;
@@ -78,7 +96,7 @@ export default function ForagingPage({ density }) {
           Foraging
         </h1>
         <p style={{ fontSize: 13.5, color: THEME.textMid, margin: 0 }}>
-          {foraging.length} forageable items across the island · Filtered: <strong>{filtered.length}</strong>
+          {forageables.length} forageable items across the island · Filtered: <strong>{filtered.length}</strong>
         </p>
       </div>
 
@@ -102,7 +120,7 @@ export default function ForagingPage({ density }) {
         </div>
 
         <FilterSelect label="Season" options={seasons} value={season} onChange={setSeason} displayFn={cap} />
-        <FilterSelect label="Area"   options={areas}   value={area}   onChange={setArea}   />
+        <FilterSelect label="Area"   options={areas}   value={area}   onChange={setArea}   displayFn={prettifyTag} />
 
         {hasFilter && (
           <button
@@ -121,7 +139,11 @@ export default function ForagingPage({ density }) {
         )}
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <LoadingDots />
+      ) : error ? (
+        <EmptyState message="Couldn't load forageables" sub={error} />
+      ) : filtered.length === 0 ? (
         <EmptyState message="Nothing found here" sub="Try a different season or area" />
       ) : (
         <div style={{

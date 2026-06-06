@@ -2,8 +2,8 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { SeasonPill, RankBadge, TypeBadge, FilterSelect, EmptyState } from '../components/ui.jsx';
-import { crops } from '../data/index.js';
+import { SeasonPill, RankBadge, TypeBadge, FilterSelect, EmptyState, LoadingDots, typeLabel } from '../components/ui.jsx';
+import { fetchCrops } from '../data/api.js';
 
 function CropCard({ crop, density }) {
   const [hov, setHov] = React.useState(false);
@@ -47,10 +47,15 @@ function CropCard({ crop, density }) {
             padding: '2px 8px', borderRadius: 999,
             fontSize: 11, fontWeight: 600,
           }}>
-            ↩ Regrows
+            ↩ Regrows{crop.regrowthDays != null ? ` ${crop.regrowthDays}d` : ''}
           </span>
         )}
       </div>
+
+      {/* Notes */}
+      {crop.notes && (
+        <div style={{ fontSize: 12, color: THEME.textMuted, lineHeight: 1.45 }}>{crop.notes}</div>
+      )}
 
       {/* Divider */}
       <div style={{ height: 1, background: THEME.primaryXLight }} />
@@ -59,7 +64,7 @@ function CropCard({ crop, density }) {
       <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: THEME.textMid, fontSize: 12.5 }}>
           <Icon name="clock" size={13} color={THEME.textMid} />
-          <span>{crop.growTime}d</span>
+          <span>{crop.growTime != null ? `${crop.growTime}d` : '—'}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5 }}>
           <Icon name="coin" size={13} color="#b45309" />
@@ -71,20 +76,35 @@ function CropCard({ crop, density }) {
 }
 
 export default function CropsPage({ density }) {
+  const [crops,   setCrops]   = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error,   setError]   = React.useState(null);
+
   const [season, setSeason] = React.useState('');
   const [type,   setType]   = React.useState('');
   const [rank,   setRank]   = React.useState('');
   const [search, setSearch] = React.useState('');
 
-  const types   = React.useMemo(() => [...new Set(crops.map(c => c.type))].sort(), []);
+  React.useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchCrops()
+      .then(rows => { if (alive) { setCrops(rows); setError(null); } })
+      .catch(e => { if (alive) setError(e.message); })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
+  const types   = React.useMemo(() => [...new Set(crops.map(c => c.type))].sort(), [crops]);
   const ranks   = ['F', 'E', 'D', 'C', 'B', 'A'];
   const seasons = ['spring', 'summer', 'fall', 'winter'];
   const cap     = s => s.charAt(0).toUpperCase() + s.slice(1);
 
   const filtered = crops.filter(c => {
-    if (season && c.season !== season) return false;
-    if (type   && c.type   !== type)   return false;
-    if (rank   && c.rank   !== rank)   return false;
+    // partial match so combos ("summer/fall") and "all"-season crops still pass
+    if (season && !(String(c.season).includes(season) || c.season === 'all')) return false;
+    if (type && c.type !== type) return false;
+    if (rank && c.rank !== rank) return false;
     if (search && !c.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -127,7 +147,7 @@ export default function CropsPage({ density }) {
         </div>
 
         <FilterSelect label="Season" options={seasons} value={season} onChange={setSeason} displayFn={cap} />
-        <FilterSelect label="Type"   options={types}   value={type}   onChange={setType}   />
+        <FilterSelect label="Type"   options={types}   value={type}   onChange={setType}   displayFn={typeLabel} />
         <FilterSelect label="Rank"   options={ranks}   value={rank}   onChange={setRank}   />
 
         {hasFilter && (
@@ -149,8 +169,12 @@ export default function CropsPage({ density }) {
         )}
       </div>
 
-      {/* Grid */}
-      {filtered.length === 0 ? (
+      {/* Body */}
+      {loading ? (
+        <LoadingDots />
+      ) : error ? (
+        <EmptyState message="Couldn't load crops" sub={error} />
+      ) : filtered.length === 0 ? (
         <EmptyState message="No crops match these filters" sub="Try a different season, type, or rank" />
       ) : (
         <div style={{

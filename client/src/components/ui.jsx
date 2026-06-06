@@ -77,7 +77,23 @@ export function MineBadge({ mine }) {
 }
 
 // ── Item Type Badge ──────────────────────────────────────────────────────────
+// Covers both the live DB taxonomy (lowercase: seed/ore/gem/...) and the
+// design's sample taxonomy (capitalized: Fruit/Mineral/...). Entries with a
+// `label` render that; others are prettified from the key.
 export const typeColors = {
+  // crop growth types (database)
+  seed:         { bg: '#f0fdf4', color: '#166534', label: 'Seed' },
+  fruit_plant:  { bg: '#ccfbf1', color: '#0f766e', label: 'Fruit Plant' },
+  fruit_tree:   { bg: '#d1fae5', color: '#065f46', label: 'Fruit Tree' },
+  ocean_crop:   { bg: '#cffafe', color: '#155e75', label: 'Ocean Crop' },
+  // cave item types (database)
+  ore:          { bg: '#fef9c3', color: '#854d0e', label: 'Ore' },
+  gem:          { bg: '#fae8ff', color: '#86198f', label: 'Gem' },
+  geode:        { bg: '#e0e7ff', color: '#3730a3', label: 'Geode' },
+  monster_drop: { bg: '#fee2e2', color: '#991b1b', label: 'Monster Drop' },
+  fish:         { bg: '#dbeafe', color: '#1e40af', label: 'Fish' },
+  scavengeable: { bg: '#f1f5f9', color: '#475569', label: 'Scavengeable' },
+  // sample-data taxonomy (design prototype / login teaser)
   Mineral:   { bg: '#fef9c3', color: '#854d0e' },
   Gem:       { bg: '#fae8ff', color: '#86198f' },
   Artifact:  { bg: '#ede9fe', color: '#5b21b6' },
@@ -88,6 +104,13 @@ export const typeColors = {
   Flower:    { bg: '#fdf2f8', color: '#9d174d' },
 };
 
+// 'deep_forest' -> 'Deep Forest', 'ore' -> 'Ore'
+export const prettifyTag = (s) =>
+  String(s).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+export const typeLabel = (type) =>
+  (typeColors[type] && typeColors[type].label) || prettifyTag(type);
+
 export function TypeBadge({ type }) {
   const cfg = typeColors[type] || { bg: '#f1f5f9', color: '#475569' };
   return (
@@ -97,7 +120,7 @@ export function TypeBadge({ type }) {
       background: cfg.bg, color: cfg.color,
       fontSize: 11, fontWeight: 600,
     }}>
-      {type}
+      {cfg.label || prettifyTag(type)}
     </span>
   );
 }

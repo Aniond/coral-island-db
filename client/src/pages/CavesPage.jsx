@@ -2,8 +2,14 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { MineBadge, TypeBadge, FilterSelect, EmptyState, mineConfig } from '../components/ui.jsx';
-import { caves, mineUnlocks } from '../data/index.js';
+import { MineBadge, TypeBadge, FilterSelect, EmptyState, LoadingDots, mineConfig, typeLabel, prettifyTag } from '../components/ui.jsx';
+import { fetchCaves } from '../data/api.js';
+import { mineUnlocks } from '../data/index.js';
+
+// DB floor ranges are mixed: "1-20" (numeric) vs "all floors" / "water pockets".
+function floorText(floors) {
+  return /^\d/.test(String(floors)) ? `Floors ${floors}` : prettifyTag(floors);
+}
 
 function CaveCard({ item, density }) {
   const [hov, setHov] = React.useState(false);
@@ -40,9 +46,12 @@ function CaveCard({ item, density }) {
           padding: '3px 9px', borderRadius: 999,
           fontSize: 11, fontWeight: 600, color: '#475569',
         }}>
-          Floors {item.floors}
+          {floorText(item.floors)}
         </span>
       </div>
+      {item.notes && (
+        <div style={{ fontSize: 12, color: THEME.textMuted, lineHeight: 1.45 }}>{item.notes}</div>
+      )}
     </div>
   );
 }
@@ -69,19 +78,33 @@ function MineBanner({ mine }) {
         <div style={{ fontWeight: 700, color: cfg.color, fontSize: 13.5, marginBottom: 3 }}>
           {cfg.label} Mine
         </div>
-        <div style={{ fontSize: 12.5, color: THEME.textMuted, lineHeight: 1.5 }}>{unlock}</div>
+        {unlock && <div style={{ fontSize: 12.5, color: THEME.textMuted, lineHeight: 1.5 }}>{unlock}</div>}
       </div>
     </div>
   );
 }
 
 export default function CavesPage({ density }) {
+  const [caves,   setCaves]   = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error,   setError]   = React.useState(null);
+
   const [mine,     setMine]     = React.useState('');
   const [itemType, setItemType] = React.useState('');
   const [search,   setSearch]   = React.useState('');
 
+  React.useEffect(() => {
+    let alive = true;
+    setLoading(true);
+    fetchCaves()
+      .then(rows => { if (alive) { setCaves(rows); setError(null); } })
+      .catch(e => { if (alive) setError(e.message); })
+      .finally(() => { if (alive) setLoading(false); });
+    return () => { alive = false; };
+  }, []);
+
   const mines     = ['earth', 'water', 'wind', 'fire', 'memories'];
-  const itemTypes = React.useMemo(() => [...new Set(caves.map(c => c.type))].sort(), []);
+  const itemTypes = React.useMemo(() => [...new Set(caves.map(c => c.type))].sort(), [caves]);
   const cap       = s => s.charAt(0).toUpperCase() + s.slice(1);
 
   const filtered = caves.filter(c => {
@@ -127,7 +150,7 @@ export default function CavesPage({ density }) {
         </div>
 
         <FilterSelect label="Mine"      options={mines}     value={mine}     onChange={setMine}     displayFn={cap} />
-        <FilterSelect label="Item Type" options={itemTypes} value={itemType} onChange={setItemType} />
+        <FilterSelect label="Item Type" options={itemTypes} value={itemType} onChange={setItemType} displayFn={typeLabel} />
 
         {hasFilter && (
           <button
@@ -148,7 +171,11 @@ export default function CavesPage({ density }) {
 
       {mine && <MineBanner mine={mine} />}
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <LoadingDots />
+      ) : error ? (
+        <EmptyState message="Couldn't load cave items" sub={error} />
+      ) : filtered.length === 0 ? (
         <EmptyState message="No cave items found" sub="Try a different mine or item type" />
       ) : (
         <div style={{
