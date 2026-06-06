@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', app: 'Coral Island DB' });
+  res.json({ status: 'ok', app: 'Coral Island DB', version: 2 });
 });
 
 // API routes
