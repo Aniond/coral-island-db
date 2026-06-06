@@ -1,0 +1,17 @@
+[
+  { "id": 1,  "name": "Wild Berries",    "season": "spring", "location": "Forest Trail",   "area": "Forest"  },
+  { "id": 2,  "name": "Fiddlehead Fern", "season": "spring", "location": "River Bank",     "area": "Forest"  },
+  { "id": 3,  "name": "Spring Onion",    "season": "spring", "location": "Hilltop Fields", "area": "Plains"  },
+  { "id": 4,  "name": "Daffodil",        "season": "spring", "location": "Meadow Path",    "area": "Plains"  },
+  { "id": 5,  "name": "Coconut",         "season": "summer", "location": "Tropical Grove", "area": "Coastal" },
+  { "id": 6,  "name": "Palm Fruit",      "season": "summer", "location": "Coastal Path",   "area": "Coastal" },
+  { "id": 7,  "name": "Sea Urchin",      "season": "summer", "location": "Tide Pools",     "area": "Beach"   },
+  { "id": 8,  "name": "Seaweed",         "season": "all",    "location": "Shoreline",      "area": "Beach"   },
+  { "id": 9,  "name": "Wild Mushroom",   "season": "fall",   "location": "Deep Forest",    "area": "Forest"  },
+  { "id": 10, "name": "Chanterelle",     "season": "fall",   "location": "Forest Trail",   "area": "Forest"  },
+  { "id": 11, "name": "Crab Apple",      "season": "fall",   "location": "Orchard Edge",   "area": "Plains"  },
+  { "id": 12, "name": "Hazelnut",        "season": "fall",   "location": "Forest Path",    "area": "Forest"  },
+  { "id": 13, "name": "Holly Berry",     "season": "winter", "location": "Snow Fields",    "area": "Plains"  },
+  { "id": 14, "name": "Ice Crystal",     "season": "winter", "location": "Frozen Lake",    "area": "Lake"    },
+  { "id": 15, "name": "Winter Root",     "season": "winter", "location": "Snowy Plains",   "area": "Plains"  }
+]

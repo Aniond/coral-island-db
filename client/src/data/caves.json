@@ -1,0 +1,20 @@
+[
+  { "id": 1,  "name": "Copper Ore",      "type": "Mineral",  "mine": "earth",    "floors": "1–10"  },
+  { "id": 2,  "name": "Coal",            "type": "Mineral",  "mine": "earth",    "floors": "5–15"  },
+  { "id": 3,  "name": "Iron Ore",        "type": "Mineral",  "mine": "earth",    "floors": "11–20" },
+  { "id": 4,  "name": "Silver Ore",      "type": "Mineral",  "mine": "earth",    "floors": "16–25" },
+  { "id": 5,  "name": "Amethyst",        "type": "Gem",      "mine": "earth",    "floors": "21–30" },
+  { "id": 6,  "name": "Gold Ore",        "type": "Mineral",  "mine": "earth",    "floors": "26–40" },
+  { "id": 7,  "name": "Coral Fragment",  "type": "Material", "mine": "water",    "floors": "1–15"  },
+  { "id": 8,  "name": "Sea Crystal",     "type": "Gem",      "mine": "water",    "floors": "16–25" },
+  { "id": 9,  "name": "Pearl",           "type": "Gem",      "mine": "water",    "floors": "26–40" },
+  { "id": 10, "name": "Storm Stone",     "type": "Mineral",  "mine": "wind",     "floors": "1–15"  },
+  { "id": 11, "name": "Emerald Shard",   "type": "Gem",      "mine": "wind",     "floors": "10–25" },
+  { "id": 12, "name": "Sky Crystal",     "type": "Gem",      "mine": "wind",     "floors": "20–40" },
+  { "id": 13, "name": "Fire Ruby",       "type": "Gem",      "mine": "fire",     "floors": "1–15"  },
+  { "id": 14, "name": "Obsidian",        "type": "Mineral",  "mine": "fire",     "floors": "10–25" },
+  { "id": 15, "name": "Dragon Shard",    "type": "Gem",      "mine": "fire",     "floors": "25–40" },
+  { "id": 16, "name": "Memory Fragment", "type": "Artifact", "mine": "memories", "floors": "1–20"  },
+  { "id": 17, "name": "Ancient Relic",   "type": "Artifact", "mine": "memories", "floors": "10–30" },
+  { "id": 18, "name": "Lost Echo",       "type": "Artifact", "mine": "memories", "floors": "25–40" }
+]

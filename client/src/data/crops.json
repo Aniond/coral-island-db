@@ -1,0 +1,21 @@
+[
+  { "id": 1,  "name": "Strawberry",    "type": "Fruit",     "season": "spring", "rank": "A", "growTime": 8,  "sellPrice": 120, "regrows": true  },
+  { "id": 2,  "name": "Tulip",         "type": "Flower",    "season": "spring", "rank": "E", "growTime": 6,  "sellPrice": 25,  "regrows": false },
+  { "id": 3,  "name": "Cauliflower",   "type": "Vegetable", "season": "spring", "rank": "B", "growTime": 12, "sellPrice": 90,  "regrows": false },
+  { "id": 4,  "name": "Potato",        "type": "Vegetable", "season": "spring", "rank": "D", "growTime": 6,  "sellPrice": 30,  "regrows": false },
+  { "id": 5,  "name": "Parsnip",       "type": "Vegetable", "season": "spring", "rank": "F", "growTime": 4,  "sellPrice": 20,  "regrows": false },
+  { "id": 6,  "name": "Blueberry",     "type": "Fruit",     "season": "summer", "rank": "B", "growTime": 14, "sellPrice": 80,  "regrows": true  },
+  { "id": 7,  "name": "Tomato",        "type": "Vegetable", "season": "summer", "rank": "C", "growTime": 7,  "sellPrice": 35,  "regrows": true  },
+  { "id": 8,  "name": "Corn",          "type": "Grain",     "season": "summer", "rank": "E", "growTime": 14, "sellPrice": 40,  "regrows": true  },
+  { "id": 9,  "name": "Sunflower",     "type": "Flower",    "season": "summer", "rank": "D", "growTime": 8,  "sellPrice": 45,  "regrows": false },
+  { "id": 10, "name": "Hot Pepper",    "type": "Vegetable", "season": "summer", "rank": "C", "growTime": 5,  "sellPrice": 40,  "regrows": true  },
+  { "id": 11, "name": "Pumpkin",       "type": "Vegetable", "season": "fall",   "rank": "D", "growTime": 13, "sellPrice": 55,  "regrows": false },
+  { "id": 12, "name": "Eggplant",      "type": "Vegetable", "season": "fall",   "rank": "C", "growTime": 5,  "sellPrice": 30,  "regrows": true  },
+  { "id": 13, "name": "Cranberry",     "type": "Fruit",     "season": "fall",   "rank": "A", "growTime": 7,  "sellPrice": 130, "regrows": true  },
+  { "id": 14, "name": "Wheat",         "type": "Grain",     "season": "fall",   "rank": "F", "growTime": 4,  "sellPrice": 25,  "regrows": false },
+  { "id": 15, "name": "Yam",           "type": "Vegetable", "season": "fall",   "rank": "D", "growTime": 8,  "sellPrice": 50,  "regrows": false },
+  { "id": 16, "name": "Crystal Berry", "type": "Fruit",     "season": "winter", "rank": "B", "growTime": 16, "sellPrice": 110, "regrows": false },
+  { "id": 17, "name": "Snow Pea",      "type": "Vegetable", "season": "winter", "rank": "C", "growTime": 6,  "sellPrice": 40,  "regrows": true  },
+  { "id": 18, "name": "Frost Lily",    "type": "Flower",    "season": "winter", "rank": "E", "growTime": 7,  "sellPrice": 30,  "regrows": false },
+  { "id": 19, "name": "Ice Beet",      "type": "Vegetable", "season": "winter", "rank": "D", "growTime": 10, "sellPrice": 60,  "regrows": false }
+]

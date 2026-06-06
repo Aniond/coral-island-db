@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coral Island Database — Welcome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body, #root { height: 100%; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+    @keyframes blob1    { 0%,100%{transform:translate(0,0) scale(1)}    50%{transform:translate(22px,-28px) scale(1.05)} }
+    @keyframes blob2    { 0%,100%{transform:translate(0,0) scale(1)}    50%{transform:translate(-18px,22px)  scale(0.95)} }
+    @keyframes blob3    { 0%,100%{transform:translate(0,0)}             40%{transform:translate(12px,14px)}  80%{transform:translate(-8px,-10px)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(10px)}    to{opacity:1;transform:translateY(0)} }
+    @keyframes spin     { to{transform:rotate(360deg)} }
+    @keyframes phFade   { 0%,15%{opacity:1} 30%,85%{opacity:0} 100%{opacity:0} }
+
+    ::-webkit-scrollbar       { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: #99f6e4; border-radius: 99px; }
+
+    @media (max-width: 820px) {
+      .ci-split { flex-direction: column !important; overflow-y: auto !important; }
+      .ci-hero  { min-height: 56vh; flex: 0 0 auto !important; }
+      .ci-form  { flex: 0 0 auto !important; overflow: visible !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="data.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const C = {
+      primary:     '#0f766e',
+      dark:        '#134e4a',
+      accent:      '#f97316',
+      accentLight: '#fff7ed',
+      cream:       '#fefce8',
+    };
+
+    const PLACEHOLDERS = [
+      'Ask anything about Coral Island\u2026',
+      "What's the best crop for summer?",
+      'How do I unlock the Water Mine?',
+      "What gifts does Lily love?",
+      'Best ways to earn money early?',
+      'What can I forage in fall?',
+    ];
+
+    const TYPE_CFG = {
+      crops:    { bg: '#dcfce7', color: '#166534', dot: '#16a34a', label: 'Crop'    },
+      caves:    { bg: '#fef3c7', color: '#92400e', dot: '#d97706', label: 'Cave'    },
+      foraging: { bg: '#d1fae5', color: '#065f46', dot: '#10b981', label: 'Forage'  },
+      npcs:     { bg: '#ede9fe', color: '#5b21b6', dot: '#8b5cf6', label: 'NPC'     },
+    };
+
+    // ── Lightweight icon ──────────────────────────────────────────────────────
+    function Ico({ n, s = 20, c = 'currentColor', w = 1.75 }) {
+      const d = {
+        leaf:       <><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></>,
+        sparkles:   <><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></>,
+        search:     <><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></>,
+        arrowRight: <><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>,
+        eye:        <><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
+        eyeOff:     <><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></>,
+        x:          <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
+        user:       <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
+        lock:       <><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+      };
+      return (
+        <svg width={s} height={s} viewBox="0 0 24 24" fill="none"
+          stroke={c} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round">
+          {d[n]}
+        </svg>
+      );
+    }
+
+    // ── Cross-database search ─────────────────────────────────────────────────
+    function runSearch(q, filter) {
+      if (!q.trim() || q.length < 2 || !window.GameData) return [];
+      const lq = q.toLowerCase();
+      const out = [];
+      const G = window.GameData;
+      const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+      if (!filter || filter === 'crops')
+        G.crops.filter(c => c.name.toLowerCase().includes(lq)).slice(0, 3)
+          .forEach(c => out.push({ type: 'crops', name: c.name, sub: `${c.type} · ${cap(c.season)} · ${c.sellPrice}g` }));
+
+      if (!filter || filter === 'caves')
+        G.caves.filter(c => c.name.toLowerCase().includes(lq)).slice(0, 3)
+          .forEach(c => out.push({ type: 'caves', name: c.name, sub: `${c.type} · ${cap(c.mine)} Mine · Floors ${c.floors}` }));
+
+      if (!filter || filter === 'foraging')
+        G.foraging.filter(f => f.name.toLowerCase().includes(lq)).slice(0, 2)
+          .forEach(f => out.push({ type: 'foraging', name: f.name, sub: `${f.season === 'all' ? 'All Seasons' : cap(f.season)} · ${f.location}` }));
+
+      if (!filter || filter === 'npcs')
+        G.npcs.filter(n => n.name.toLowerCase().includes(lq) || n.role.toLowerCase().includes(lq)).slice(0, 2)
+          .forEach(n => out.push({ type: 'npcs', name: n.name, sub: `${n.role} · ${n.location}` }));
+
+      return out.slice(0, 8);
+    }
+
+    // ── Hero search bar ───────────────────────────────────────────────────────
+    function SearchHero() {
+      const [q,      setQ]      = useState('');
+      const [filter, setFilter] = useState('');
+      const [results,setResults]= useState([]);
+      const [show,   setShow]   = useState(false);
+      const [phIdx,  setPhIdx]  = useState(0);
+      const [focus,  setFocus]  = useState(false);
+      const inputRef = useRef(null);
+
+      useEffect(() => {
+        if (focus) return;
+        const id = setInterval(() => setPhIdx(i => (i + 1) % PLACEHOLDERS.length), 3200);
+        return () => clearInterval(id);
+      }, [focus]);
+
+      useEffect(() => {
+        if (q.length >= 2) { setResults(runSearch(q, filter)); setShow(true); }
+        else { setResults([]); setShow(false); }
+      }, [q, filter]);
+
+      const go = () => { window.location.href = 'Coral Island Database.html'; };
+
+      const TABS = [
+        { id: '', label: 'All' }, { id: 'crops', label: 'Crops' },
+        { id: 'caves', label: 'Caves' }, { id: 'foraging', label: 'Foraging' },
+        { id: 'npcs', label: 'NPCs' },
+      ];
+
+      return (
+        <div style={{ width: '100%', maxWidth: 560, position: 'relative' }}>
+          {/* Filter chips */}
+          <div style={{ display: 'flex', gap: 6, marginBottom: 10, flexWrap: 'wrap' }}>
+            {TABS.map(t => (
+              <button key={t.id} onClick={() => setFilter(t.id)} style={{
+                padding: '5px 13px', borderRadius: 999, border: 'none', cursor: 'pointer',
+                background: filter === t.id ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.08)',
+                color: filter === t.id ? 'white' : 'rgba(255,255,255,0.55)',
+                fontSize: 12.5, fontWeight: filter === t.id ? 600 : 400,
+                fontFamily: "'Inter',sans-serif",
+                boxShadow: filter === t.id ? 'inset 0 0 0 1px rgba(255,255,255,0.3)' : 'none',
+                transition: 'all 0.14s',
+              }}>
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Input pill */}
+          <form onSubmit={e => { e.preventDefault(); go(); }}>
+            <div style={{
+              display: 'flex', alignItems: 'center',
+              background: 'white', borderRadius: 18,
+              padding: '5px 5px 5px 18px',
+              boxShadow: focus
+                ? '0 0 0 3px rgba(249,115,22,0.5), 0 12px 40px rgba(0,0,0,0.28)'
+                : '0 10px 40px rgba(0,0,0,0.24)',
+              transition: 'box-shadow 0.2s',
+            }}>
+              <div style={{ marginRight: 10, display: 'flex', flexShrink: 0, color: focus ? C.accent : '#9ca3af', transition: 'color 0.15s' }}>
+                <Ico n="sparkles" s={19} c={focus ? C.accent : '#9ca3af'} />
+              </div>
+              <input
+                ref={inputRef}
+                value={q}
+                onChange={e => setQ(e.target.value)}
+                onFocus={() => { setFocus(true); if (results.length) setShow(true); }}
+                onBlur={() => { setFocus(false); setTimeout(() => setShow(false), 160); }}
+                placeholder={focus ? PLACEHOLDERS[0] : PLACEHOLDERS[phIdx]}
+                style={{
+                  flex: 1, border: 'none', outline: 'none', background: 'transparent',
+                  fontSize: 15, color: C.dark, fontFamily: "'Inter',sans-serif",
+                  padding: '11px 0',
+                }}
+              />
+              {q && (
+                <button type="button" onClick={() => { setQ(''); inputRef.current?.focus(); }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', padding: '4px 6px', color: '#9ca3af' }}>
+                  <Ico n="x" s={16} />
+                </button>
+              )}
+              <button type="submit" style={{
+                flexShrink: 0, padding: '10px 18px', borderRadius: 13,
+                background: C.accent, border: 'none', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 7,
+                color: 'white', fontSize: 13.5, fontWeight: 600,
+                fontFamily: "'Inter',sans-serif",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+                <Ico n="search" s={15} c="white" /> Search
+              </button>
+            </div>
+          </form>
+
+          {/* Dropdown */}
+          {show && results.length > 0 && (
+            <div style={{
+              position: 'absolute', top: 'calc(100% + 8px)', left: 0, right: 0,
+              background: 'white', borderRadius: 14, overflow: 'hidden',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.22)', zIndex: 50,
+              animation: 'fadeUp 0.14s ease',
+              border: '1px solid rgba(255,255,255,0.15)',
+            }}>
+              {results.map((r, i) => {
+                const tc = TYPE_CFG[r.type];
+                return (
+                  <button key={i} onClick={go} style={{
+                    display: 'flex', alignItems: 'center', gap: 11,
+                    width: '100%', padding: '11px 15px', border: 'none',
+                    background: 'white', cursor: 'pointer', textAlign: 'left',
+                    borderBottom: i < results.length - 1 ? '1px solid #f0fdfa' : 'none',
+                    transition: 'background 0.1s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#f0fdfa'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'white'}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8, flexShrink: 0,
+                      background: tc.bg, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: tc.dot }} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13.5, fontWeight: 600, color: C.dark, marginBottom: 1 }}>{r.name}</div>
+                      <div style={{ fontSize: 11.5, color: '#6b7a74', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.sub}</div>
+                    </div>
+                    <span style={{
+                      fontSize: 10.5, fontWeight: 600, color: tc.color, background: tc.bg,
+                      padding: '2px 8px', borderRadius: 999, flexShrink: 0,
+                    }}>{tc.label}</span>
+                  </button>
+                );
+              })}
+              {/* Ask AI row */}
+              <button onClick={go} style={{
+                display: 'flex', alignItems: 'center', gap: 11, width: '100%',
+                padding: '11px 15px', border: 'none', background: '#f8fffe',
+                borderTop: '1px solid #e0faf6', cursor: 'pointer', textAlign: 'left',
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = '#f0fdfa'}
+              onMouseLeave={e => e.currentTarget.style.background = '#f8fffe'}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: '#f0fdfa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Ico n="sparkles" s={16} c={C.primary} />
+                </div>
+                <span style={{ fontSize: 13, color: C.primary, fontWeight: 500 }}>
+                  Ask AI: "<em>{q}</em>"
+                </span>
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ── Login form ────────────────────────────────────────────────────────────
+    function LoginForm() {
+      const [email,    setEmail]    = useState('');
+      const [password, setPassword] = useState('');
+      const [showPw,   setShowPw]   = useState(false);
+      const [loading,  setLoading]  = useState(false);
+      const [errors,   setErrors]   = useState({});
+
+      function validate() {
+        const e = {};
+        if (!email.trim())                       e.email    = 'Email is required';
+        else if (!/\S+@\S+\.\S+/.test(email))   e.email    = 'Enter a valid email';
+        if (!password)                           e.password = 'Password is required';
+        else if (password.length < 6)            e.password = 'At least 6 characters';
+        setErrors(e);
+        return !Object.keys(e).length;
+      }
+
+      function handleSignIn(ev) {
+        ev.preventDefault();
+        if (!validate()) return;
+        setLoading(true);
+        setTimeout(() => { window.location.href = 'Coral Island Database.html'; }, 1100);
+      }
+
+      const fieldStyle = (err) => ({
+        width: '100%', padding: '11px 12px 11px 38px',
+        border: `1.5px solid ${err ? '#fca5a5' : '#e5e7eb'}`,
+        borderRadius: 10, fontSize: 13.5, outline: 'none',
+        fontFamily: "'Inter',sans-serif", color: '#111827',
+        background: err ? '#fef2f2' : 'white',
+        transition: 'border-color 0.15s',
+      });
+
+      return (
+        <form onSubmit={handleSignIn} noValidate style={{ width: '100%' }}>
+
+          {/* Email */}
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#374151', marginBottom: 6, letterSpacing: '0.02em' }}>Email address</label>
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: errors.email ? '#dc2626' : '#9ca3af', display: 'flex' }}>
+                <Ico n="user" s={16} />
+              </div>
+              <input type="email" value={email} placeholder="you@example.com"
+                onChange={e => { setEmail(e.target.value); setErrors(p => ({...p, email: ''})); }}
+                style={fieldStyle(errors.email)}
+                onFocus={e => { if (!errors.email) e.target.style.borderColor = C.primary; }}
+                onBlur={e  => { if (!errors.email) e.target.style.borderColor = '#e5e7eb'; }}
+              />
+            </div>
+            {errors.email && <p style={{ fontSize: 11.5, color: '#dc2626', marginTop: 4 }}>{errors.email}</p>}
+          </div>
+
+          {/* Password */}
+          <div style={{ marginBottom: 22 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <label style={{ fontSize: 12.5, fontWeight: 600, color: '#374151', letterSpacing: '0.02em' }}>Password</label>
+              <a href="#" onClick={e => e.preventDefault()} style={{ fontSize: 12, color: C.primary, textDecoration: 'none', fontWeight: 500 }}>Forgot password?</a>
+            </div>
+            <div style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: errors.password ? '#dc2626' : '#9ca3af', display: 'flex' }}>
+                <Ico n="lock" s={16} />
+              </div>
+              <input type={showPw ? 'text' : 'password'} value={password} placeholder="••••••••"
+                onChange={e => { setPassword(e.target.value); setErrors(p => ({...p, password: ''})); }}
+                style={{ ...fieldStyle(errors.password), paddingRight: 40 }}
+                onFocus={e => { if (!errors.password) e.target.style.borderColor = C.primary; }}
+                onBlur={e  => { if (!errors.password) e.target.style.borderColor = '#e5e7eb'; }}
+              />
+              <button type="button" onClick={() => setShowPw(p => !p)} style={{
+                position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
+                background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', display: 'flex',
+              }}>
+                <Ico n={showPw ? 'eyeOff' : 'eye'} s={16} />
+              </button>
+            </div>
+            {errors.password && <p style={{ fontSize: 11.5, color: '#dc2626', marginTop: 4 }}>{errors.password}</p>}
+          </div>
+
+          {/* Sign In */}
+          <button type="submit" disabled={loading} style={{
+            width: '100%', padding: '13px', marginBottom: 14,
+            background: loading ? '#5eead4' : C.primary,
+            border: 'none', borderRadius: 10, color: 'white',
+            fontSize: 14.5, fontWeight: 600, fontFamily: "'Inter',sans-serif",
+            cursor: loading ? 'default' : 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            transition: 'background 0.2s',
+          }}>
+            {loading
+              ? <><div style={{ width: 16, height: 16, border: '2.5px solid rgba(255,255,255,0.4)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} /> Signing in…</>
+              : 'Sign In'
+            }
+          </button>
+
+          {/* Divider */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+            <div style={{ flex: 1, height: 1, background: '#e5e7eb' }} />
+            <span style={{ fontSize: 12, color: '#9ca3af' }}>or</span>
+            <div style={{ flex: 1, height: 1, background: '#e5e7eb' }} />
+          </div>
+
+          {/* Guest */}
+          <button type="button" onClick={() => { window.location.href = 'Coral Island Database.html'; }} style={{
+            width: '100%', padding: '12px', background: 'white',
+            border: '1.5px solid #e5e7eb', borderRadius: 10,
+            color: '#374151', fontSize: 14, fontWeight: 500,
+            fontFamily: "'Inter',sans-serif", cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            transition: 'all 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = C.primary; e.currentTarget.style.background = '#f0fdfa'; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.background = 'white'; }}>
+            Continue as Guest <Ico n="arrowRight" s={16} c={C.primary} />
+          </button>
+        </form>
+      );
+    }
+
+    // ── Root ──────────────────────────────────────────────────────────────────
+    function LoginPage() {
+      return (
+        <div className="ci-split" style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+
+          {/* ── Left hero panel ── */}
+          <div className="ci-hero" style={{
+            flex: '1 1 55%',
+            background: 'linear-gradient(148deg, #071e1c 0%, #0b3330 45%, #134e4a 100%)',
+            display: 'flex', flexDirection: 'column',
+            padding: '36px 48px', position: 'relative', overflow: 'hidden',
+          }}>
+            {/* Decorative blobs */}
+            {[
+              { w: 520, h: 520, top: -220, right: -180, anim: 'blob1 14s ease-in-out infinite', gradient: 'rgba(15,118,110,0.3)' },
+              { w: 360, h: 360, bottom: -100, left: -90, anim: 'blob2 18s ease-in-out infinite', gradient: 'rgba(249,115,22,0.12)' },
+              { w: 220, h: 220, bottom: 80, right: 60, anim: 'blob3 11s ease-in-out infinite', gradient: 'rgba(94,234,212,0.07)' },
+            ].map((b, i) => (
+              <div key={i} style={{
+                position: 'absolute', width: b.w, height: b.h, borderRadius: '50%',
+                top: b.top, right: b.right, bottom: b.bottom, left: b.left,
+                background: `radial-gradient(circle, ${b.gradient} 0%, transparent 70%)`,
+                animation: b.anim, pointerEvents: 'none',
+              }} />
+            ))}
+
+            {/* Subtle grid overlay */}
+            <div style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none',
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+            }} />
+
+            {/* Logo */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 11, position: 'relative', zIndex: 2 }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: 11, flexShrink: 0,
+                background: 'linear-gradient(135deg, #0d9488, #f97316)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Ico n="leaf" s={20} c="white" />
+              </div>
+              <div>
+                <div style={{ color: 'white', fontFamily: "'Playfair Display',serif", fontWeight: 700, fontSize: 16 }}>Coral Island</div>
+                <div style={{ color: '#5eead4', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: 1 }}>Database</div>
+              </div>
+            </div>
+
+            {/* Main content */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 2, gap: 22, paddingTop: 20 }}>
+              <div style={{ animation: 'fadeUp 0.5s ease forwards' }}>
+                <h1 style={{
+                  fontFamily: "'Playfair Display',serif",
+                  fontSize: 'clamp(26px, 3.2vw, 46px)',
+                  fontWeight: 700, color: 'white', lineHeight: 1.15, marginBottom: 12,
+                }}>
+                  Your complete<br />
+                  <span style={{ color: '#f97316', fontStyle: 'italic' }}>island</span> companion
+                </h1>
+                <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 1.65, maxWidth: 420 }}>
+                  Search crops, caves, foraging spots and NPC guides — all in one place. Ask the AI anything.
+                </p>
+              </div>
+
+              <div style={{ animation: 'fadeUp 0.5s ease 0.1s forwards' }}>
+                <SearchHero />
+              </div>
+
+              {/* Popular */}
+              <div style={{ animation: 'fadeUp 0.5s ease 0.2s forwards' }}>
+                <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 9 }}>
+                  Popular searches
+                </p>
+                <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
+                  {['Best spring crops', 'Water Mine', "Lily's gifts", 'Cranberry', 'Ancient Relic'].map(q => (
+                    <button key={q}
+                      onClick={() => { window.location.href = 'Coral Island Database.html'; }}
+                      style={{
+                        padding: '5px 13px', borderRadius: 999,
+                        background: 'rgba(255,255,255,0.07)',
+                        border: '1px solid rgba(255,255,255,0.13)',
+                        color: 'rgba(255,255,255,0.65)',
+                        fontSize: 12, cursor: 'pointer',
+                        fontFamily: "'Inter',sans-serif",
+                        transition: 'all 0.15s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.16)'; e.currentTarget.style.color = 'white'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.65)'; }}
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11, position: 'relative', zIndex: 2, paddingTop: 12 }}>
+              v1.0.0 · Fan-made companion · Not affiliated with Stairway Games
+            </div>
+          </div>
+
+          {/* ── Right login panel ── */}
+          <div className="ci-form" style={{
+            flex: '0 0 420px',
+            background: '#fefce8',
+            display: 'flex', flexDirection: 'column',
+            padding: '44px 44px 36px',
+            overflow: 'hidden',
+            borderLeft: '1px solid #e5e7eb',
+          }}>
+            {/* Sign-up link */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 36 }}>
+              <span style={{ fontSize: 13, color: '#6b7280' }}>
+                New here?{' '}
+                <a href="#" onClick={e => e.preventDefault()} style={{ color: C.accent, fontWeight: 600, textDecoration: 'none' }}>
+                  Create account
+                </a>
+              </span>
+            </div>
+
+            {/* Greeting */}
+            <div style={{ marginBottom: 28 }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>🌴</div>
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: 27, fontWeight: 700, color: C.dark, marginBottom: 7 }}>
+                Welcome back
+              </h2>
+              <p style={{ fontSize: 13.5, color: '#6b7a74', lineHeight: 1.55 }}>
+                Sign in to save progress, favourites &amp; custom notes.
+              </p>
+            </div>
+
+            <LoginForm />
+
+            <div style={{ marginTop: 'auto', paddingTop: 20, textAlign: 'center' }}>
+              <p style={{ fontSize: 11.5, color: '#9ca3af', lineHeight: 1.65 }}>
+                By signing in you agree to our{' '}
+                <a href="#" onClick={e => e.preventDefault()} style={{ color: C.primary, textDecoration: 'none' }}>Terms</a>
+                {' '}and{' '}
+                <a href="#" onClick={e => e.preventDefault()} style={{ color: C.primary, textDecoration: 'none' }}>Privacy Policy</a>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<LoginPage />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+/**
+ * Seeds the Coral Island database.
+ *
+ * Applies schema.sql (drops + recreates the four tables) then inserts all data
+ * inside a single transaction. Idempotent: re-running starts from a clean slate.
+ *
+ * Usage:  node seed.js   (or: npm run seed)
+ * Requires DATABASE_URL in .env to point at a reachable PostgreSQL instance.
+ */
+
+const fs = require('fs');
+const path = require('path');
+const pool = require('./db');
+
+// ---- CROPS -----------------------------------------------------------------
+// Structural notes reused for entries the source data didn't annotate individually.
+const FRUIT_PLANT_NOTE = '2x2 space needed. Needs watering. Dies off-season.';
+const FRUIT_TREE_NOTE = '3x3 clear space needed. No watering. Dormant off-season.';
+const OCEAN_NOTE = 'Underwater farm. Requires completing One of Us quest and reaching Town Rank A.';
+
+const crops = [
+  // Seeds
+  { name: 'Turnip',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 5,  sell_price: 40,  regrowth_days: null, notes: null },
+  { name: 'Parsnip',     type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 4,  sell_price: 35,  regrowth_days: null, notes: null },
+  { name: 'Potato',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 6,  sell_price: 80,  regrowth_days: null, notes: null },
+  { name: 'Cauliflower', type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 12, sell_price: 175, regrowth_days: null, notes: null },
+  { name: 'Daisy',       type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 4,  sell_price: 40,  regrowth_days: null, notes: null },
+  { name: 'Strawberry',  type: 'seed', season: 'spring',      town_rank: 'E', grow_days: 8,  sell_price: 120, regrowth_days: 4,    notes: null },
+  { name: 'Tomato',      type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 11, sell_price: 60,  regrowth_days: 4,    notes: null },
+  { name: 'Blueberry',   type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 13, sell_price: 50,  regrowth_days: 4,    notes: null },
+  { name: 'Corn',        type: 'seed', season: 'summer/fall', town_rank: 'F', grow_days: 14, sell_price: 50,  regrowth_days: 4,    notes: null },
+  { name: 'Sunflower',   type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 8,  sell_price: 80,  regrowth_days: null, notes: null },
+  { name: 'Radish',      type: 'seed', season: 'summer',      town_rank: 'D', grow_days: 6,  sell_price: 90,  regrowth_days: null, notes: null },
+  { name: 'Melon',       type: 'seed', season: 'summer',      town_rank: 'D', grow_days: 12, sell_price: 250, regrowth_days: null, notes: null },
+  { name: 'Pumpkin',     type: 'seed', season: 'fall',        town_rank: 'F', grow_days: 13, sell_price: 320, regrowth_days: null, notes: null },
+  { name: 'Yam',         type: 'seed', season: 'fall',        town_rank: 'F', grow_days: 10, sell_price: 160, regrowth_days: null, notes: null },
+  { name: 'Amaranth',    type: 'seed', season: 'fall',        town_rank: 'D', grow_days: 7,  sell_price: 150, regrowth_days: null, notes: null },
+  { name: 'Bok Choy',    type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 4,  sell_price: 80,  regrowth_days: null, notes: null },
+  { name: 'Eggplant',    type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 5,  sell_price: 60,  regrowth_days: 5,    notes: null },
+  { name: 'Grape',       type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 10, sell_price: 80,  regrowth_days: 3,    notes: null },
+
+  // Fruit plants (2x2, need watering, die off-season)
+  { name: 'Plum',        type: 'fruit_plant', season: 'winter/spring',  town_rank: 'E', grow_days: null, sell_price: 80,  regrowth_days: null, notes: '2x2 space needed. Dies off-season.' },
+  { name: 'Banana',      type: 'fruit_plant', season: 'spring/summer',  town_rank: 'E', grow_days: null, sell_price: 150, regrowth_days: null, notes: '2x2 space needed. Dies off-season.' },
+  { name: 'Rambutan',    type: 'fruit_plant', season: 'spring/summer',  town_rank: 'E', grow_days: null, sell_price: 120, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Jackfruit',   type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Dragonfruit', type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 400, regrowth_days: null, notes: 'Highest value fruit plant.' },
+  { name: 'Papaya',      type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Avocado',     type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Cocoa',       type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 270, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Lemon',       type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 150, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Pear',        type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Lychee',      type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 180, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+  { name: 'Snakefruit',  type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 250, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
+
+  // Fruit trees (3x3 untilled, no watering, dormant off-season, all rank C)
+  { name: 'Durian', type: 'fruit_tree', season: 'spring', town_rank: 'C', grow_days: null, sell_price: 600, regrowth_days: null, notes: '3x3 clear space needed. No watering. Dormant off-season.' },
+  { name: 'Orange', type: 'fruit_tree', season: 'spring', town_rank: 'C', grow_days: null, sell_price: 160, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+  { name: 'Mango',  type: 'fruit_tree', season: 'summer', town_rank: 'C', grow_days: null, sell_price: 130, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+  { name: 'Peach',  type: 'fruit_tree', season: 'summer', town_rank: 'C', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+  { name: 'Apple',  type: 'fruit_tree', season: 'fall',   town_rank: 'C', grow_days: null, sell_price: 100, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+  { name: 'Olive',  type: 'fruit_tree', season: 'fall',   town_rank: 'C', grow_days: null, sell_price: 150, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+  { name: 'Almond', type: 'fruit_tree', season: 'winter', town_rank: 'C', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_TREE_NOTE },
+
+  // Ocean crops (unlock after One of Us quest + rank A)
+  { name: 'Kelp',         type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 4,  sell_price: 500,  regrowth_days: null, notes: OCEAN_NOTE },
+  { name: 'Sea Grape',    type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 6,  sell_price: 600,  regrowth_days: null, notes: OCEAN_NOTE },
+  { name: 'Pearl Oyster', type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 10, sell_price: 1200, regrowth_days: null, notes: 'Most valuable ocean crop.' }
+];
+
+// ---- CAVE ITEMS ------------------------------------------------------------
+const caveItems = [
+  // Earth Mine (first mine, available from Day 7)
+  { cave: 'earth', item_name: 'Bronze Ore',  item_type: 'ore',          floor_range: 'all floors', notes: 'Most common ore. Used for tool upgrades and crafting.' },
+  { cave: 'earth', item_name: 'Coal',        item_type: 'ore',          floor_range: 'all floors', notes: 'Required for smelting. 5 ore + coal = 1 bar.' },
+  { cave: 'earth', item_name: 'Earth Geode', item_type: 'geode',        floor_range: 'all floors', notes: 'Break open at blacksmith for gems or minerals.' },
+  { cave: 'earth', item_name: 'Copper Gem',  item_type: 'gem',          floor_range: '1-20',       notes: null },
+  { cave: 'earth', item_name: 'Topaz',       item_type: 'gem',          floor_range: '20-40',      notes: null },
+  { cave: 'earth', item_name: 'Slime Disc',  item_type: 'monster_drop', floor_range: 'all floors', notes: 'Dropped by Slime enemies. ~40 HP damage if hit.' },
+  { cave: 'earth', item_name: 'Spider Fang', item_type: 'monster_drop', floor_range: 'all floors', notes: 'Dropped by Spider enemies. ~50 HP damage if hit.' },
+  { cave: 'earth', item_name: 'Stone',       item_type: 'scavengeable', floor_range: 'all floors', notes: 'Abundant. Used in many crafting recipes.' },
+  { cave: 'earth', item_name: 'Coffer',      item_type: 'scavengeable', floor_range: 'all floors', notes: 'Small treasure containers found on floors.' },
+
+  // Water Mine (unlock by reaching Earth Mine floor 40)
+  { cave: 'water', item_name: 'Silver Ore',     item_type: 'ore',   floor_range: 'all floors',   notes: 'Used for mid-tier tool upgrades and crafting.' },
+  { cave: 'water', item_name: 'Bronze Ore',     item_type: 'ore',   floor_range: 'all floors',   notes: null },
+  { cave: 'water', item_name: 'Water Geode',    item_type: 'geode', floor_range: 'all floors',   notes: null },
+  { cave: 'water', item_name: 'Aquamarine',     item_type: 'gem',   floor_range: 'all floors',   notes: null },
+  { cave: 'water', item_name: 'Sapphire',       item_type: 'gem',   floor_range: '20-40',        notes: 'Rarer gem found in deeper floors.' },
+  { cave: 'water', item_name: 'Blue Tang',      item_type: 'fish',  floor_range: 'water pockets', notes: 'Can be caught in water pockets on mine floors.' },
+  { cave: 'water', item_name: 'Silver Arowana', item_type: 'fish',  floor_range: 'water pockets', notes: 'Rare. Time-sensitive catch window.' },
+  { cave: 'water', item_name: 'Tilapia',        item_type: 'fish',  floor_range: 'water pockets', notes: null },
+
+  // Wind Mine (unlock by reaching Water Mine floor 40)
+  { cave: 'wind', item_name: 'Gold Ore',   item_type: 'ore',   floor_range: 'all floors', notes: 'High-tier ore. Used for advanced upgrades.' },
+  { cave: 'wind', item_name: 'Silver Ore',  item_type: 'ore',   floor_range: 'all floors', notes: null },
+  { cave: 'wind', item_name: 'Wind Geode',  item_type: 'geode', floor_range: 'all floors', notes: null },
+  { cave: 'wind', item_name: 'Emerald',     item_type: 'gem',   floor_range: 'all floors', notes: null },
+  { cave: 'wind', item_name: 'Diamond',     item_type: 'gem',   floor_range: '30-40',      notes: 'Rarest gem in Wind Mine. Deep floors only.' },
+
+  // Fire Mine (unlock by reaching Wind Mine floor 40)
+  { cave: 'fire', item_name: 'Osmium Ore', item_type: 'ore',   floor_range: 'all floors', notes: 'Rarest ore. End-game crafting material.' },
+  { cave: 'fire', item_name: 'Gold Ore',   item_type: 'ore',   floor_range: 'all floors', notes: null },
+  { cave: 'fire', item_name: 'Fire Geode', item_type: 'geode', floor_range: 'all floors', notes: null },
+  { cave: 'fire', item_name: 'Ruby',       item_type: 'gem',   floor_range: 'all floors', notes: null },
+  { cave: 'fire', item_name: 'Fire Opal',  item_type: 'gem',   floor_range: '20-40',      notes: 'Valuable gem found in deeper fire mine floors.' },
+
+  // Cave of Memories (unlock after all Lake Temple advanced altar offerings)
+  { cave: 'memories', item_name: 'Mixed Ores',      item_type: 'ore',          floor_range: 'all floors', notes: 'All ore types can be found here.' },
+  { cave: 'memories', item_name: 'Fossil Node',     item_type: 'scavengeable', floor_range: 'all floors', notes: 'Break for fossil items. Donate to museum.' },
+  { cave: 'memories', item_name: 'Coffer',          item_type: 'scavengeable', floor_range: 'all floors', notes: null },
+  { cave: 'memories', item_name: 'Dino Print',      item_type: 'scavengeable', floor_range: 'all floors', notes: 'Needed for museum hologram quest.' },
+  { cave: 'memories', item_name: 'Wellness Fruit',  item_type: 'scavengeable', floor_range: 'floor 25',   notes: 'Found in checkpoint chest at floor 25.' },
+  { cave: 'memories', item_name: 'Yellow Mushroom', item_type: 'scavengeable', floor_range: '1-25',       notes: 'First section has mushroom theme floors.' }
+];
+
+// ---- FORAGEABLES -----------------------------------------------------------
+const forageables = [
+  // Spring
+  { name: 'Wild Garlic',   season: 'spring', location: 'Forest Path and island paths',                area: 'forest',      notes: null },
+  { name: 'Dandelion',     season: 'spring', location: 'Town meadows and open areas',                 area: 'meadow',      notes: null },
+  { name: 'Spring Onion',  season: 'spring', location: 'Riverbanks near water',                       area: 'river',       notes: null },
+  { name: 'Leek',          season: 'spring', location: 'Deep Forest (unlocks with story progression)', area: 'deep_forest', notes: null },
+  { name: 'Ginseng',       season: 'spring', location: 'Deep Forest (unlocks with story progression)', area: 'deep_forest', notes: null },
+
+  // Summer
+  { name: 'Coconut',    season: 'summer', location: 'Tropical areas - shake palm trees',     area: 'beach',  notes: null },
+  { name: 'Shallot',    season: 'summer', location: 'Meadows and fields (rare spawn)',        area: 'meadow', notes: null },
+  { name: 'Wild Basil', season: 'summer', location: 'Garden Lane and garden areas',           area: 'garden', notes: null },
+  { name: 'Sea Urchin', season: 'summer', location: 'Southern Beach and Lighthouse beach',    area: 'beach',  notes: null },
+  { name: 'Firefly',    season: 'summer', location: 'Forest edges at night - use Net',        area: 'forest', notes: 'Critter — catch with the Net at night.' },
+
+  // Fall
+  { name: 'Blackberry',           season: 'fall', location: 'Forest edges and bush areas', area: 'forest',      notes: null },
+  { name: 'Wild Ginger',          season: 'fall', location: 'Forest floor near trees',     area: 'forest',      notes: null },
+  { name: 'Chanterelle Mushroom', season: 'fall', location: 'Deep Forest floor',           area: 'deep_forest', notes: null },
+  { name: 'Hazelnut',             season: 'fall', location: 'Forest Path near nut trees',  area: 'forest',      notes: null },
+
+  // Winter
+  { name: 'Holly Berry',   season: 'winter', location: 'Forest and garden areas',  area: 'forest', notes: null },
+  { name: 'Snowdrop',      season: 'winter', location: 'Open fields and meadows',   area: 'meadow', notes: null },
+  { name: 'Crystal Fruit', season: 'winter', location: 'Frozen or icy areas',       area: 'field',  notes: null },
+
+  // All year / beach
+  { name: 'Coral Fragment', season: 'all', location: 'Southern Beach',                       area: 'beach',       notes: null },
+  { name: 'Seashell',       season: 'all', location: 'Southern Beach and Lighthouse beach',  area: 'beach',       notes: null },
+  { name: 'Driftwood',      season: 'all', location: 'Beach areas along coast',              area: 'beach',       notes: null },
+  { name: 'Sea Glass',      season: 'all', location: 'Southern Beach and east of Lighthouse', area: 'beach',      notes: null },
+  { name: 'Hardwood',       season: 'all', location: 'Deep Forest (requires upgraded axe)',  area: 'deep_forest', notes: null }
+];
+
+// ---- NPCS ------------------------------------------------------------------
+const npcs = [
+  {
+    name: 'Sam', role: 'General Store Owner', location: 'General Store',
+    schedule: 'Mon-Sat 9am-5pm, closed Wed all day, Sun opens at noon',
+    loved_gifts: 'Tropical fruits, Dragonfruit, Coconut', liked_gifts: 'Any crop produce',
+    quest_summary: 'Sells seeds at General Store. More crops unlock as Town Rank increases. Key for farming progression.'
+  },
+  {
+    name: 'Mark', role: 'Main Story Character', location: 'Various locations',
+    schedule: 'Visits farm early game, found around town',
+    loved_gifts: 'Gems, Ores, Minerals', liked_gifts: 'Cooked meals',
+    quest_summary: 'Unlocks Cavern access around Day 5-7. Primary driver of main story quests. Investigate mysteries of the island.'
+  },
+  {
+    name: 'Kira', role: 'Cavern Guide & Warrior', location: 'Cavern Entrance',
+    schedule: 'Found at cavern or training area',
+    loved_gifts: 'Gems, Rubies, Diamonds', liked_gifts: 'Ores, Geodes',
+    quest_summary: 'Gives player their first sword. Trains combat. Key NPC for cavern progression quests.'
+  },
+  {
+    name: 'Jack', role: 'Rancher', location: 'The Ranch',
+    schedule: 'Mon-Sat, ranch area',
+    loved_gifts: 'Animal products, Eggs, Milk', liked_gifts: 'Hay, Crops',
+    quest_summary: 'Sells animals: goats and quails unlock at Rank D, pigs and peafowl unlock at Rank C. Key for ranching progression.'
+  },
+  {
+    name: 'Dinda', role: 'Master Builder', location: 'Construction Office',
+    schedule: 'Mon-Fri business hours',
+    loved_gifts: 'Building materials, Wood, Stone', liked_gifts: 'Cooked food',
+    quest_summary: 'Upgrades farm buildings. Barn and Coop reach level 3 at Town Rank C. Works with Joko.'
+  },
+  {
+    name: 'Joko', role: 'Master Builder', location: 'Construction Office',
+    schedule: 'Mon-Fri business hours',
+    loved_gifts: 'Stone, Minerals, Gems', liked_gifts: 'Cooked food',
+    quest_summary: 'Partner to Dinda. Same building upgrade quests. Level 3 barn and coop unlocked at Rank C.'
+  },
+  {
+    name: 'Scott', role: 'Explorer & Archaeologist', location: 'Various / near Cavern ruins',
+    schedule: 'Found exploring around town and cavern entrance',
+    loved_gifts: 'Fossils, Museum donations, Geodes', liked_gifts: 'Minerals, Ores',
+    quest_summary: 'Investigates cavern ruins. Related to museum donation quests and uncovering island history.'
+  },
+  {
+    name: 'Ling', role: 'Tech & Automation Shopkeeper', location: 'Automation Store (unlocks mid-game)',
+    schedule: 'Store hours once unlocked',
+    loved_gifts: 'Gems, Crystals, Minerals', liked_gifts: 'Cooked tech-themed dishes',
+    quest_summary: 'Unlocks automation components. Sells Sturdy Computer with foraging component upgrade that shows all forage locations on map.'
+  }
+];
+
+/**
+ * Inserts an array of row objects into `table` using a single multi-row
+ * parameterized INSERT. `columns` defines both the column list and the order
+ * in which each row's values are read.
+ */
+async function insertRows(client, table, columns, rows) {
+  if (rows.length === 0) return;
+  const colCount = columns.length;
+  const valuesSql = rows
+    .map((_, r) => '(' + columns.map((_, c) => `$${r * colCount + c + 1}`).join(', ') + ')')
+    .join(', ');
+  const params = rows.flatMap((row) => columns.map((col) => (row[col] === undefined ? null : row[col])));
+  await client.query(`INSERT INTO ${table} (${columns.join(', ')}) VALUES ${valuesSql}`, params);
+}
+
+async function seed() {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const schema = fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8');
+    await client.query(schema);
+
+    await insertRows(client, 'crops',
+      ['name', 'type', 'season', 'town_rank', 'grow_days', 'sell_price', 'regrowth_days', 'notes'], crops);
+    await insertRows(client, 'cave_items',
+      ['cave', 'item_name', 'item_type', 'floor_range', 'notes'], caveItems);
+    await insertRows(client, 'forageables',
+      ['name', 'season', 'location', 'area', 'notes'], forageables);
+    await insertRows(client, 'npcs',
+      ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary'], npcs);
+
+    await client.query('COMMIT');
+
+    console.log('Coral Island database seeded successfully:');
+    console.log(`  crops:       ${crops.length}`);
+    console.log(`  cave_items:  ${caveItems.length}`);
+    console.log(`  forageables: ${forageables.length}`);
+    console.log(`  npcs:        ${npcs.length}`);
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+seed()
+  .then(() => pool.end())
+  .catch((err) => {
+    console.error('Seeding failed:', err.message);
+    pool.end();
+    process.exit(1);
+  });
