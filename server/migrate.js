@@ -10,11 +10,18 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
+const MIGRATIONS = [
+  '001_auth_tables.sql',
+  '002_daily_search_limit.sql',
+];
+
 async function main() {
-  const sql = fs.readFileSync(path.join(__dirname, 'migrations', '001_auth_tables.sql'), 'utf8');
-  console.log('Running migration 001_auth_tables.sql…');
-  await pool.query(sql);
-  console.log('Done.');
+  for (const file of MIGRATIONS) {
+    const sql = fs.readFileSync(path.join(__dirname, 'migrations', file), 'utf8');
+    console.log(`Running ${file}…`);
+    await pool.query(sql);
+    console.log(`  Done.`);
+  }
   await pool.end();
 }
 

@@ -91,6 +91,25 @@ router.post('/', async (req, res) => {
   const userId = user.id;
 
   try {
+    // Check per-user daily limit before hitting the model
+    const { rows: limitRows } = await pool.query(
+      'SELECT daily_search_limit FROM user_roles WHERE user_id = $1',
+      [userId]
+    );
+    const dailyLimit = limitRows.length > 0 ? limitRows[0].daily_search_limit : null;
+    if (dailyLimit !== null) {
+      const { rows: countRows } = await pool.query(
+        "SELECT COUNT(*) FROM search_logs WHERE user_id = $1 AND created_at >= CURRENT_DATE",
+        [userId]
+      );
+      const usedToday = parseInt(countRows[0].count, 10);
+      if (usedToday >= dailyLimit) {
+        return res.status(429).json({
+          error: `Daily limit reached — you've used all ${dailyLimit} AI searches for today. Try again tomorrow.`,
+        });
+      }
+    }
+
     const context = await buildContext();
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 

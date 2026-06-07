@@ -101,10 +101,12 @@ function RoleBadge({ role }) {
 }
 
 function UsersTab({ token, currentUserId }) {
-  const [users,   setUsers]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [err,     setErr]     = useState('');
-  const [busy,    setBusy]    = useState({});
+  const [users,        setUsers]        = useState([]);
+  const [loading,      setLoading]      = useState(true);
+  const [err,          setErr]          = useState('');
+  const [busy,         setBusy]         = useState({});
+  const [editingLimit, setEditingLimit] = useState(null);
+  const [limitInput,   setLimitInput]   = useState('');
 
   const load = useCallback(async () => {
     setLoading(true); setErr('');
@@ -132,6 +134,30 @@ function UsersTab({ token, currentUserId }) {
     finally { setBusy(p => ({ ...p, [userId]: false })); }
   }
 
+  function startEditLimit(userId, currentLimit) {
+    setEditingLimit(userId);
+    setLimitInput(currentLimit !== null && currentLimit !== undefined ? String(currentLimit) : '');
+  }
+
+  async function saveLimit(userId) {
+    const parsed = limitInput.trim() === '' ? null : parseInt(limitInput.trim(), 10);
+    if (limitInput.trim() !== '' && (isNaN(parsed) || parsed < 1)) {
+      alert('Enter a positive number, or leave blank for unlimited.');
+      return;
+    }
+    setBusy(p => ({ ...p, [userId + '_limit']: true }));
+    try {
+      const r = await authFetch(`/api/admin/users/${userId}/limit`, token, {
+        method: 'PATCH',
+        body: JSON.stringify({ limit: parsed }),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      setUsers(prev => prev.map(u => u.id === userId ? { ...u, dailyLimit: parsed } : u));
+      setEditingLimit(null);
+    } catch (e) { alert(e.message); }
+    finally { setBusy(p => ({ ...p, [userId + '_limit']: false })); }
+  }
+
   if (loading) return <div style={{ padding: 20, color: '#9ca3af' }}>Loading users…</div>;
   if (err) return <div style={{ color: '#dc2626', padding: 20 }}>Error: {err}</div>;
 
@@ -147,7 +173,7 @@ function UsersTab({ token, currentUserId }) {
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ background: '#f9fafb' }}>
-              {['Email', 'Role', 'Joined', 'Actions'].map(h => (
+              {['Email', 'Role', 'Daily Limit', 'Today', 'Joined', 'Actions'].map(h => (
                 <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: 11.5, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
               ))}
             </tr>
@@ -160,6 +186,72 @@ function UsersTab({ token, currentUserId }) {
                   {u.id === currentUserId && <span style={{ marginLeft: 6, fontSize: 11, color: C.primary, fontWeight: 600 }}>(you)</span>}
                 </td>
                 <td style={{ padding: '12px 16px' }}><RoleBadge role={u.role} /></td>
+
+                {/* Daily Limit inline editor */}
+                <td style={{ padding: '10px 16px' }}>
+                  {editingLimit === u.id ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                      <input
+                        type="number"
+                        min="1"
+                        value={limitInput}
+                        onChange={e => setLimitInput(e.target.value)}
+                        onKeyDown={e => { if (e.key === 'Enter') saveLimit(u.id); if (e.key === 'Escape') setEditingLimit(null); }}
+                        placeholder="∞"
+                        autoFocus
+                        style={{
+                          width: 58, padding: '4px 7px', borderRadius: 6, fontSize: 12.5,
+                          border: `1.5px solid ${C.primary}`, outline: 'none',
+                          fontFamily: "'Inter', sans-serif", color: C.dark,
+                        }}
+                      />
+                      <button
+                        onClick={() => saveLimit(u.id)}
+                        disabled={busy[u.id + '_limit']}
+                        style={{ padding: '4px 8px', borderRadius: 6, background: C.primary, border: 'none', color: 'white', fontSize: 11.5, cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingLimit(null)}
+                        style={{ padding: '4px 7px', borderRadius: 6, background: 'none', border: '1px solid #e5e7eb', color: '#9ca3af', fontSize: 11.5, cursor: 'pointer' }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => startEditLimit(u.id, u.dailyLimit)}
+                      title="Click to set limit"
+                      style={{
+                        background: u.dailyLimit !== null ? '#f0fdf4' : '#f9fafb',
+                        border: `1px solid ${u.dailyLimit !== null ? '#86efac' : '#e5e7eb'}`,
+                        borderRadius: 6, padding: '3px 10px', cursor: 'pointer',
+                        fontSize: 12.5, fontWeight: 600,
+                        color: u.dailyLimit !== null ? '#15803d' : '#9ca3af',
+                      }}
+                    >
+                      {u.dailyLimit !== null ? `${u.dailyLimit}/day` : '∞ unlimited'}
+                    </button>
+                  )}
+                </td>
+
+                {/* Today's usage */}
+                <td style={{ padding: '12px 16px', fontSize: 12.5 }}>
+                  {u.dailyLimit !== null ? (
+                    <span style={{
+                      color: u.searchesToday >= u.dailyLimit ? '#dc2626' : (u.searchesToday > 0 ? C.primary : '#9ca3af'),
+                      fontWeight: u.searchesToday >= u.dailyLimit ? 700 : 500,
+                    }}>
+                      {u.searchesToday}/{u.dailyLimit}
+                    </span>
+                  ) : (
+                    <span style={{ color: u.searchesToday > 0 ? C.primary : '#d1d5db', fontWeight: 500 }}>
+                      {u.searchesToday}
+                    </span>
+                  )}
+                </td>
+
                 <td style={{ padding: '12px 16px', fontSize: 12.5, color: '#9ca3af' }}>
                   {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}
                 </td>

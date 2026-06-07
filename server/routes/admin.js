@@ -32,21 +32,34 @@ router.get('/stats', requireAdmin, async (req, res) => {
   }
 });
 
-// GET /api/admin/users  — full user list with roles
+// GET /api/admin/users  — full user list with roles, limits, and today's usage
 router.get('/users', requireAdmin, async (req, res) => {
   try {
-    // Fetch all auth users (paginated up to 1000 for now)
-    const { data, error } = await supabase.auth.admin.listUsers({ perPage: 1000 });
-    if (error) throw error;
+    const [authRes, roleRes, todayRes] = await Promise.all([
+      supabase.auth.admin.listUsers({ perPage: 1000 }),
+      pool.query('SELECT user_id, role, daily_search_limit FROM user_roles'),
+      pool.query(
+        'SELECT user_id, COUNT(*) AS count FROM search_logs WHERE created_at >= CURRENT_DATE GROUP BY user_id'
+      ),
+    ]);
+    if (authRes.error) throw authRes.error;
 
-    const { rows: roleRows } = await pool.query('SELECT user_id, role FROM user_roles');
-    const roleMap = Object.fromEntries(roleRows.map(r => [r.user_id, r.role]));
+    const roleMap = {};
+    for (const r of roleRes.rows) {
+      roleMap[r.user_id] = { role: r.role, dailyLimit: r.daily_search_limit };
+    }
+    const todayMap = {};
+    for (const r of todayRes.rows) {
+      todayMap[r.user_id] = parseInt(r.count, 10);
+    }
 
-    const users = (data.users || []).map(u => ({
-      id:        u.id,
-      email:     u.email,
-      role:      roleMap[u.id] || 'user',
-      createdAt: u.created_at,
+    const users = (authRes.data.users || []).map(u => ({
+      id:            u.id,
+      email:         u.email,
+      role:          roleMap[u.id]?.role || 'user',
+      dailyLimit:    roleMap[u.id]?.dailyLimit ?? null,
+      searchesToday: todayMap[u.id] || 0,
+      createdAt:     u.created_at,
     }));
 
     res.json(users);
@@ -91,6 +104,39 @@ router.patch('/users/:id/role', requireAdmin, async (req, res) => {
   } catch (err) {
     console.error('PATCH /api/admin/users/:id/role failed:', err.message);
     res.status(500).json({ error: 'Failed to update role' });
+  }
+});
+
+// PATCH /api/admin/users/:id/limit  { limit: number | null }
+router.patch('/users/:id/limit', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { limit } = req.body;
+
+  if (limit !== null && limit !== undefined) {
+    const n = parseInt(limit, 10);
+    if (!Number.isFinite(n) || n < 1) {
+      return res.status(400).json({ error: 'limit must be a positive integer or null' });
+    }
+  }
+
+  const finalLimit = (limit === null || limit === undefined || limit === '') ? null : parseInt(limit, 10);
+
+  try {
+    const { data: userData, error: userError } = await supabase.auth.admin.getUserById(id);
+    if (userError) throw userError;
+    const email = userData?.user?.email || '';
+
+    await pool.query(
+      `INSERT INTO user_roles (user_id, role, email, daily_search_limit, created_at)
+       VALUES ($1, 'user', $2, $3, NOW())
+       ON CONFLICT (user_id) DO UPDATE SET daily_search_limit = $3, email = COALESCE(NULLIF(user_roles.email, ''), $2)`,
+      [id, email, finalLimit],
+    );
+
+    res.json({ ok: true, limit: finalLimit });
+  } catch (err) {
+    console.error('PATCH /api/admin/users/:id/limit failed:', err.message);
+    res.status(500).json({ error: 'Failed to update limit' });
   }
 });
 
