@@ -3,11 +3,11 @@
 // replace getResponse() with a POST to /api/search and stream the reply.
 
 export const SUGGESTED_QS = [
+  "What food boosts my Fishing skill?",
+  "How do I craft a Furnace? Show me the recipe.",
+  "What gifts does Macy love?",
+  "Where do I catch Salmon and what season?",
   "What's the best crop to plant in spring?",
-  "How do I unlock the Water Mine?",
-  "What gifts does Lily love?",
-  "How do I earn money fast early on?",
-  "What can I forage in fall?",
 ];
 
 const AI_KB = {

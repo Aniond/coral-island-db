@@ -1,0 +1,3625 @@
+[
+  {
+    "name": "Aging barrel",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Farming",
+    "mastery_level": 10,
+    "ingredients": [
+      {
+        "name": "Hardwood",
+        "amount": 25,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Bar_Sprite.webp"
+      },
+      {
+        "name": "Resin",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Resin_Sprite.webp"
+      }
+    ],
+    "description": "Produces aged products, such as wine, kombucha, and aged cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aging_Barrel_Sprite.webp"
+  },
+  {
+    "name": "Bee house",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Catching",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Bronze ore",
+        "amount": 15,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      }
+    ],
+    "description": "Place a flower to produce honey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Beehouse_Sprite.webp"
+  },
+  {
+    "name": "Cheese press",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Ranching",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Bar_Sprite.webp"
+      },
+      {
+        "name": "Silver bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Turns milk into a block of cheese, and sugarcane into syrup.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cheese_Press_Sprite.webp"
+  },
+  {
+    "name": "Compost bin",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Farming",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": "Turns trash into compost. Helpful in making fertilizer.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Compost_bin_Sprite.webp"
+  },
+  {
+    "name": "Dehydrator",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Diving",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Sea salt",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Sea_Salt_Sprite.webp"
+      },
+      {
+        "name": "Silver bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Removes moisture from ocean loot such as oysters and scallops. Produces dried artisan goods.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Dehydrator_Sprite.webp"
+  },
+  {
+    "name": "Extractor",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Bronze kelp",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 40,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Extracts and bottles nutrients from kelp.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Extractor_Sprite.webp"
+  },
+  {
+    "name": "Furnace",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 40,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Bronze ore",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      }
+    ],
+    "description": "A machine to make metal bars.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Furnace_Sprite.webp"
+  },
+  {
+    "name": "Keg",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Farming",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Bar_Sprite.webp"
+      },
+      {
+        "name": "Silver bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Processes fruits or vegetables into beverages. Makes juice, beer, sake, coffee, and green tea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Keg_Sprite.webp"
+  },
+  {
+    "name": "Kiln",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Foraging",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Bronze ore",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 25,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "This processes wood into coal, scrap into glass, and stone into glass.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kiln_Sprite.webp"
+  },
+  {
+    "name": "Loom",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Ranching",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 25,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Turns wool into cloth.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Loom_Sprite.webp"
+  },
+  {
+    "name": "Mason jar",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Farming",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 12,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "Preserves fruits and vegetables.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mason_jar_Sprite.webp"
+  },
+  {
+    "name": "Mayonnaise machine",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Ranching",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Turns an egg into a jar of mayonnaise.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mayonnaise_machine_Sprite.webp"
+  },
+  {
+    "name": "Mushroom log",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Foraging",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 25,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Compost",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      }
+    ],
+    "description": "Add a mushroom to cultivate more.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mushroom_Log_Sprite.webp"
+  },
+  {
+    "name": "Oil press",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Foraging",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Hardwood",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      }
+    ],
+    "description": "Used for making all kinds of oil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Oil_press_Sprite.webp"
+  },
+  {
+    "name": "Recycling machine",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Diving",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Trash",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Bronze kelp",
+        "amount": 15,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_Sprite.webp"
+      }
+    ],
+    "description": "Turns one resource into another resource.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Recycling_Machine_Sprite.webp"
+  },
+  {
+    "name": "Slime of replication",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Combat",
+    "mastery_level": 10,
+    "ingredients": [
+      {
+        "name": "Slime goop",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "This Slime of Replication can duplicate items. Just give it three days or so.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Slime_of_replication_Sprite.webp"
+  },
+  {
+    "name": "Slime of transmutation",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Combat",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Slime goop",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Bar_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "Place an item to increase its quality.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Slime_of_transmutation_Sprite.webp"
+  },
+  {
+    "name": "Solar panel",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Diving",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "A solar-powered battery converter. It needs to be placed outdoors to harness sunlight and convert it into battery.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Solar_Panel_Sprite.webp"
+  },
+  {
+    "name": "Tap",
+    "output_amount": 1,
+    "category": "Artisan",
+    "mastery_type": "Foraging",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 40,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Collects nutty sap, maple syrup and resin from a tree. Cannot be put on fruit trees.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Tap_Sprite.webp"
+  },
+  {
+    "name": "Coral fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Any Beach Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_Fence_Sprite.webp"
+  },
+  {
+    "name": "Coral gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Any Beach Scavengeable",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_Gate_Sprite.webp"
+  },
+  {
+    "name": "Hay arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Arch_Sprite.webp"
+  },
+  {
+    "name": "Hay fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      }
+    ],
+    "description": "A fence made of hay.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Fence_Sprite.webp"
+  },
+  {
+    "name": "Hay floor tile",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_floor_tile_Sprite.webp"
+  },
+  {
+    "name": "Hay gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      }
+    ],
+    "description": "Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Gate_Sprite.webp"
+  },
+  {
+    "name": "Hay path",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Path_Sprite.webp"
+  },
+  {
+    "name": "Hay sign",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Ranching",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Made from hay. Use an item to set the display.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Sign_Sprite.webp"
+  },
+  {
+    "name": "Hedge fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Fiber",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      }
+    ],
+    "description": "A fence made of living bushes.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hedge_Fence_Sprite.webp"
+  },
+  {
+    "name": "Hedge gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Fiber",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Compost",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      }
+    ],
+    "description": "Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hedge_Gate_Sprite.webp"
+  },
+  {
+    "name": "Kelp arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kelp_arch_Sprite.webp"
+  },
+  {
+    "name": "Kelp fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kelp_fence_Sprite.webp"
+  },
+  {
+    "name": "Makeshift arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Farming",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_Arch_Sprite.webp"
+  },
+  {
+    "name": "Makeshift fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "A fence made of wood and trash",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_Fence_Sprite.webp"
+  },
+  {
+    "name": "Makeshift floor tile",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Farming",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_floor_tile_Sprite.webp"
+  },
+  {
+    "name": "Makeshift gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_Gate_Sprite.webp"
+  },
+  {
+    "name": "Makeshift path",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Trash",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_Path_Sprite.webp"
+  },
+  {
+    "name": "Makeshift sign",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Made from wood and trash. Use an item to set the display.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_Sign_Sprite.webp"
+  },
+  {
+    "name": "Reef arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Bone",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Bone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Reef_arch_Sprite.webp"
+  },
+  {
+    "name": "Reef fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Bone",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Reef_fence_Sprite.webp"
+  },
+  {
+    "name": "Scrap arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_Arch_Sprite.webp"
+  },
+  {
+    "name": "Scrap fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "A fence made out of scrap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_fence_Sprite.webp"
+  },
+  {
+    "name": "Scrap floor tile",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_floor_tile_Sprite.webp"
+  },
+  {
+    "name": "Scrap gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_gate_Sprite.webp"
+  },
+  {
+    "name": "Scrap path",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_Path_Sprite.webp"
+  },
+  {
+    "name": "Scrap sign",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Diving",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Made from scrap. Use an item to set the display.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_Sign_Sprite.webp"
+  },
+  {
+    "name": "Stone arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Mining",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Arch_Sprite.webp"
+  },
+  {
+    "name": "Stone fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Mining",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Made of stone. Sturdier than a wood fence.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_fence_Sprite.webp"
+  },
+  {
+    "name": "Stone floor tile",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Mining",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_floor_tile_Sprite.webp"
+  },
+  {
+    "name": "Stone gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Mining",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Made of stone. Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Gate_Sprite.webp"
+  },
+  {
+    "name": "Stone path",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Path_Sprite.webp"
+  },
+  {
+    "name": "Stone sign",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Mining",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Made from stone. Use an item to set the display.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Sign_Sprite.webp"
+  },
+  {
+    "name": "Sturdy computer",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      },
+      {
+        "name": "Bronze ore",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 70,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sturdy_Computer_Sprite.webp"
+  },
+  {
+    "name": "Wood floor tile",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wood_floor_tile_Sprite.webp"
+  },
+  {
+    "name": "Wood path",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wood_path_Sprite.webp"
+  },
+  {
+    "name": "Wood sign",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Made from renewable wood. Use an item to set the display.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wood_Sign_Sprite.webp"
+  },
+  {
+    "name": "Wooden arch",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wooden_Arch_Sprite.webp"
+  },
+  {
+    "name": "Wooden fence",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "A durable fence.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wooden_fence_Sprite.webp"
+  },
+  {
+    "name": "Wooden gate",
+    "output_amount": 1,
+    "category": "Decor",
+    "mastery_type": "Foraging",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Made of wood. Must be installed between 2 fences.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wooden_Gate_Sprite.webp"
+  },
+  {
+    "name": "Anemone auto fertilizer",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Bronze kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_essence_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "An anemone for lumina sprinkler attachment. Automatically applies fertilizer to nearby seeds when loaded with it.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Anemone_auto_fertilizer_Sprite.webp"
+  },
+  {
+    "name": "Anemone auto harvest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Silver kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "An anemone for lumina sprinkler attachment. Automatically harvest underwater crops.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Anemone_auto_harvest_Sprite.webp"
+  },
+  {
+    "name": "Anemone auto seed",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Gold kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "An anemone for lumina sprinkler attachment. Automatically plants seeds to empty tilled soil when loaded with it.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Anemone_auto_seed_Sprite.webp"
+  },
+  {
+    "name": "Anemone auto SFH",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Osmium kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "An anemone for lumina sprinkler attachment. Automatically fertilizes, plants seeds and harvest crops to empty tilled soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Anemone_auto_SFH_Sprite.webp"
+  },
+  {
+    "name": "Auto chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Bar_Sprite.webp"
+      }
+    ],
+    "description": "A chest that automatically pushes or pulls items from machines placed to the right or left of it. Can hold up to 40 objects.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_Chest_Sprite.webp"
+  },
+  {
+    "name": "Auto collector",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Silver ore",
+        "amount": 15,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Ore_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Automatically collects resources from animals. Must be placed inside a barn or a coop.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_Collector_Sprite.webp"
+  },
+  {
+    "name": "Auto feeder",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Hay",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_Feeder_Sprite.webp"
+  },
+  {
+    "name": "Auto fertilizer",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      }
+    ],
+    "description": "A sprinkler attachment. Automatically applies fertilizer to nearby seeds when loaded with it.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_fertilizer_Sprite.webp"
+  },
+  {
+    "name": "Auto harvest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      }
+    ],
+    "description": "A sprinkler attachment. Automatically harvest crops.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_harvest_Sprite.webp"
+  },
+  {
+    "name": "Auto petter",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Large wool",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Large_wool_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_Petter_Sprite.webp"
+  },
+  {
+    "name": "Auto seed",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Gold bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      }
+    ],
+    "description": "A sprinkler attachment. Automatically plants seeds to empty tilled soil when loaded with it.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_seed_Sprite.webp"
+  },
+  {
+    "name": "Auto SFH",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Bar_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      }
+    ],
+    "description": "A sprinkler attachment. Automatically fertilizes, plants seeds and harvest crops to empty tilled soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_SFH_Sprite.webp"
+  },
+  {
+    "name": "Fertilizer I",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": "A chance to grow better quality crops if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fertilizer_I_Sprite.webp"
+  },
+  {
+    "name": "Fertilizer II",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      }
+    ],
+    "description": "There is an excellent chance to grow better quality crops if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fertilizer_II_Sprite.webp"
+  },
+  {
+    "name": "Fertilizer III",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Sprite.webp"
+      }
+    ],
+    "description": "This will grow better quality crops if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fertilizer_III_Sprite.webp"
+  },
+  {
+    "name": "Flash I",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Increase growth rate a little bit.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flash_I_Sprite.webp"
+  },
+  {
+    "name": "Flash II",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Increase growth rate.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flash_II_Sprite.webp"
+  },
+  {
+    "name": "Flash III",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": "Increase growth rate tremendously.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flash_III_Sprite.webp"
+  },
+  {
+    "name": "Fungarian chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Morel",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Morel_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fungarian_Chest_Sprite.webp"
+  },
+  {
+    "name": "Hay chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Ranching",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Hay",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hay_Chest_Sprite.webp"
+  },
+  {
+    "name": "Hydro I",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "A chance of the soil staying watered overnight if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hydro_I_Sprite.webp"
+  },
+  {
+    "name": "Hydro II",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      }
+    ],
+    "description": "There is an excellent chance of the soil staying watered overnight if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hydro_II_Sprite.webp"
+  },
+  {
+    "name": "Hydro III",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Compost",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Compost_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      }
+    ],
+    "description": "This will keep the soil staying watered overnight if mixed with soil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hydro_III_Sprite.webp"
+  },
+  {
+    "name": "Lumina sprinkler I",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Bronze bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Bar_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      }
+    ],
+    "description": "An automatic sunlight system for your underwater farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Lumina_sprinkler_I_Sprite.webp"
+  },
+  {
+    "name": "Lumina sprinkler II",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Silver bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      }
+    ],
+    "description": "An automatic sunlight system for your underwater farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Lumina_sprinkler_II_Sprite.webp"
+  },
+  {
+    "name": "Lumina sprinkler III",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Gold bar",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Solar core",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      }
+    ],
+    "description": "An automatic sunlight system for your underwater farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Lumina_sprinkler_III_Sprite.webp"
+  },
+  {
+    "name": "Makeshift chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 20 objects.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Makeshift_chest_Sprite.webp"
+  },
+  {
+    "name": "Ocean Explorer chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Bronze ore",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scout_chest_Sprite.webp"
+  },
+  {
+    "name": "Ocean guardian chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Trash",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ocean_warrior_chest_Sprite.webp"
+  },
+  {
+    "name": "Scrap chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Diving",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrap_Chest_Sprite.webp"
+  },
+  {
+    "name": "Sprinkler I",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Bronze kelp",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_Sprite.webp"
+      }
+    ],
+    "description": "An automatic watering system. Waters a 3x3 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sprinkler_I_Sprite.webp"
+  },
+  {
+    "name": "Sprinkler II",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Silver kelp",
+        "amount": 7,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp",
+        "amount": 7,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Sprite.webp"
+      }
+    ],
+    "description": "An automatic watering system. Waters a 5x5 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sprinkler_II_Sprite.webp"
+  },
+  {
+    "name": "Sprinkler III",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Farming",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Osmium kelp",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      }
+    ],
+    "description": "An automatic watering system. Waters a 9x9 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sprinkler_III_Sprite.webp"
+  },
+  {
+    "name": "Stone chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Mining",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Chest_Sprite.webp"
+  },
+  {
+    "name": "Temperature machine",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Flame essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Flame_essence_Sprite.webp"
+      },
+      {
+        "name": "Water essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Water_essence_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Temperature_Machine_Sprite.webp"
+  },
+  {
+    "name": "Wooden chest",
+    "output_amount": 1,
+    "category": "Farming",
+    "mastery_type": "Foraging",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 50,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "Storage for all kinds of items. Can be placed around the farm, and hold up to 40 objects",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wooden_Chest_Sprite.webp"
+  },
+  {
+    "name": "Architect desk",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 100,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Architect_desk_Sprite.webp"
+  },
+  {
+    "name": "Auto trash collector",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 100,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Gold kelp essence",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Essence_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Wind essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Wind_essence_Sprite.webp"
+      }
+    ],
+    "description": "Place on the ground to collect trash underwater.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Auto_trash_collector_Sprite.webp"
+  },
+  {
+    "name": "Ball of goop",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Slime goop",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Bamboo net large",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Fishing",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Gold kelp",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Fiber",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Hardwood",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Any Dried Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Put it in the water to catch fish.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Bamboo_net_Large_Sprite.webp"
+  },
+  {
+    "name": "Bamboo net small",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Fishing",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Silver kelp",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Fiber",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Any Dried Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Put it in the water to catch fish.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Bamboo_net_small_Sprite.webp"
+  },
+  {
+    "name": "Candied tree seed",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Foraging",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Sap",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      },
+      {
+        "name": "Any Tree Seed",
+        "amount": 3,
+        "icon": null
+      }
+    ],
+    "description": "A craftable snack to satisfy thrifty foragers.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Candied_Tree_Seed_Sprite.webp"
+  },
+  {
+    "name": "Crawler trap",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 5,
+    "ingredients": [
+      {
+        "name": "Silver bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      },
+      {
+        "name": "Seaweed",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "A trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Crawler_trap_Sprite.webp"
+  },
+  {
+    "name": "Crawling critter scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A craftable scent that lowers awareness of crawling ocean critters. Can be consumed or attached to a trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Crawling_critter_scent_Sprite.webp"
+  },
+  {
+    "name": "Decoy",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Tough meat",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tough_meat_Sprite.webp"
+      },
+      {
+        "name": "Silky fur",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silky_fur_Sprite.webp"
+      },
+      {
+        "name": "Any Ore",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Explosive I",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Mining",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Bronze ore",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_Ore_Sprite.webp"
+      },
+      {
+        "name": "Coal",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Coal_Sprite.webp"
+      }
+    ],
+    "description": "Generates a small explosion on land. Can not be used underwater.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Explosive_I_Sprite.webp"
+  },
+  {
+    "name": "Explosive II",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Mining",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Silver ore",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Ore_Sprite.webp"
+      },
+      {
+        "name": "Coal",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Coal_Sprite.webp"
+      }
+    ],
+    "description": "Generates an explosion on land. Can not be used underwater.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Explosive_II_Sprite.webp"
+  },
+  {
+    "name": "Explosive III",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Mining",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Osmium ore",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Ore_Sprite.webp"
+      },
+      {
+        "name": "Coal",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Coal_Sprite.webp"
+      }
+    ],
+    "description": "Generates a huge explosion on land. Can not be used underwater.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Explosive_III_Sprite.webp"
+  },
+  {
+    "name": "Float trap",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Gold bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      },
+      {
+        "name": "Any Dried Scavengeable",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Float_trap_Sprite.webp"
+  },
+  {
+    "name": "Floating critter scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Sea salt",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Sea_Salt_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A craftable scent that lowers awareness of floating ocean critters. Can be consumed or attached to a trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Floating_critter_scent_Sprite.webp"
+  },
+  {
+    "name": "Flower bouquet",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Fiber",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "An arrangement of flowers.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flower_Bouquet_Sprite.webp"
+  },
+  {
+    "name": "Flying insect scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Fiber",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A craftable scent that lowers awareness of flying insects. Can be consumed or attached to a trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flying_insect_scent_Sprite.webp"
+  },
+  {
+    "name": "Flying insect trap",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Gold bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Bar_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      },
+      {
+        "name": "Any Honey",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Flying_insect_trap_Sprite.webp"
+  },
+  {
+    "name": "Glue trap",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Sap",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      },
+      {
+        "name": "Dark essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Dark_Essence_Sprite.webp"
+      },
+      {
+        "name": "Any Ore",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Ground insect scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Sap",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "A craftable scent that lowers awareness of ground insects. Can be consumed or attached to a trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ground_insect_scent__Sprite.webp"
+  },
+  {
+    "name": "Ground insect trap",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Catching",
+    "mastery_level": 3,
+    "ingredients": [
+      {
+        "name": "Silver bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Bar_Sprite.webp"
+      },
+      {
+        "name": "Fiber",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "description": "A trap.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ground_insect_trap_Sprite.webp"
+  },
+  {
+    "name": "Large fish bait",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Fishing",
+    "mastery_level": 8,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Any Small Fish",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Needs to be attached to a fishing rod.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_fish_bait_Sprite.webp"
+  },
+  {
+    "name": "Medium fish bait",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Fishing",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Any Insect",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Needs to be attached to a fishing rod.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Medium_fish_bait_Sprite.webp"
+  },
+  {
+    "name": "Monster lure scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Combat",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Any Monster Essence",
+        "amount": 1,
+        "icon": null
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "The scent lures monsters to attack the wearer.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Increase_aggro_scent_Sprite.webp"
+  },
+  {
+    "name": "Monster lure scent II",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Combat",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Any Monster Essence",
+        "amount": 1,
+        "icon": null
+      },
+      {
+        "name": "Any Honey",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Increase spawn scent",
+    "image_url": "https://coral.guide/assets/live/items/icons/Increase_spawn_scent_Sprite.webp"
+  },
+  {
+    "name": "Monster scent",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Combat",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Fiber",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Any Monster Essence",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Decrease aggro scent",
+    "image_url": "https://coral.guide/assets/live/items/icons/Decrease_aggro_scent_Sprite.webp"
+  },
+  {
+    "name": "Monster scent II",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Combat",
+    "mastery_level": 7,
+    "ingredients": [
+      {
+        "name": "Cursed fragment",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cursed_Fragment_Sprite.webp"
+      },
+      {
+        "name": "Any Monster Essence",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Decrease spawn scent",
+    "image_url": "https://coral.guide/assets/live/items/icons/Decrease_spawn_scent_Sprite.webp"
+  },
+  {
+    "name": "Rope",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Mining",
+    "mastery_level": 2,
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 199,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      }
+    ],
+    "description": "Can be used to descend into the mine.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Rope_Sprite.webp"
+  },
+  {
+    "name": "Scuba snack",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Shock trap",
+    "output_amount": 3,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Battery",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Any Ore",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Slime trap",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Slime goop",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Any Ore",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Small fish bait",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": "Fishing",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Bronze kelp",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_Sprite.webp"
+      },
+      {
+        "name": "Seaweed",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      }
+    ],
+    "description": "Needs to be attached to a fishing rod.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Small_fish_bait_Sprite.webp"
+  },
+  {
+    "name": "Solar core",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Solar fragment",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Fragment_Sprite.webp"
+      }
+    ],
+    "description": "A magical concentration of sunlight, radiating warmth and joy to its bearer.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+  },
+  {
+    "name": "Spikes",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Any Ore",
+        "amount": 10,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Spring trap",
+    "output_amount": 2,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Any Ore",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Vortexanator I",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Diving",
+    "mastery_level": 1,
+    "ingredients": [
+      {
+        "name": "Bronze kelp",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bronze_kelp_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "Creates a small vortex underwater, perfect for clearing out trash. When used in land, it will collect crops.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vortexanator_I_Sprite.webp"
+  },
+  {
+    "name": "Vortexanator II",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Diving",
+    "mastery_level": 6,
+    "ingredients": [
+      {
+        "name": "Silver kelp",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "Creates a vortex underwater, perfect for clearing out trash. When used in land, it will collect crops.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vortexanator_II_Sprite.webp"
+  },
+  {
+    "name": "Vortexanator III",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": "Diving",
+    "mastery_level": 9,
+    "ingredients": [
+      {
+        "name": "Osmium kelp",
+        "amount": 4,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Kelp_Sprite.webp"
+      },
+      {
+        "name": "Glass",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Glass_Sprite.webp"
+      }
+    ],
+    "description": "Creates a huge vortex underwater, perfect for clearing out trash. When used in land, it will collect crops.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vortexanator_III_Sprite.webp"
+  },
+  {
+    "name": "Warp sesajen",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Any Flower",
+        "amount": 3,
+        "icon": null
+      }
+    ],
+    "description": "A warping device when used on teleport temple. One-time use.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Warp_sesajen_Sprite.webp"
+  },
+  {
+    "name": "Weather conch",
+    "output_amount": 1,
+    "category": "Misc",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Solar core",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Solar_Core_Sprite.webp"
+      },
+      {
+        "name": "Wind essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wind_essence_Sprite.webp"
+      },
+      {
+        "name": "Water essence",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Water_essence_Sprite.webp"
+      },
+      {
+        "name": "Any Sea Scavengeable",
+        "amount": 2,
+        "icon": null
+      }
+    ],
+    "description": "This mystical conch unlocks the ability to change the weather, but be mindful—it comes at a cost.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Weather_Conch_Sprite.webp"
+  },
+  {
+    "name": "Alien scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      },
+      {
+        "name": "Resin",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Resin_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Alien_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Chef scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Cotton",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cotton_Sprite.webp"
+      },
+      {
+        "name": "Maple syrup",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Maple_Syrup_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Chef_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Chieftain scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Hardwood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Gold ore",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Gold_Ore_Sprite.webp"
+      },
+      {
+        "name": "Any Flower",
+        "amount": 5,
+        "icon": null
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Chieftain_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Coral Hero scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Hay",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Osmium ore",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Ore_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_Hero_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Fish kite scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Rope",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rope_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 3,
+        "icon": null
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fish_kite_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Gingerbread scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wheat flour",
+        "amount": 3,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Ginger",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Ginger_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Gingerbread_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Humpty scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Large egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Large_egg_Sprite_.webp"
+      },
+      {
+        "name": "Resin",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Resin_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Humpty_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Jolly Stalk scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Large wool",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Large_wool_Sprite.webp"
+      },
+      {
+        "name": "Tea berry",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Tea_Berry_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jolly_Stalk_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Kunti ghost scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Dark essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Dark_Essence_Sprite.webp"
+      },
+      {
+        "name": "Cotton cloth",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cotton_cloth_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kunti_ghost_scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Makeshift scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 15,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Mermaid scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Seaweed",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Water essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Water_essence_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mermaid_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Monster scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Monster essence",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Monster_Essence_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Any Wool",
+        "amount": 1,
+        "icon": null
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Monster_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Mummy scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Hay",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Silky fur",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silky_fur_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mummy_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Ocean Explorer scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Fiber",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects a 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scout_scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Ocean guardian scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Trash",
+        "amount": 30,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      },
+      {
+        "name": "Stone",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects a 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ocean_warrior_scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Ondel-ondel handsome scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Cotton cloth",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cotton_cloth_Sprite.webp"
+      },
+      {
+        "name": "Larkspur",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Larkspur_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ondel_Ondel_Handsome_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Ondel-ondel pretty scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Wood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Cotton cloth",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cotton_cloth_Sprite.webp"
+      },
+      {
+        "name": "Jepun",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Jepun_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ondel_Ondel_Pretty_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Ordinary scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": "Farming",
+    "mastery_level": 4,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Fiber",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Fiber_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ordinary_scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Pino scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Hardwood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Cricket",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cricket_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pino_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Poci ghost scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Bone",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Bone_Sprite.webp"
+      },
+      {
+        "name": "Cotton cloth",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cotton_cloth_Sprite.webp"
+      },
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Poci_ghost_scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Prankenstein scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Tough meat",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/Tough_meat_Sprite.webp"
+      },
+      {
+        "name": "Silver ore",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Ore_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Prankenstein_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Scrap scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Scrap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Scrap_Sprite.webp"
+      },
+      {
+        "name": "Trash",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Trash_Sprite.webp"
+      },
+      {
+        "name": "Sap",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Sap_Sprite.webp"
+      }
+    ],
+    "description": null,
+    "image_url": null
+  },
+  {
+    "name": "Ultimate scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Hardwood",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Battery",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Battery_Sprite.webp"
+      },
+      {
+        "name": "Resin",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Resin_Sprite.webp"
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Osmium_Bar_Sprite.webp"
+      }
+    ],
+    "description": "Place on the farm. Protects a 19x19 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ultimate_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Undead scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 20,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Hay",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Cursed fragment",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Cursed_Fragment_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Undead_Scarecrow_Sprite.webp"
+  },
+  {
+    "name": "Walnutcracker scarecrow",
+    "output_amount": 1,
+    "category": "Scarecrow",
+    "mastery_type": null,
+    "mastery_level": null,
+    "ingredients": [
+      {
+        "name": "Hardwood",
+        "amount": 5,
+        "icon": "https://coral.guide/assets/live/items/icons/HardWood_Sprite.webp"
+      },
+      {
+        "name": "Hay",
+        "amount": 10,
+        "icon": "https://coral.guide/assets/live/items/icons/Hay_Sprite.webp"
+      },
+      {
+        "name": "Silver ore",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Silver_Ore_Sprite.webp"
+      }
+    ],
+    "description": "Discourages crows from disturbing crops. Protects an 11x11 area.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Walnutcracker_Scarecrow_Sprite.webp"
+  }
+]

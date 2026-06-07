@@ -1,0 +1,2672 @@
+[
+  {
+    "name": "Apple pie",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Apple",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Apple_Sprite.webp"
+      },
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Any Honey",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyHoney_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 135,
+    "energy": 125,
+    "sell_price": 191,
+    "description": "Sweet, spiced apple filling in a flaky pastry crust.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Apple_Pie_Sprite.webp"
+  },
+  {
+    "name": "Assorted grilled platter",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Any Honey",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyHoney_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 150,
+    "energy": 160,
+    "sell_price": 38,
+    "description": "Nutritious and colorful. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Assorted_Grilled_Platter_Sprite.webp"
+  },
+  {
+    "name": "Banana fritter",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Banana",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Banana_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 30,
+    "energy": 95,
+    "sell_price": 83,
+    "description": "It’s sweet and mushy on the inside.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Banana_Fritter_Sprite.webp"
+  },
+  {
+    "name": "Basil pesto pasta",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Basil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Basil_Sprite.webp"
+      },
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 245,
+    "energy": 275,
+    "sell_price": 69,
+    "description": "This tasty meal is a kid-pleaser.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Basil_Pesto_Pasta_Sprite.webp"
+  },
+  {
+    "name": "Beet chips",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Beet",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Beet_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 110,
+    "energy": 140,
+    "sell_price": 64,
+    "description": "Perfectly salted beet chips.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Beet_Chips_Sprite.webp"
+  },
+  {
+    "name": "Bread",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 5,
+    "energy": 25,
+    "sell_price": 20,
+    "description": "A light and crusty loaf of bread.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Bread_Sprite.webp"
+  },
+  {
+    "name": "Bug jerky",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Any Insect",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyInsect_Sprite.webp"
+      }
+    ],
+    "buff": "Catching +3",
+    "buff_duration_min": 2,
+    "health": 60,
+    "energy": 80,
+    "sell_price": 13,
+    "description": "Looks weird. Surprisingly delicious.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Bug_jerky_Sprite.webp"
+  },
+  {
+    "name": "Burrito",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Tortilla",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tortilla_Sprite.webp"
+      },
+      {
+        "name": "Soybean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Soybean_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Defense % +1",
+    "buff_duration_min": 2,
+    "health": 110,
+    "energy": 180,
+    "sell_price": 102,
+    "description": "A hearty meal.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Burrito_Sprite.webp"
+  },
+  {
+    "name": "Butter croissant",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      }
+    ],
+    "buff": "Ranching +3",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 55,
+    "sell_price": 123,
+    "description": "Soft and incredibly flaky.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Butter_Croissant_Sprite.webp"
+  },
+  {
+    "name": "Caterpillar Peyek",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Almond",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Almond_Sprite.webp"
+      },
+      {
+        "name": "Any Catterpilar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_caterpillar_Sprite.webp"
+      }
+    ],
+    "buff": "Catching +3",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 120,
+    "sell_price": 115,
+    "description": "A savory, deep-fried cracker. Crunchy, with a hint of leaves and grasses.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Peyek_Sprite.webp"
+  },
+  {
+    "name": "Cauliflower casserole",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Cauliflower",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cauliflower_Sprite.webp"
+      },
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 410,
+    "energy": 395,
+    "sell_price": 145,
+    "description": "A creamy white dish of baked cruciferous veggies.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cauliflower_Casserole_Sprite.webp"
+  },
+  {
+    "name": "Cenil",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Taro root",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Taro_root_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 65,
+    "energy": 95,
+    "sell_price": 57,
+    "description": "It restores energy. Sweet and chewy.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cenil_Sprite.webp"
+  },
+  {
+    "name": "Chocolate chip muffins",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Cocoa bean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cocoa_Bean_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 55,
+    "energy": 100,
+    "sell_price": 85,
+    "description": "It’s very sweet.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Chocolate_chip_muffins_Sprite.webp"
+  },
+  {
+    "name": "Clam chowder",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Any Clam",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Clam_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Diving +3",
+    "buff_duration_min": 2,
+    "health": 60,
+    "energy": 70,
+    "sell_price": 50,
+    "description": "Creamy New England style. Warm and filling, rich with the flavors of the sea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Clam_Chowder_Sprite.webp"
+  },
+  {
+    "name": "Cookies",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Cocoa bean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cocoa_Bean_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 55,
+    "sell_price": 128,
+    "description": "A plate of chewy cookies.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cookies_Sprite.webp"
+  },
+  {
+    "name": "Corn on the cob",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Corn",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Corn_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 50,
+    "sell_price": 80,
+    "description": "Juicy grilled kernels bursting with flavor.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Corn_On_The_Cob_Sprite.webp"
+  },
+  {
+    "name": "Donut",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Canola oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Canola_oil_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 185,
+    "energy": 255,
+    "sell_price": 98,
+    "description": "An irresistable ring of sweet, deep-fried dough.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Donut_Sprite.webp"
+  },
+  {
+    "name": "Edamame",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Soybean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Soybean_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 35,
+    "energy": 45,
+    "sell_price": 30,
+    "description": "A healthy snack option.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Edamame_Sprite.webp"
+  },
+  {
+    "name": "Egg custard",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Ranching +3",
+    "buff_duration_min": 2,
+    "health": 60,
+    "energy": 115,
+    "sell_price": 83,
+    "description": "A cute little tart with a sunny yellow filling.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Egg_Custard_Sprite.webp"
+  },
+  {
+    "name": "Eggplant lasagna",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Eggplant",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Eggplant_Sprite.webp"
+      },
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 125,
+    "energy": 150,
+    "sell_price": 118,
+    "description": "Cheesy layers of eggplant and pasta.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Eggplant_Lasagna_Sprite.webp"
+  },
+  {
+    "name": "Es cendol",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Rice flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Flour_Sprite.webp"
+      },
+      {
+        "name": "Syrup",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Syrup_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 55,
+    "energy": 85,
+    "sell_price": 90,
+    "description": "Green rice flour jelly swimming in sweet, fresh coconut milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Es_cendol_Sprite.webp"
+  },
+  {
+    "name": "Es doger",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Syrup",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Syrup_Sprite.webp"
+      },
+      {
+        "name": "Sweet potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sweet_Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 105,
+    "sell_price": 100,
+    "description": "Pink coconut milk ice layered with all the toppings. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Es_Doger_Sprite.webp"
+  },
+  {
+    "name": "Falafel",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Peas",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Peas_Sprite.webp"
+      },
+      {
+        "name": "Cucumber",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cucumber_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 85,
+    "energy": 100,
+    "sell_price": 88,
+    "description": "Tasty fried balls made from chickpeas.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Falafel_Sprite.webp"
+  },
+  {
+    "name": "Fish sandwich",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Bread",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bread_Sprite.webp"
+      },
+      {
+        "name": "Lettuce",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Lettuce_Sprite.webp"
+      },
+      {
+        "name": "Shallot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Shallot_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 275,
+    "energy": 295,
+    "sell_price": 64,
+    "description": "Flaky, tender fish on fresh, white bread.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fish_Sandwich_Sprite.webp"
+  },
+  {
+    "name": "Fish soup",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Sake",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sake_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 270,
+    "energy": 285,
+    "sell_price": 260,
+    "description": "The broth is fishy with a hint of truffle flavor.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fish_soup_Sprite.webp"
+  },
+  {
+    "name": "Fish taco",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Tortilla",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tortilla_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      },
+      {
+        "name": "Any Mayonnaise",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyMayo_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 120,
+    "energy": 145,
+    "sell_price": 75,
+    "description": "A fresh bite of the ocean.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fish_taco_Sprite.webp"
+  },
+  {
+    "name": "Fresh salad",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 35,
+    "energy": 45,
+    "sell_price": 8,
+    "description": "A healthy mix of crunchy veggies and greens.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fresh_salad_Sprite.webp"
+  },
+  {
+    "name": "Fried rice",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Rice",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Sprite.webp"
+      },
+      {
+        "name": "Shallot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Shallot_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 255,
+    "energy": 310,
+    "sell_price": 68,
+    "description": "A traditional comfort food.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fried_Rice_Sprite.webp"
+  },
+  {
+    "name": "Fried tempeh",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Tempeh",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tempeh_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 40,
+    "sell_price": 65,
+    "description": "Crunchy soybean cake.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fried_tempeh_Sprite.webp"
+  },
+  {
+    "name": "Fruit tart",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Any Fruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Fruit_Sprite.webp"
+      },
+      {
+        "name": "Any Fruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Fruit_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 115,
+    "energy": 175,
+    "sell_price": 70,
+    "description": "It’s full of color.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fruit_Tart_Sprite.webp"
+  },
+  {
+    "name": "Gnocchi",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 215,
+    "energy": 260,
+    "sell_price": 205,
+    "description": "Lumps of potato pasta covered in zesty tomato sauce.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Gnocchi_Sprite.webp"
+  },
+  {
+    "name": "Green curry",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Bell pepper",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bell_pepper_Sprite.webp"
+      },
+      {
+        "name": "Basil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Basil_Sprite.webp"
+      },
+      {
+        "name": "Peas",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Peas_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Defense % +1",
+    "buff_duration_min": 2,
+    "health": 310,
+    "energy": 315,
+    "sell_price": 95,
+    "description": "A flavorful curry.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_Curry_Sprite.webp"
+  },
+  {
+    "name": "Green smoothie",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 35,
+    "sell_price": 8,
+    "description": "A refreshing drink of nutritious green goodness.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_smoothie_Sprite.webp"
+  },
+  {
+    "name": "Grilled fish",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 70,
+    "energy": 60,
+    "sell_price": 23,
+    "description": "Tender and flaky, grilled to perfection.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Grilled_Fish_Sprite.webp"
+  },
+  {
+    "name": "Guacamole",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Avocado",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Avocado_Sprite.webp"
+      },
+      {
+        "name": "Garlic",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Garlic_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 175,
+    "energy": 180,
+    "sell_price": 102,
+    "description": "A dip made from mashed avocado.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Guacamole_Sprite.webp"
+  },
+  {
+    "name": "Hard-boiled duck egg",
+    "utensil": "Pot",
+    "ingredients": [],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 20,
+    "energy": 30,
+    "sell_price": 50,
+    "description": "A simple boiled egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hard_boiled_Duck_Egg_Sprite.webp"
+  },
+  {
+    "name": "Hard-boiled egg",
+    "utensil": "Pot",
+    "ingredients": [],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 15,
+    "energy": 25,
+    "sell_price": 25,
+    "description": "A simple boiled egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hard-boiled_egg_Sprite.webp"
+  },
+  {
+    "name": "Hard-boiled quail egg",
+    "utensil": "Pot",
+    "ingredients": [],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 35,
+    "sell_price": 123,
+    "description": "A simple boiled egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hard_boiled_Quail_Egg_Sprite.webp"
+  },
+  {
+    "name": "Hash browns",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Eggs",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 160,
+    "energy": 235,
+    "sell_price": 80,
+    "description": "Deliciously greasy fried potatoes.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hash_browns_Sprite.webp"
+  },
+  {
+    "name": "Hawaiian pizza",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Pineapple",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Pineapple_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 190,
+    "energy": 215,
+    "sell_price": 213,
+    "description": "The perfect summer meal.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hawaiian_Pizza_Sprite.webp"
+  },
+  {
+    "name": "Herbed tempeh",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Tempeh",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tempeh_Sprite.webp"
+      },
+      {
+        "name": "Gourmet salt",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gourmet_Salt_Sprite.webp"
+      },
+      {
+        "name": "Basil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Basil_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 160,
+    "energy": 180,
+    "sell_price": 67,
+    "description": "Fermented soybean flavored with herbs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Herbed_Tempeh_Sprite.webp"
+  },
+  {
+    "name": "Hot cocoa",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Cocoa bean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Cocoa_Bean_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 45,
+    "energy": 45,
+    "sell_price": 83,
+    "description": "A hug in a cup.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hot_Cocoa_Sprite.webp"
+  },
+  {
+    "name": "Hummus",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Peas",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Peas_Sprite.webp"
+      },
+      {
+        "name": "Olive oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Olive_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 50,
+    "sell_price": 155,
+    "description": "A savory dip.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Hummus_Sprite.webp"
+  },
+  {
+    "name": "Ice cream",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Ranching +3",
+    "buff_duration_min": 2,
+    "health": 15,
+    "energy": 20,
+    "sell_price": 38,
+    "description": "A cold, creamy treat for a hot day. Or any day, really.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ice_Cream_Sprite.webp"
+  },
+  {
+    "name": "Jackfruit casserole",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Jackfruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Jackfruit_Sprite.webp"
+      },
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 260,
+    "energy": 290,
+    "sell_price": 132,
+    "description": "It has a chewy texture and a soft crust.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jackfruit_casserole_Sprite.webp"
+  },
+  {
+    "name": "Jamu",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Ginseng",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Ginseng_Sprite.webp"
+      },
+      {
+        "name": "Ginger",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Ginger_Sprite.webp"
+      },
+      {
+        "name": "Any Honey",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyHoney_Sprite.webp"
+      }
+    ],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 130,
+    "energy": 300,
+    "sell_price": 90,
+    "description": "A traditional medicinal drink. Smells strong, tastes even stronger.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jamu_Sprite.webp"
+  },
+  {
+    "name": "Kale chips",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Kale",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Kale_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 40,
+    "sell_price": 53,
+    "description": "Crunchy kale. A good snack between meals.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kale_Chips_Sprite.webp"
+  },
+  {
+    "name": "Ketchup",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Gourmet salt",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gourmet_Salt_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 45,
+    "energy": 50,
+    "sell_price": 37,
+    "description": "A tomatoey condiment.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ketchup_Sprite.webp"
+  },
+  {
+    "name": "Klepon",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Rice flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Flour_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 60,
+    "energy": 95,
+    "sell_price": 90,
+    "description": "Coconut-coated rice balls with an explosion of sweetness inside.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Klepon_Sprite.webp"
+  },
+  {
+    "name": "Kue kancing",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 45,
+    "energy": 100,
+    "sell_price": 68,
+    "description": "A crunchy cookie topped with sugar icing. Cute as a button!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kue_Kancing_Sprite.webp"
+  },
+  {
+    "name": "Kue lapis",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Taro root",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Taro_root_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 115,
+    "sell_price": 57,
+    "description": "A cake with many layers. It’s chewy and delicious.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kue_Lapis_Sprite.webp"
+  },
+  {
+    "name": "Lettuce wrap",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Lettuce",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Lettuce_Sprite.webp"
+      },
+      {
+        "name": "Soybean",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Soybean_Sprite.webp"
+      }
+    ],
+    "buff": "Defense % +1",
+    "buff_duration_min": 2,
+    "health": 150,
+    "energy": 180,
+    "sell_price": 33,
+    "description": "A light meal wrapped in a lettuce leaf.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Lettuce_Wrap_Sprite.webp"
+  },
+  {
+    "name": "Lodeh",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Eggplant",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Eggplant_Sprite.webp"
+      },
+      {
+        "name": "Tempeh",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tempeh_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 150,
+    "energy": 155,
+    "sell_price": 76,
+    "description": "A simple vegetable stew in coconut milk. The perfect Fall meal.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Lodeh_Sprite.webp"
+  },
+  {
+    "name": "Minced jackfruit pie",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Jackfruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Jackfruit_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 50,
+    "energy": 75,
+    "sell_price": 125,
+    "description": "A savory pie with a jackfruit filling. Surprisingly meaty!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Minced_Jackfruit_Pie_Sprite.webp"
+  },
+  {
+    "name": "Mooncake",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Lotus",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Lotus_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 50,
+    "energy": 100,
+    "sell_price": 58,
+    "description": "A delicacy traditionally enjoyed in Fall.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mooncake_Sprite.webp"
+  },
+  {
+    "name": "Mushroom jerky",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 35,
+    "energy": 35,
+    "sell_price": 20,
+    "description": "Made out of dehydrated mushroom. Very tough to chew.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mushroom_Jerky_Sprite.webp"
+  },
+  {
+    "name": "Omurice",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Rice",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Sprite.webp"
+      },
+      {
+        "name": "Ketchup",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Ketchup_Sprite.webp"
+      },
+      {
+        "name": "Carrot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Carrot_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 380,
+    "energy": 425,
+    "sell_price": 110,
+    "description": "An omelet made with fried rice and ketchup.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Omurice_Sprite.webp"
+  },
+  {
+    "name": "Onigiri",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Rice",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 110,
+    "energy": 140,
+    "sell_price": 23,
+    "description": "A ball of rice with a mysterious filling.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Onigiri_Sprite.webp"
+  },
+  {
+    "name": "Oven-baked risotto",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Rice",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Sprite.webp"
+      },
+      {
+        "name": "Any Butter",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyButter_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 230,
+    "energy": 270,
+    "sell_price": 191,
+    "description": "A warm, creamy rice dish.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Oven-baked_risotto_Sprite.webp"
+  },
+  {
+    "name": "Pad thai",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Shrimp",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Shrimp_Sprite.webp"
+      },
+      {
+        "name": "Lemon",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Lemon_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 175,
+    "energy": 195,
+    "sell_price": 93,
+    "description": "A yummy stir-fried noodle dish.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pad_Thai_Sprite.webp"
+  },
+  {
+    "name": "Pancakes",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Maple syrup",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Maple_Syrup_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Fruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Fruit_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 110,
+    "sell_price": 140,
+    "description": "Fluffy flat cakes.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pancakes_Sprite.webp"
+  },
+  {
+    "name": "Peanut butter",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Almond",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Almond_Sprite.webp"
+      }
+    ],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 30,
+    "sell_price": 140,
+    "description": "A popular nutty spread.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Peanut_Butter_Sprite.webp"
+  },
+  {
+    "name": "Pepper and mushroom flatbread",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Bell pepper",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bell_pepper_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": "Mining +3",
+    "buff_duration_min": 2,
+    "health": 65,
+    "energy": 95,
+    "sell_price": 64,
+    "description": "A good source of energy.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pepper_and_Mushroom_Flatbread_Sprite.webp"
+  },
+  {
+    "name": "Pineapple upside-down cake",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Pineapple",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Pineapple_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 210,
+    "energy": 270,
+    "sell_price": 143,
+    "description": "There are slices of pineapple on top.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pineapple_upside-down_cake_Sprite.webp"
+  },
+  {
+    "name": "Pizza",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 130,
+    "energy": 150,
+    "sell_price": 150,
+    "description": "The ultimate comfort food.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pizza_Sprite.webp"
+  },
+  {
+    "name": "Popiah",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Bamboo shoot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bamboo_Shoot_Sprite.webp"
+      },
+      {
+        "name": "Carrot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Carrot_Sprite.webp"
+      }
+    ],
+    "buff": "Max Energy +1",
+    "buff_duration_min": 2,
+    "health": 235,
+    "energy": 255,
+    "sell_price": 79,
+    "description": "Fresh spring rolls.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Popiah_Sprite.webp"
+  },
+  {
+    "name": "Potato chips",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 110,
+    "energy": 150,
+    "sell_price": 75,
+    "description": "Thinly sliced potato. Crunchy.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Potato_Chips_Sprite.webp"
+  },
+  {
+    "name": "Pumpkin pie",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Pumpkin",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Pumpkin_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 105,
+    "energy": 195,
+    "sell_price": 123,
+    "description": "A Fall treat.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pumpkin_Pie_Sprite.webp"
+  },
+  {
+    "name": "Purée",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Any Fruit / Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Fruit_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 40,
+    "sell_price": 8,
+    "description": "Creamy.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Puree_Sprite.webp"
+  },
+  {
+    "name": "Rainbow sandwich",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Bread",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bread_Sprite.webp"
+      },
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      },
+      {
+        "name": "Any Mayonnaise",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyMayo_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 125,
+    "energy": 170,
+    "sell_price": 77,
+    "description": "It tastes as good as it looks!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Rainbow_sandwich_Sprite.webp"
+  },
+  {
+    "name": "Raisins",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Grape",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Grape_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 35,
+    "energy": 45,
+    "sell_price": 37,
+    "description": "Dehydrated grapes. A good candy substitute.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Raisins_Sprite.webp"
+  },
+  {
+    "name": "Ratatouille",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Bell pepper",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bell_pepper_Sprite.webp"
+      },
+      {
+        "name": "Olive",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Olive_Sprite.webp"
+      },
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      },
+      {
+        "name": "Eggplant",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Eggplant_Sprite.webp"
+      }
+    ],
+    "buff": "Mining +3",
+    "buff_duration_min": 2,
+    "health": 125,
+    "energy": 150,
+    "sell_price": 115,
+    "description": "Layer upon layer of crunchy vegetables.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ratatouille_Sprite.webp"
+  },
+  {
+    "name": "Red curry",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Hot pepper",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Hot_Pepper_Sprite.webp"
+      },
+      {
+        "name": "Shallot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Shallot_Sprite.webp"
+      },
+      {
+        "name": "Carrot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Carrot_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 255,
+    "energy": 295,
+    "sell_price": 95,
+    "description": "A spicy curry.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Curry_Sprite.webp"
+  },
+  {
+    "name": "Red velvet cake",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Strawberry",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Strawberry_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 75,
+    "energy": 125,
+    "sell_price": 131,
+    "description": "A velvety soft dessert.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_velvet_cake_Sprite.webp"
+  },
+  {
+    "name": "Roasted almonds",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Almond",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Almond_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 25,
+    "energy": 30,
+    "sell_price": 72,
+    "description": "Smells earthy.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Roasted_Almonds_Sprite.webp"
+  },
+  {
+    "name": "Roasted chestnuts",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Chestnut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Chestnut_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 25,
+    "energy": 40,
+    "sell_price": 23,
+    "description": "A hot, tasty snack.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Roasted_Chestnuts_Sprite.webp"
+  },
+  {
+    "name": "Roasted mushroom",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Basil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Basil_Sprite.webp"
+      },
+      {
+        "name": "Olive oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Olive_Oil_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Mining +3",
+    "buff_duration_min": 2,
+    "health": 155,
+    "energy": 185,
+    "sell_price": 165,
+    "description": "It smells herby.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Roasted_Mushroom_Sprite.webp"
+  },
+  {
+    "name": "Sashimi",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Wasabi",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wasabi_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 135,
+    "energy": 120,
+    "sell_price": 50,
+    "description": "Raw fish with a side of spicy green paste.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sashimi_Sprite.webp"
+  },
+  {
+    "name": "Sauteed chard",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Chard",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Chard_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 145,
+    "energy": 165,
+    "sell_price": 93,
+    "description": "Dark leafy greens sauteed in oil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sauteed_Chards_Sprite.webp"
+  },
+  {
+    "name": "Scrambled eggs",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": "Ranching +3",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 55,
+    "sell_price": 60,
+    "description": "A perfect way to start the day.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Scrambled_Eggs_Sprite.webp"
+  },
+  {
+    "name": "Seafood ramen",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Any Mussel",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mussel_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Diving +3",
+    "buff_duration_min": 2,
+    "health": 140,
+    "energy": 155,
+    "sell_price": 73,
+    "description": "The perfect meal for cold nights.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_Ramen_Sprite.webp"
+  },
+  {
+    "name": "Serabi",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Gourmet salt",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gourmet_Salt_Sprite.webp"
+      },
+      {
+        "name": "Rice flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Flour_Sprite.webp"
+      },
+      {
+        "name": "Sugar",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sugar_Sprite.webp"
+      },
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 85,
+    "energy": 130,
+    "sell_price": 110,
+    "description": "A traditional coconut pancake. Smells yummy!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Serabi_Sprite.webp"
+  },
+  {
+    "name": "Slimy okra",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Okra",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Okra_Sprite.webp"
+      },
+      {
+        "name": "Slime goop",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Slime_goop_Sprite.webp"
+      }
+    ],
+    "buff": "Mining +3",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 80,
+    "sell_price": 32,
+    "description": "It’s slimy!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Slimy_Okra_Sprite.webp"
+  },
+  {
+    "name": "Smoked fish",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 70,
+    "energy": 60,
+    "sell_price": 24,
+    "description": "Cured fish. It smells wonderful.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Smoked_Fish_Sprite.webp"
+  },
+  {
+    "name": "Smoked salmon",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Wood",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wood_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 70,
+    "sell_price": 31,
+    "description": "Pink and smoky-tasting.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Smoked_Salmon_Sprite.webp"
+  },
+  {
+    "name": "Smoothie",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Any Fruit",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Fruit_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 40,
+    "energy": 40,
+    "sell_price": 8,
+    "description": "A refreshing meal you can drink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Smoothie_Sprite.webp"
+  },
+  {
+    "name": "Spicy sauerkraut",
+    "utensil": "Seasoning Set",
+    "ingredients": [
+      {
+        "name": "Hot pepper",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Hot_Pepper_Sprite.webp"
+      },
+      {
+        "name": "Red cabbage",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Red_Cabbage_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 120,
+    "energy": 170,
+    "sell_price": 71,
+    "description": "Tangy and spicy fermented cabbage.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Spicy_Sauerkraut_Sprite.webp"
+  },
+  {
+    "name": "Spider tempura",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Gourmet salt",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Gourmet_Salt_Sprite.webp"
+      },
+      {
+        "name": "Any Spider",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_spider_Sprite.webp"
+      },
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Move Speed +1",
+    "buff_duration_min": 2,
+    "health": 75,
+    "energy": 160,
+    "sell_price": 105,
+    "description": "Delicious with a side of dipping sauce.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Spider_Tempura_Sprite.webp"
+  },
+  {
+    "name": "Spring frittata",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Defense % +1",
+    "buff_duration_min": 2,
+    "health": 65,
+    "energy": 80,
+    "sell_price": 33,
+    "description": "A little Spring in every bite.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Spring_Frittata_Sprite.webp"
+  },
+  {
+    "name": "Stew",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 210,
+    "energy": 230,
+    "sell_price": 58,
+    "description": "A hearty meal in a bowl.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stew_Sprite.webp"
+  },
+  {
+    "name": "Stone soup",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Stone",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Stone_Sprite.webp"
+      },
+      {
+        "name": "Any Edible Ingredients",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyIngridient_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 20,
+    "energy": 30,
+    "sell_price": 5,
+    "description": "Doesn’t look edible. Consume at your own risk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Stone_Soup_Sprite.webp"
+  },
+  {
+    "name": "Summer burger",
+    "utensil": "Grill",
+    "ingredients": [
+      {
+        "name": "Bread",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Bread_Sprite.webp"
+      },
+      {
+        "name": "Pineapple",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Pineapple_Sprite.webp"
+      },
+      {
+        "name": "Shallot",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Shallot_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      }
+    ],
+    "buff": "Debuff Immunity +1",
+    "buff_duration_min": 2,
+    "health": 235,
+    "energy": 305,
+    "sell_price": 201,
+    "description": "A grilled patty with all the fixings.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Summer_Burger_Sprite.webp"
+  },
+  {
+    "name": "Sunny-side-up eggs",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Any Egg",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyEgg_Sprite.webp"
+      }
+    ],
+    "buff": "Ranching +3",
+    "buff_duration_min": 2,
+    "health": 15,
+    "energy": 25,
+    "sell_price": 25,
+    "description": "The original egg dish.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sunny-side-up_eggs_Sprite.webp"
+  },
+  {
+    "name": "Sushi",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Rice",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Rice_Sprite.webp"
+      },
+      {
+        "name": "Any Fish",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/T_AnyFish_Sprite.webp"
+      }
+    ],
+    "buff": "Fishing +3",
+    "buff_duration_min": 2,
+    "health": 235,
+    "energy": 245,
+    "sell_price": 46,
+    "description": "A bite of raw fish on a bed of fluffy rice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sushi_Sprite.webp"
+  },
+  {
+    "name": "Sweet potato chips",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Sweet potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sweet_Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 30,
+    "energy": 40,
+    "sell_price": 53,
+    "description": "Delicious, crunchy chips made out of sweet potato. Naturally sweet.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sweet_Potato_Chips_Sprite.webp"
+  },
+  {
+    "name": "Sweet potato poutine",
+    "utensil": "Frying Pan",
+    "ingredients": [
+      {
+        "name": "Sweet potato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Sweet_Potato_Sprite.webp"
+      },
+      {
+        "name": "Any Cheese",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Cheese_Sprite.webp"
+      },
+      {
+        "name": "Any Oil",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Oil_Sprite.webp"
+      }
+    ],
+    "buff": "Mining +3",
+    "buff_duration_min": 2,
+    "health": 60,
+    "energy": 90,
+    "sell_price": 135,
+    "description": "Baked sweet potato covered in cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sweet_Potato_Poutine_Sprite.webp"
+  },
+  {
+    "name": "Tomato soup",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Tomato",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tomato_Sprite.webp"
+      }
+    ],
+    "buff": "Farming +3",
+    "buff_duration_min": 2,
+    "health": 40,
+    "energy": 50,
+    "sell_price": 17,
+    "description": "A simple and comforting lunch.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Tomato_Soup_Sprite.webp"
+  },
+  {
+    "name": "Tortilla",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Any Flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Flour_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 5,
+    "energy": 25,
+    "sell_price": 33,
+    "description": "A useful cooking ingredient. Can be made from either corn or wheat.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Tortilla_Sprite.webp"
+  },
+  {
+    "name": "Vegan taco",
+    "utensil": "Skillet",
+    "ingredients": [
+      {
+        "name": "Tortilla",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Tortilla_Sprite.webp"
+      },
+      {
+        "name": "Kiracha sauce",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Kiracha_Sauce_Sprite.webp"
+      },
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Attack +1",
+    "buff_duration_min": 2,
+    "health": 70,
+    "energy": 160,
+    "sell_price": 45,
+    "description": "A quick meal packed with nature’s goodness.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegan_taco_Sprite.webp"
+  },
+  {
+    "name": "Vegetable jerky",
+    "utensil": "Oven",
+    "ingredients": [
+      {
+        "name": "Any Vegetable",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_vegetable_Sprite.webp"
+      }
+    ],
+    "buff": "Defense +1",
+    "buff_duration_min": 2,
+    "health": 35,
+    "energy": 40,
+    "sell_price": 8,
+    "description": "Made out of dehydrated vegetables. Very tough to chew.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_jerky_Sprite.webp"
+  },
+  {
+    "name": "Veggie ramen",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Wheat flour",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+      },
+      {
+        "name": "Kombu",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Kombu_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Diving +3",
+    "buff_duration_min": 2,
+    "health": 80,
+    "energy": 100,
+    "sell_price": 70,
+    "description": "It’s delicious and very filling.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Veggie_Ramen_Sprite.webp"
+  },
+  {
+    "name": "Wakame",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Seaweed",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      },
+      {
+        "name": "Seaweed",
+        "amount": 2,
+        "icon": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 10,
+    "energy": 10,
+    "sell_price": 2,
+    "description": "It has a faintly sweet scent and a distinctive texture. Best enjoyed cold.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wakame_Sprite.webp"
+  },
+  {
+    "name": "Wasabi paste",
+    "utensil": "Blender",
+    "ingredients": [
+      {
+        "name": "Wasabi",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Wasabi_Sprite.webp"
+      }
+    ],
+    "buff": "Burn (debuff) +1",
+    "buff_duration_min": 1,
+    "health": 25,
+    "energy": 30,
+    "sell_price": 28,
+    "description": "A zingy condiment.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wasabi_Paste_Sprite.webp"
+  },
+  {
+    "name": "Whole coconut drink",
+    "utensil": "Chef Knife",
+    "ingredients": [
+      {
+        "name": "Any Coconut",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Coconut_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 30,
+    "energy": 20,
+    "sell_price": 23,
+    "description": "It comes naturally prepackaged for your enjoyment.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Whole_Coconut_Drink_Sprite.webp"
+  },
+  {
+    "name": "Wild mushroom polenta",
+    "utensil": "Pot",
+    "ingredients": [
+      {
+        "name": "Corn",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Corn_Sprite.webp"
+      },
+      {
+        "name": "Any Mushroom",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Mushroom_Sprite.webp"
+      }
+    ],
+    "buff": "Foraging +3",
+    "buff_duration_min": 2,
+    "health": 90,
+    "energy": 95,
+    "sell_price": 32,
+    "description": "Mushy corn with bits of mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wild_Mushroom_Polenta_Sprite.webp"
+  },
+  {
+    "name": "Yogurt",
+    "utensil": "Ceramic Bowl",
+    "ingredients": [
+      {
+        "name": "Any Milk",
+        "amount": 1,
+        "icon": "https://coral.guide/assets/live/items/icons/Any_Milk_Sprite.webp"
+      }
+    ],
+    "buff": null,
+    "buff_duration_min": null,
+    "health": 20,
+    "energy": 20,
+    "sell_price": 240,
+    "description": "Plain fermented milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yoghurt_Sprite.webp"
+  }
+]

@@ -126,6 +126,23 @@ const forageables = require('./data/forageables.json');
 // Regenerate with scripts/build-collectibles.js.
 const collectibles = require('./data/collectibles.json');
 
+// ---- CRAFTING RECIPES ------------------------------------------------------
+// Full crafting recipe list (158) with structured ingredients, categories,
+// mastery unlocks, descriptions, and output icons. Ingredients are stored as a
+// JSON string. Regenerate with scripts/build-crafting.js.
+const crafting = require('./data/crafting-recipes.json').map(r => ({
+  ...r,
+  ingredients: JSON.stringify(r.ingredients),
+}));
+
+// ---- COOKING RECIPES -------------------------------------------------------
+// Full cooking recipe list (106) with food buffs (skill/stat bonuses), utensil,
+// HP/energy restore, ingredients, and icons. Regenerate with build-cooking.js.
+const cooking = require('./data/cooking-recipes.json').map(r => ({
+  ...r,
+  ingredients: JSON.stringify(r.ingredients),
+}));
+
 // ---- NPCS ------------------------------------------------------------------
 // Full giftable roster (71 NPCs) with accurate loved/liked gifts, birthdays,
 // bios, and portrait art. Data mined from the game via the open-source
@@ -164,6 +181,10 @@ async function seed() {
       ['name', 'season', 'location', 'area', 'notes', 'sell_price', 'image_url'], forageables);
     await insertRows(client, 'collectibles',
       ['category', 'name', 'sell_price', 'rarity', 'seasons', 'locations', 'time_of_day', 'description', 'icon', 'sort_order'], collectibles);
+    await insertRows(client, 'crafting_recipes',
+      ['name', 'output_amount', 'category', 'mastery_type', 'mastery_level', 'ingredients', 'description', 'image_url'], crafting);
+    await insertRows(client, 'cooking_recipes',
+      ['name', 'utensil', 'ingredients', 'buff', 'buff_duration_min', 'health', 'energy', 'sell_price', 'description', 'image_url'], cooking);
     await insertRows(client, 'npcs',
       ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary', 'birthday', 'image_url'], npcs);
 
@@ -174,6 +195,8 @@ async function seed() {
     console.log(`  cave_items:  ${caveItems.length}`);
     console.log(`  forageables: ${forageables.length}`);
     console.log(`  collectibles:${collectibles.length}`);
+    console.log(`  crafting:    ${crafting.length}`);
+    console.log(`  cooking:     ${cooking.length}`);
     console.log(`  npcs:        ${npcs.length}`);
   } catch (err) {
     await client.query('ROLLBACK');

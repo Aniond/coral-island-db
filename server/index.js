@@ -21,6 +21,8 @@ app.use('/api/crops', require('./routes/crops'));
 app.use('/api/caves', require('./routes/caves'));
 app.use('/api/forageables', require('./routes/foraging'));
 app.use('/api/collectibles', require('./routes/collectibles'));
+app.use('/api/crafting', require('./routes/crafting'));
+app.use('/api/cooking', require('./routes/cooking'));
 app.use('/api/npcs', require('./routes/npcs'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/admin',  require('./routes/admin'));

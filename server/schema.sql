@@ -36,6 +36,34 @@ CREATE TABLE forageables (
   image_url TEXT
 );
 
+DROP TABLE IF EXISTS cooking_recipes CASCADE;
+CREATE TABLE cooking_recipes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150),
+  utensil VARCHAR(40),       -- Oven, Pot, Grill, Chef Knife… (tool needed)
+  ingredients TEXT,          -- JSON array of {name, amount, icon}
+  buff VARCHAR(80),          -- skill/stat bonus, e.g. 'Fishing +3' (null = none)
+  buff_duration_min INTEGER,
+  health INTEGER,            -- HP restored
+  energy INTEGER,            -- stamina restored
+  sell_price INTEGER,
+  description TEXT,
+  image_url TEXT
+);
+
+DROP TABLE IF EXISTS crafting_recipes CASCADE;
+CREATE TABLE crafting_recipes (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150),
+  output_amount INTEGER,
+  category VARCHAR(60),       -- Misc, Farming, Artisan, Decor, Scarecrow
+  mastery_type VARCHAR(40),   -- unlock skill (Farming, Mining…); null = no requirement
+  mastery_level INTEGER,
+  ingredients TEXT,           -- JSON array of {name, amount, icon}
+  description TEXT,
+  image_url TEXT              -- output item icon
+);
+
 DROP TABLE IF EXISTS collectibles CASCADE;
 CREATE TABLE collectibles (
   id SERIAL PRIMARY KEY,
