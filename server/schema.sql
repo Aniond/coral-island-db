@@ -43,5 +43,7 @@ CREATE TABLE npcs (
   schedule TEXT,
   loved_gifts TEXT,
   liked_gifts TEXT,
-  quest_summary TEXT
+  quest_summary TEXT,
+  birthday VARCHAR(50),       -- e.g. 'Summer 8' (season + day)
+  image_url TEXT              -- portrait URL (coral.guide head-portraits)
 );

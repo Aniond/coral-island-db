@@ -68,8 +68,10 @@ function mapNpc(r, i) {
     role: r.role,
     location: r.location,
     schedule: r.schedule,
+    birthday: r.birthday,
+    image: r.image_url,
     lovedGifts: (r.loved_gifts || '').split(',').map(s => s.trim()).filter(Boolean),
-    likedGifts: r.liked_gifts,
+    likedGifts: (r.liked_gifts || '').split(',').map(s => s.trim()).filter(Boolean),
     quest: r.quest_summary,
     color: NPC_PALETTE[i % NPC_PALETTE.length],
   };

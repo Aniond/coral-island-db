@@ -30,7 +30,7 @@ async function buildContext() {
     pool.query('SELECT name, type, season, town_rank, grow_days, sell_price, regrowth_days, notes FROM crops ORDER BY id'),
     pool.query('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
     pool.query('SELECT name, season, location, area, notes FROM forageables ORDER BY id'),
-    pool.query('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary FROM npcs ORDER BY id'),
+    pool.query('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary, birthday FROM npcs ORDER BY id'),
   ]);
 
   const cropLines = crops.rows.map(c =>
@@ -46,9 +46,16 @@ async function buildContext() {
   const forageLines = forageables.rows.map(f =>
     `- ${f.name} (${f.season}) — ${f.location} [${f.area}]${f.notes ? `. ${f.notes}` : ''}`);
 
-  const npcLines = npcs.rows.map(n =>
-    `- ${n.name} (${n.role}) @ ${n.location}. Schedule: ${n.schedule}. ` +
-    `Loved gifts: ${n.loved_gifts}. Liked: ${n.liked_gifts}. Quest: ${n.quest_summary}`);
+  const npcLines = npcs.rows.map(n => {
+    let line = `- ${n.name} (${n.role})`;
+    if (n.birthday) line += `, birthday ${n.birthday}`;
+    if (n.location) line += ` @ ${n.location}`;
+    if (n.schedule) line += `. Schedule: ${n.schedule}`;
+    if (n.loved_gifts) line += `. Loved gifts: ${n.loved_gifts}`;
+    if (n.liked_gifts) line += `. Liked gifts: ${n.liked_gifts}`;
+    if (n.quest_summary) line += `. About: ${n.quest_summary}`;
+    return line;
+  });
 
   return [
     `# CROPS\n${cropLines.join('\n')}`,

@@ -5,8 +5,39 @@ import { THEME } from '../lib/theme.js';
 import { FilterSelect, EmptyState, LoadingDots } from '../components/ui.jsx';
 import { fetchNpcs } from '../data/api.js';
 
+function Avatar({ npc }) {
+  const [failed, setFailed] = React.useState(false);
+  const ring = { boxShadow: `0 0 0 3px ${npc.color}33` };
+  if (npc.image && !failed) {
+    return (
+      <img
+        src={npc.image}
+        alt={npc.name}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        style={{
+          width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+          objectFit: 'cover', background: THEME.primaryXLight, ...ring,
+        }}
+      />
+    );
+  }
+  return (
+    <div style={{
+      width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+      background: npc.color,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: 'white', fontFamily: "'Playfair Display', serif",
+      fontWeight: 700, fontSize: 16, ...ring,
+    }}>
+      {npc.initials}
+    </div>
+  );
+}
+
 function NPCCard({ npc, density }) {
   const [hov, setHov] = React.useState(false);
+  const hasWhereabouts = npc.location || npc.schedule;
   return (
     <div
       onMouseEnter={() => setHov(true)}
@@ -24,45 +55,53 @@ function NPCCard({ npc, density }) {
     >
       {/* Avatar + name */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{
-          width: 48, height: 48, borderRadius: '50%', flexShrink: 0,
-          background: npc.color,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'white',
-          fontFamily: "'Playfair Display', serif",
-          fontWeight: 700, fontSize: 16,
-          boxShadow: `0 0 0 3px ${npc.color}33`,
-        }}>
-          {npc.initials}
-        </div>
-        <div>
+        <Avatar npc={npc} />
+        <div style={{ minWidth: 0 }}>
           <div style={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: 700, fontSize: 17, color: THEME.textDark, lineHeight: 1.2,
           }}>
             {npc.name}
           </div>
-          <span style={{
-            display: 'inline-block', marginTop: 4,
-            background: THEME.primaryXLight, color: THEME.primary,
-            padding: '2px 9px', borderRadius: 5,
-            fontSize: 11, fontWeight: 600,
-          }}>
-            {npc.role}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 5, flexWrap: 'wrap' }}>
+            <span style={{
+              display: 'inline-block',
+              background: THEME.primaryXLight, color: THEME.primary,
+              padding: '2px 9px', borderRadius: 5,
+              fontSize: 11, fontWeight: 600,
+            }}>
+              {npc.role}
+            </span>
+            {npc.birthday && (
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: 3,
+                background: '#fdf2f8', color: '#be185d',
+                padding: '2px 8px', borderRadius: 5,
+                fontSize: 11, fontWeight: 600,
+              }}>
+                🎂 {npc.birthday}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Location + schedule */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5, color: THEME.textMid }}>
-          <Icon name="mapPin" size={12} color={THEME.textMid} />
-          <span style={{ fontWeight: 500 }}>{npc.location}</span>
+      {/* Location + schedule (only when known) */}
+      {hasWhereabouts && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+          {npc.location && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5, color: THEME.textMid }}>
+              <Icon name="mapPin" size={12} color={THEME.textMid} />
+              <span style={{ fontWeight: 500 }}>{npc.location}</span>
+            </div>
+          )}
+          {npc.schedule && (
+            <div style={{ fontSize: 12, color: THEME.textMuted, paddingLeft: 17 }}>
+              {npc.schedule}
+            </div>
+          )}
         </div>
-        <div style={{ fontSize: 12, color: THEME.textMuted, paddingLeft: 17 }}>
-          {npc.schedule}
-        </div>
-      </div>
+      )}
 
       {/* Loved gifts */}
       {npc.lovedGifts.length > 0 && (
@@ -90,7 +129,32 @@ function NPCCard({ npc, density }) {
         </div>
       )}
 
-      {/* Quest */}
+      {/* Liked gifts */}
+      {npc.likedGifts.length > 0 && (
+        <div>
+          <div style={{
+            fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
+            textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
+          }}>
+            Liked Gifts
+          </div>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+            {npc.likedGifts.map(gift => (
+              <span key={gift} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+                background: THEME.primaryXLight, color: THEME.primary,
+                border: `1px solid ${THEME.primaryLight}`,
+                padding: '3px 9px', borderRadius: 999,
+                fontSize: 11, fontWeight: 500,
+              }}>
+                {gift}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* About / bio */}
       {npc.quest && (
         <div style={{
           padding: '10px 13px', borderRadius: 8,
@@ -98,7 +162,7 @@ function NPCCard({ npc, density }) {
           border: `1px solid ${THEME.primaryLight}`,
           fontSize: 12.5, color: THEME.textDark, lineHeight: 1.55,
         }}>
-          <span style={{ fontWeight: 700, color: THEME.primary }}>📜 Quest: </span>
+          <span style={{ fontWeight: 700, color: THEME.primary }}>About </span>
           {npc.quest}
         </div>
       )}

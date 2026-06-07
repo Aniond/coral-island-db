@@ -150,56 +150,11 @@ const forageables = [
 ];
 
 // ---- NPCS ------------------------------------------------------------------
-const npcs = [
-  {
-    name: 'Sam', role: 'General Store Owner', location: 'General Store',
-    schedule: 'Mon-Sat 9am-5pm, closed Wed all day, Sun opens at noon',
-    loved_gifts: 'Tropical fruits, Dragonfruit, Coconut', liked_gifts: 'Any crop produce',
-    quest_summary: 'Sells seeds at General Store. More crops unlock as Town Rank increases. Key for farming progression.'
-  },
-  {
-    name: 'Mark', role: 'Main Story Character', location: 'Various locations',
-    schedule: 'Visits farm early game, found around town',
-    loved_gifts: 'Gems, Ores, Minerals', liked_gifts: 'Cooked meals',
-    quest_summary: 'Unlocks Cavern access around Day 5-7. Primary driver of main story quests. Investigate mysteries of the island.'
-  },
-  {
-    name: 'Kira', role: 'Cavern Guide & Warrior', location: 'Cavern Entrance',
-    schedule: 'Found at cavern or training area',
-    loved_gifts: 'Gems, Rubies, Diamonds', liked_gifts: 'Ores, Geodes',
-    quest_summary: 'Gives player their first sword. Trains combat. Key NPC for cavern progression quests.'
-  },
-  {
-    name: 'Jack', role: 'Rancher', location: 'The Ranch',
-    schedule: 'Mon-Sat, ranch area',
-    loved_gifts: 'Animal products, Eggs, Milk', liked_gifts: 'Hay, Crops',
-    quest_summary: 'Sells animals: goats and quails unlock at Rank D, pigs and peafowl unlock at Rank C. Key for ranching progression.'
-  },
-  {
-    name: 'Dinda', role: 'Master Builder', location: 'Construction Office',
-    schedule: 'Mon-Fri business hours',
-    loved_gifts: 'Building materials, Wood, Stone', liked_gifts: 'Cooked food',
-    quest_summary: 'Upgrades farm buildings. Barn and Coop reach level 3 at Town Rank C. Works with Joko.'
-  },
-  {
-    name: 'Joko', role: 'Master Builder', location: 'Construction Office',
-    schedule: 'Mon-Fri business hours',
-    loved_gifts: 'Stone, Minerals, Gems', liked_gifts: 'Cooked food',
-    quest_summary: 'Partner to Dinda. Same building upgrade quests. Level 3 barn and coop unlocked at Rank C.'
-  },
-  {
-    name: 'Scott', role: 'Explorer & Archaeologist', location: 'Various / near Cavern ruins',
-    schedule: 'Found exploring around town and cavern entrance',
-    loved_gifts: 'Fossils, Museum donations, Geodes', liked_gifts: 'Minerals, Ores',
-    quest_summary: 'Investigates cavern ruins. Related to museum donation quests and uncovering island history.'
-  },
-  {
-    name: 'Ling', role: 'Tech & Automation Shopkeeper', location: 'Automation Store (unlocks mid-game)',
-    schedule: 'Store hours once unlocked',
-    loved_gifts: 'Gems, Crystals, Minerals', liked_gifts: 'Cooked tech-themed dishes',
-    quest_summary: 'Unlocks automation components. Sells Sturdy Computer with foraging component upgrade that shows all forage locations on map.'
-  }
-];
+// Full giftable roster (71 NPCs) with accurate loved/liked gifts, birthdays,
+// bios, and portrait art. Data mined from the game via the open-source
+// coral-island-guide project (github.com/koenigderluegner/coral-island-guide).
+// Regenerate with scripts/build-npcs.js if the game updates.
+const npcs = require('./data/npcs.json');
 
 /**
  * Inserts an array of row objects into `table` using a single multi-row
@@ -231,7 +186,7 @@ async function seed() {
     await insertRows(client, 'forageables',
       ['name', 'season', 'location', 'area', 'notes'], forageables);
     await insertRows(client, 'npcs',
-      ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary'], npcs);
+      ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary', 'birthday', 'image_url'], npcs);
 
     await client.query('COMMIT');
 
