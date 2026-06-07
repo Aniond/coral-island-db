@@ -2,25 +2,43 @@
 // (a.k.a. the "AI Guide" — talks only to our Express backend at POST /api/search;
 //  the Anthropic call is server-side, never in the browser.)
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
-// renders markdown-style **bold** inline
-function MsgLine({ text }) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return (
-    <span>
-      {parts.map((p, i) =>
-        p.startsWith('**') && p.endsWith('**')
-          ? <strong key={i}>{p.slice(2, -2)}</strong>
-          : <span key={i}>{p}</span>
-      )}
-    </span>
-  );
-}
+const MD_COMPONENTS = {
+  h1: ({ children }) => <div style={{ fontSize: 15, fontWeight: 700, color: THEME.textDark, marginBottom: 6, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 4 }}>{children}</div>,
+  h2: ({ children }) => <div style={{ fontSize: 13.5, fontWeight: 700, color: THEME.textDark, marginBottom: 5, marginTop: 10 }}>{children}</div>,
+  h3: ({ children }) => <div style={{ fontSize: 12.5, fontWeight: 700, color: THEME.textDark, marginBottom: 4, marginTop: 8 }}>{children}</div>,
+  p:  ({ children }) => <div style={{ marginBottom: 6, lineHeight: 1.65 }}>{children}</div>,
+  strong: ({ children }) => <strong style={{ fontWeight: 700, color: THEME.dark }}>{children}</strong>,
+  em: ({ children }) => <em style={{ color: '#6b7a74' }}>{children}</em>,
+  hr: () => <div style={{ height: 1, background: THEME.primaryLight, margin: '10px 0' }} />,
+  blockquote: ({ children }) => (
+    <div style={{ borderLeft: `3px solid ${THEME.primary}`, paddingLeft: 10, margin: '8px 0', color: '#6b7a74', fontStyle: 'italic', fontSize: 12 }}>
+      {children}
+    </div>
+  ),
+  ul: ({ children }) => <ul style={{ paddingLeft: 18, margin: '4px 0 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</ul>,
+  ol: ({ children }) => <ol style={{ paddingLeft: 18, margin: '4px 0 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</ol>,
+  li: ({ children }) => <li style={{ fontSize: 12.5, lineHeight: 1.6 }}>{children}</li>,
+  code: ({ inline, children }) => inline
+    ? <code style={{ background: 'rgba(15,118,110,0.08)', padding: '1px 5px', borderRadius: 4, fontSize: 11.5, fontFamily: 'monospace' }}>{children}</code>
+    : <pre style={{ background: 'rgba(15,118,110,0.06)', padding: '8px 10px', borderRadius: 6, fontSize: 11.5, overflowX: 'auto', margin: '6px 0' }}><code>{children}</code></pre>,
+  table: ({ children }) => (
+    <div style={{ overflowX: 'auto', margin: '8px 0' }}>
+      <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 12 }}>{children}</table>
+    </div>
+  ),
+  thead: ({ children }) => <thead style={{ background: THEME.primary }}>{children}</thead>,
+  th: ({ children }) => <th style={{ padding: '6px 10px', textAlign: 'left', color: 'white', fontWeight: 600, whiteSpace: 'nowrap', fontSize: 11.5 }}>{children}</th>,
+  td: ({ children }) => <td style={{ padding: '5px 10px', borderBottom: `1px solid ${THEME.primaryLight}`, verticalAlign: 'top' }}>{children}</td>,
+  tr: ({ children }) => <tr style={{ background: 'white' }}>{children}</tr>,
+};
 
 function ChatBubble({ msg }) {
   const isUser = msg.role === 'user';
@@ -28,12 +46,12 @@ function ChatBubble({ msg }) {
     <div style={{
       display: 'flex',
       flexDirection: isUser ? 'row-reverse' : 'row',
-      alignItems: 'flex-end',
+      alignItems: 'flex-start',
       gap: 8, marginBottom: 12,
     }}>
       {!isUser && (
         <div style={{
-          width: 26, height: 26, borderRadius: '50%', flexShrink: 0,
+          width: 26, height: 26, borderRadius: '50%', flexShrink: 0, marginTop: 2,
           background: THEME.primary,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
@@ -41,7 +59,7 @@ function ChatBubble({ msg }) {
         </div>
       )}
       <div style={{
-        maxWidth: '78%',
+        maxWidth: isUser ? '78%' : '90%',
         padding: '9px 13px',
         borderRadius: isUser ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
         background: isUser ? 'var(--accent-light, #fff7ed)' : THEME.primaryXLight,
@@ -49,11 +67,10 @@ function ChatBubble({ msg }) {
         fontSize: 12.5, lineHeight: 1.65,
         border: `1px solid ${isUser ? 'var(--accent-border, #fed7aa)' : THEME.primaryLight}`,
       }}>
-        {msg.content.split('\n').map((line, i, arr) => (
-          <div key={i} style={{ marginBottom: i < arr.length - 1 ? 3 : 0 }}>
-            <MsgLine text={line} />
-          </div>
-        ))}
+        {isUser
+          ? msg.content
+          : <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>{msg.content}</ReactMarkdown>
+        }
       </div>
     </div>
   );
