@@ -12,69 +12,145 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
 
-const MD_COMPONENTS = {
-  h1: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 15, fontWeight: 700, color: THEME.textDark, marginBottom: 6, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 4 }}>{children}</div>,
-  h2: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 13.5, fontWeight: 700, color: THEME.textDark, marginBottom: 5, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 3 }}>{children}</div>,
-  h3: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 12, fontWeight: 700, color: THEME.primary, marginBottom: 4, marginTop: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{children}</div>,
-  p:  ({ children }) => <div style={{ marginBottom: 6, lineHeight: 1.65 }}>{children}</div>,
-  strong: ({ children }) => <strong style={{ fontWeight: 700, color: THEME.dark }}>{children}</strong>,
-  em: ({ children }) => <em style={{ color: '#6b7a74' }}>{children}</em>,
-  hr: () => <div style={{ height: 1, background: THEME.primaryLight, margin: '10px 0' }} />,
-  blockquote: ({ children }) => (
-    <div style={{ borderLeft: `3px solid ${THEME.primary}`, paddingLeft: 10, margin: '8px 0', color: '#6b7a74', fontStyle: 'italic', fontSize: 12 }}>
-      {children}
-    </div>
-  ),
-  ul: ({ children }) => <ul style={{ paddingLeft: 18, margin: '4px 0 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</ul>,
-  ol: ({ children }) => <ol style={{ paddingLeft: 18, margin: '4px 0 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>{children}</ol>,
-  li: ({ children }) => <li style={{ fontSize: 12.5, lineHeight: 1.6 }}>{children}</li>,
-  code: ({ inline, children }) => inline
-    ? <code style={{ background: 'rgba(15,118,110,0.08)', padding: '1px 5px', borderRadius: 4, fontSize: 11.5, fontFamily: 'monospace' }}>{children}</code>
-    : <pre style={{ background: 'rgba(15,118,110,0.06)', padding: '8px 10px', borderRadius: 6, fontSize: 11.5, overflowX: 'auto', margin: '6px 0' }}><code>{children}</code></pre>,
-  table: ({ children }) => (
-    <div style={{ overflowX: 'auto', margin: '8px 0' }}>
-      <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: 12 }}>{children}</table>
-    </div>
-  ),
-  thead: ({ children }) => <thead style={{ background: THEME.primary }}>{children}</thead>,
-  th: ({ children }) => <th style={{ padding: '6px 10px', textAlign: 'left', color: 'white', fontWeight: 600, whiteSpace: 'nowrap', fontSize: 11.5 }}>{children}</th>,
-  td: ({ children }) => <td style={{ padding: '5px 10px', borderBottom: `1px solid ${THEME.primaryLight}`, verticalAlign: 'top' }}>{children}</td>,
-  tr: ({ children }) => <tr style={{ background: 'white' }}>{children}</tr>,
-};
+function makeMdComponents(large = false) {
+  const base = large ? 15 : 12.5;
+  return {
+    h1: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: large ? 22 : 15, fontWeight: 700, color: THEME.textDark, marginBottom: 8, marginTop: large ? 20 : 10, borderBottom: `2px solid ${THEME.primaryLight}`, paddingBottom: 6 }}>{children}</div>,
+    h2: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: large ? 18 : 13.5, fontWeight: 700, color: THEME.textDark, marginBottom: 6, marginTop: large ? 18 : 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 4 }}>{children}</div>,
+    h3: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: large ? 12 : 11, fontWeight: 700, color: THEME.primary, marginBottom: 5, marginTop: large ? 14 : 8, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{children}</div>,
+    p:  ({ children }) => <div style={{ marginBottom: 8, lineHeight: 1.7, fontSize: base }}>{children}</div>,
+    strong: ({ children }) => <strong style={{ fontWeight: 700, color: THEME.dark }}>{children}</strong>,
+    em: ({ children }) => <em style={{ color: '#6b7a74' }}>{children}</em>,
+    hr: () => <div style={{ height: 1, background: THEME.primaryLight, margin: '14px 0' }} />,
+    blockquote: ({ children }) => (
+      <div style={{ borderLeft: `3px solid ${THEME.primary}`, paddingLeft: 12, margin: '10px 0', color: '#6b7a74', fontStyle: 'italic', fontSize: base - 0.5, background: THEME.primaryXLight, borderRadius: '0 6px 6px 0', padding: '8px 8px 8px 12px' }}>
+        {children}
+      </div>
+    ),
+    ul: ({ children }) => <ul style={{ paddingLeft: 20, margin: '4px 0 10px', display: 'flex', flexDirection: 'column', gap: 3 }}>{children}</ul>,
+    ol: ({ children }) => <ol style={{ paddingLeft: 20, margin: '4px 0 10px', display: 'flex', flexDirection: 'column', gap: 3 }}>{children}</ol>,
+    li: ({ children }) => <li style={{ fontSize: base, lineHeight: 1.65 }}>{children}</li>,
+    code: ({ inline, children }) => inline
+      ? <code style={{ background: 'rgba(15,118,110,0.08)', padding: '1px 5px', borderRadius: 4, fontSize: base - 1, fontFamily: 'monospace' }}>{children}</code>
+      : <pre style={{ background: 'rgba(15,118,110,0.06)', padding: '10px 12px', borderRadius: 8, fontSize: base - 1, overflowX: 'auto', margin: '8px 0' }}><code>{children}</code></pre>,
+    table: ({ children }) => (
+      <div style={{ overflowX: 'auto', margin: '10px 0', borderRadius: 8, border: `1px solid ${THEME.primaryLight}`, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: large ? 13.5 : 12 }}>{children}</table>
+      </div>
+    ),
+    thead: ({ children }) => <thead style={{ background: THEME.primary }}>{children}</thead>,
+    th: ({ children }) => <th style={{ padding: large ? '9px 14px' : '6px 10px', textAlign: 'left', color: 'white', fontWeight: 600, whiteSpace: 'nowrap', fontSize: large ? 13 : 11.5 }}>{children}</th>,
+    td: ({ children }) => <td style={{ padding: large ? '8px 14px' : '5px 10px', borderBottom: `1px solid ${THEME.primaryLight}`, verticalAlign: 'top' }}>{children}</td>,
+    tr: ({ children, ...props }) => <tr {...props} style={{ background: 'white' }}>{children}</tr>,
+  };
+}
 
-function ChatBubble({ msg }) {
-  const isUser = msg.role === 'user';
+const MD_COMPONENTS       = makeMdComponents(false);
+const MD_COMPONENTS_LARGE = makeMdComponents(true);
+
+function ExpandModal({ content, query, onClose }) {
+  React.useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   return (
     <div style={{
-      display: 'flex',
-      flexDirection: isUser ? 'row-reverse' : 'row',
-      alignItems: 'flex-start',
-      gap: 8, marginBottom: 12,
-    }}>
-      {!isUser && (
-        <div style={{
-          width: 26, height: 26, borderRadius: '50%', flexShrink: 0, marginTop: 2,
-          background: THEME.primary,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <Icon name="sparkles" size={13} color="white" />
-        </div>
-      )}
+      position: 'fixed', inset: 0, zIndex: 2000,
+      background: 'rgba(7,30,28,0.7)', backdropFilter: 'blur(4px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '24px',
+      animation: 'fadeUp 0.18s ease',
+    }} onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div style={{
-        maxWidth: isUser ? '78%' : '90%',
-        padding: '9px 13px',
-        borderRadius: isUser ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
-        background: isUser ? 'var(--accent-light, #fff7ed)' : THEME.primaryXLight,
-        color: isUser ? '#7c2d12' : THEME.textDark,
-        fontSize: 12.5, lineHeight: 1.65,
-        border: `1px solid ${isUser ? 'var(--accent-border, #fed7aa)' : THEME.primaryLight}`,
+        background: 'white', borderRadius: 16, width: '100%', maxWidth: 860,
+        maxHeight: '88vh', display: 'flex', flexDirection: 'column',
+        boxShadow: '0 32px 80px rgba(0,0,0,0.28)',
+        overflow: 'hidden',
       }}>
-        {isUser
-          ? msg.content
-          : <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>{msg.content}</ReactMarkdown>
-        }
+        {/* Header */}
+        <div style={{
+          padding: '16px 22px', borderBottom: `1px solid ${THEME.primaryLight}`,
+          display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0,
+          background: THEME.primary,
+        }}>
+          <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="sparkles" size={16} color="white" />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ color: 'white', fontWeight: 700, fontSize: 14, fontFamily: "'Playfair Display', serif" }}>AI Guide Result</div>
+            {query && <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11.5, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>"{query}"</div>}
+          </div>
+          <button onClick={onClose} style={{
+            background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 8,
+            color: 'white', cursor: 'pointer', padding: '6px 12px',
+            fontSize: 12.5, fontFamily: "'Inter', sans-serif", display: 'flex', alignItems: 'center', gap: 5,
+          }}>
+            <Icon name="x" size={14} color="white" /> Close
+          </button>
+        </div>
+        {/* Content */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '24px 28px', fontFamily: "'Inter', sans-serif", color: THEME.textDark }}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS_LARGE}>{content}</ReactMarkdown>
+        </div>
       </div>
     </div>
+  );
+}
+
+function ChatBubble({ msg, query }) {
+  const [expanded, setExpanded] = React.useState(false);
+  const isUser = msg.role === 'user';
+  return (
+    <>
+      {expanded && <ExpandModal content={msg.content} query={query} onClose={() => setExpanded(false)} />}
+      <div style={{
+        display: 'flex',
+        flexDirection: isUser ? 'row-reverse' : 'row',
+        alignItems: 'flex-start',
+        gap: 8, marginBottom: 12,
+      }}>
+        {!isUser && (
+          <div style={{
+            width: 26, height: 26, borderRadius: '50%', flexShrink: 0, marginTop: 2,
+            background: THEME.primary,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <Icon name="sparkles" size={13} color="white" />
+          </div>
+        )}
+        <div style={{ maxWidth: isUser ? '78%' : '90%', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{
+            padding: '9px 13px',
+            borderRadius: isUser ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
+            background: isUser ? 'var(--accent-light, #fff7ed)' : THEME.primaryXLight,
+            color: isUser ? '#7c2d12' : THEME.textDark,
+            fontSize: 12.5, lineHeight: 1.65,
+            border: `1px solid ${isUser ? 'var(--accent-border, #fed7aa)' : THEME.primaryLight}`,
+          }}>
+            {isUser
+              ? msg.content
+              : <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>{msg.content}</ReactMarkdown>
+            }
+          </div>
+          {!isUser && (
+            <button onClick={() => setExpanded(true)} style={{
+              alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 5,
+              background: 'none', border: `1px solid ${THEME.primaryLight}`,
+              borderRadius: 6, padding: '3px 10px', cursor: 'pointer',
+              color: THEME.primary, fontSize: 11, fontWeight: 500,
+              fontFamily: "'Inter', sans-serif",
+              transition: 'all 0.12s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = THEME.primaryXLight; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}>
+              <Icon name="expand" size={12} color={THEME.primary} /> Expand
+            </button>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -122,19 +198,17 @@ export default function AISearch({ isOpen, onToggle }) {
     if (!t) return;
     const userId = Date.now();
     const aiId = userId + 1;
-    setMessages(prev => [...prev, { role: 'user', content: t, id: userId }]);
+    setMessages(prev => [...prev, { role: 'user', content: t, id: userId, query: t }]);
     setInput('');
     setTyping(true);
 
     let started = false;
     try {
-      // Streams the answer from POST /api/search; the typing indicator shows
-      // until the first chunk arrives, then the bubble grows as tokens stream in.
       await streamSearch(t, (chunk) => {
         if (!started) {
           started = true;
           setTyping(false);
-          setMessages(prev => [...prev, { role: 'assistant', content: chunk, id: aiId }]);
+          setMessages(prev => [...prev, { role: 'assistant', content: chunk, id: aiId, query: t }]);
         } else {
           setMessages(prev => prev.map(m => (m.id === aiId ? { ...m, content: m.content + chunk } : m)));
         }
@@ -270,7 +344,7 @@ export default function AISearch({ isOpen, onToggle }) {
             </div>
           ) : (
             <>
-              {messages.map(msg => <ChatBubble key={msg.id} msg={msg} />)}
+              {messages.map(msg => <ChatBubble key={msg.id} msg={msg} query={msg.query} />)}
               {typing && <TypingBubble />}
             </>
           )}
