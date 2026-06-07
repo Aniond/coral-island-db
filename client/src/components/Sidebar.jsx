@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { id: 'caves',       label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
   { id: 'foraging',    label: 'Foraging',       shortLabel: 'Forage',  icon: 'sprout'   },
   { id: 'collections', label: 'Collections',    shortLabel: 'Collect', icon: 'scroll'   },
+  { id: 'recipes',     label: 'Recipes',        shortLabel: 'Recipes', icon: 'cookingPot' },
   { id: 'npcs',        label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
   { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
   { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },

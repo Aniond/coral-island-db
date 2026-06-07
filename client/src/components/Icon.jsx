@@ -21,6 +21,8 @@ export default function Icon({ name, size = 20, color = 'currentColor', strokeWi
     expand:   <><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></>,
     check:    <path d="M20 6 9 17l-5-5"/>,
     route:    <><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></>,
+    cookingPot: <><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="m4 8 16-4"/><path d="m8.86 6.78-.45-1.81a2 2 0 0 1 1.46-2.43l1.94-.48a2 2 0 0 1 2.43 1.46l.45 1.8"/></>,
+    zap:      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"

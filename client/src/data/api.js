@@ -76,6 +76,38 @@ function mapCollectible(r) {
   };
 }
 
+function mapCookingRecipe(r) {
+  return {
+    id: r.id,
+    kind: 'cooking',
+    name: r.name,
+    utensil: r.utensil,                 // Oven, Pot, Grill, Chef Knife…
+    ingredients: r.ingredients || [],   // [{name, amount, icon}]
+    buff: r.buff,                       // 'Farming +3' | null
+    buffDuration: r.buff_duration_min,  // minutes
+    health: r.health,
+    energy: r.energy,
+    sellPrice: r.sell_price,
+    description: r.description,
+    image: r.image_url,
+  };
+}
+
+function mapCraftingRecipe(r) {
+  return {
+    id: r.id,
+    kind: 'crafting',
+    name: r.name,
+    outputAmount: r.output_amount,      // usually 1
+    category: r.category,               // Misc, Farming, Artisan, Decor, Scarecrow
+    masteryType: r.mastery_type,        // unlock skill | null
+    masteryLevel: r.mastery_level,
+    ingredients: r.ingredients || [],   // [{name, amount, icon}]
+    description: r.description,
+    image: r.image_url,
+  };
+}
+
 const NPC_PALETTE = ['#0369a1', '#15803d', '#b45309', '#9333ea', '#0f766e', '#dc2626', '#d97706', '#ec4899'];
 
 function mapNpc(r, i) {
@@ -102,6 +134,8 @@ export async function fetchCaves()       { return (await getJson('/caves')).map(
 export async function fetchForageables() { return (await getJson('/forageables')).map(mapForageable); }
 export async function fetchNpcs()        { return (await getJson('/npcs')).map(mapNpc); }
 export async function fetchCollectibles() { return (await getJson('/collectibles')).map(mapCollectible); }
+export async function fetchCookingRecipes()  { return (await getJson('/cooking')).map(mapCookingRecipe); }
+export async function fetchCraftingRecipes() { return (await getJson('/crafting')).map(mapCraftingRecipe); }
 
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.
