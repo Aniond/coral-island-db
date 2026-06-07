@@ -1,48 +1,25 @@
 // ── Login / Landing Page ─────────────────────────────────────────────────────
-// Split hero (brand + cross-database AI search) + login form.
-// Auth: Supabase — email/password + Google OAuth.
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase.js';
-import { crops, caves, foraging, npcs } from '../data/index.js';
 
-const { useState, useEffect, useRef } = React;
+const { useState } = React;
 
 const C = {
-  primary:     '#0f766e',
-  dark:        '#134e4a',
-  accent:      '#f97316',
-  accentLight: '#fff7ed',
-  cream:       '#fefce8',
-};
-
-const PLACEHOLDERS = [
-  'Ask anything about Coral Island…',
-  "What's the best crop for summer?",
-  'How do I unlock the Water Mine?',
-  "What gifts does Lily love?",
-  'Best ways to earn money early?',
-  'What can I forage in fall?',
-];
-
-const TYPE_CFG = {
-  crops:    { bg: '#dcfce7', color: '#166534', dot: '#16a34a', label: 'Crop'   },
-  caves:    { bg: '#fef3c7', color: '#92400e', dot: '#d97706', label: 'Cave'   },
-  foraging: { bg: '#d1fae5', color: '#065f46', dot: '#10b981', label: 'Forage' },
-  npcs:     { bg: '#ede9fe', color: '#5b21b6', dot: '#8b5cf6', label: 'NPC'    },
+  primary: '#0f766e',
+  dark:    '#134e4a',
+  accent:  '#f97316',
 };
 
 function Ico({ n, s = 20, c = 'currentColor', w = 1.75 }) {
   const d = {
-    leaf:       <><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></>,
-    sparkles:   <><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></>,
-    search:     <><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></>,
-    arrowRight: <><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>,
-    eye:        <><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
-    eyeOff:     <><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></>,
-    x:          <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
-    user:       <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
-    lock:       <><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+    leaf:     <><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></>,
+    sparkles: <><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></>,
+    users:    <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>,
+    lock:     <><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+    eye:      <><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
+    eyeOff:   <><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></>,
+    user:     <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></>,
   };
   return (
     <svg width={s} height={s} viewBox="0 0 24 24" fill="none"
@@ -63,152 +40,11 @@ function GoogleLogo() {
   );
 }
 
-function runSearch(q, filter) {
-  if (!q.trim() || q.length < 2) return [];
-  const lq = q.toLowerCase();
-  const out = [];
-  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-
-  if (!filter || filter === 'crops')
-    crops.filter(c => c.name.toLowerCase().includes(lq)).slice(0, 3)
-      .forEach(c => out.push({ type: 'crops', name: c.name, sub: `${c.type} · ${cap(c.season)} · ${c.sellPrice}g` }));
-
-  if (!filter || filter === 'caves')
-    caves.filter(c => c.name.toLowerCase().includes(lq)).slice(0, 3)
-      .forEach(c => out.push({ type: 'caves', name: c.name, sub: `${c.type} · ${cap(c.mine)} Mine · Floors ${c.floors}` }));
-
-  if (!filter || filter === 'foraging')
-    foraging.filter(f => f.name.toLowerCase().includes(lq)).slice(0, 2)
-      .forEach(f => out.push({ type: 'foraging', name: f.name, sub: `${f.season === 'all' ? 'All Seasons' : cap(f.season)} · ${f.location}` }));
-
-  if (!filter || filter === 'npcs')
-    npcs.filter(n => n.name.toLowerCase().includes(lq) || n.role.toLowerCase().includes(lq)).slice(0, 2)
-      .forEach(n => out.push({ type: 'npcs', name: n.name, sub: `${n.role} · ${n.location}` }));
-
-  return out.slice(0, 8);
-}
-
-function SearchHero() {
-  const [q,       setQ]       = useState('');
-  const [filter,  setFilter]  = useState('');
-  const [results, setResults] = useState([]);
-  const [show,    setShow]    = useState(false);
-  const [phIdx,   setPhIdx]   = useState(0);
-  const [focus,   setFocus]   = useState(false);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (focus) return;
-    const id = setInterval(() => setPhIdx(i => (i + 1) % PLACEHOLDERS.length), 3200);
-    return () => clearInterval(id);
-  }, [focus]);
-
-  useEffect(() => {
-    if (q.length >= 2) { setResults(runSearch(q, filter)); setShow(true); }
-    else { setResults([]); setShow(false); }
-  }, [q, filter]);
-
-  const TABS = [
-    { id: '', label: 'All' }, { id: 'crops', label: 'Crops' },
-    { id: 'caves', label: 'Caves' }, { id: 'foraging', label: 'Foraging' },
-    { id: 'npcs', label: 'NPCs' },
-  ];
-
-  return (
-    <div style={{ width: '100%', maxWidth: 560, position: 'relative' }}>
-      <div style={{ display: 'flex', gap: 6, marginBottom: 10, flexWrap: 'wrap' }}>
-        {TABS.map(t => (
-          <button key={t.id} onClick={() => setFilter(t.id)} style={{
-            padding: '5px 13px', borderRadius: 999, border: 'none', cursor: 'pointer',
-            background: filter === t.id ? 'rgba(255,255,255,0.22)' : 'rgba(255,255,255,0.08)',
-            color: filter === t.id ? 'white' : 'rgba(255,255,255,0.55)',
-            fontSize: 12.5, fontWeight: filter === t.id ? 600 : 400,
-            fontFamily: "'Inter', sans-serif",
-            boxShadow: filter === t.id ? 'inset 0 0 0 1px rgba(255,255,255,0.3)' : 'none',
-            transition: 'all 0.14s',
-          }}>
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <div style={{
-        display: 'flex', alignItems: 'center',
-        background: 'white', borderRadius: 18,
-        padding: '5px 5px 5px 18px',
-        boxShadow: focus
-          ? '0 0 0 3px rgba(249,115,22,0.5), 0 12px 40px rgba(0,0,0,0.28)'
-          : '0 10px 40px rgba(0,0,0,0.24)',
-        transition: 'box-shadow 0.2s',
-      }}>
-        <div style={{ marginRight: 10, display: 'flex', flexShrink: 0 }}>
-          <Ico n="sparkles" s={19} c={focus ? C.accent : '#9ca3af'} />
-        </div>
-        <input
-          ref={inputRef}
-          value={q}
-          onChange={e => setQ(e.target.value)}
-          onFocus={() => { setFocus(true); if (results.length) setShow(true); }}
-          onBlur={() => { setFocus(false); setTimeout(() => setShow(false), 160); }}
-          placeholder={focus ? PLACEHOLDERS[0] : PLACEHOLDERS[phIdx]}
-          style={{
-            flex: 1, border: 'none', outline: 'none', background: 'transparent',
-            fontSize: 15, color: C.dark, fontFamily: "'Inter', sans-serif",
-            padding: '11px 0',
-          }}
-        />
-        {q && (
-          <button type="button" onClick={() => { setQ(''); inputRef.current?.focus(); }}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', padding: '4px 6px', color: '#9ca3af' }}>
-            <Ico n="x" s={16} />
-          </button>
-        )}
-        <div style={{
-          flexShrink: 0, padding: '10px 18px', borderRadius: 13,
-          background: '#e5e7eb',
-          display: 'flex', alignItems: 'center', gap: 7,
-          color: '#9ca3af', fontSize: 13.5, fontWeight: 600,
-          fontFamily: "'Inter', sans-serif",
-        }}>
-          <Ico n="search" s={15} c="#9ca3af" /> Sign in to search
-        </div>
-      </div>
-
-      {show && results.length > 0 && (
-        <div style={{
-          position: 'absolute', top: 'calc(100% + 8px)', left: 0, right: 0,
-          background: 'white', borderRadius: 14, overflow: 'hidden',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.22)', zIndex: 50,
-          animation: 'fadeUp 0.14s ease',
-        }}>
-          {results.map((r, i) => {
-            const tc = TYPE_CFG[r.type];
-            return (
-              <div key={i} style={{
-                display: 'flex', alignItems: 'center', gap: 11,
-                padding: '11px 15px',
-                borderBottom: i < results.length - 1 ? '1px solid #f0fdfa' : 'none',
-                opacity: 0.6,
-              }}>
-                <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: tc.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: tc.dot }} />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 13.5, fontWeight: 600, color: C.dark, marginBottom: 1 }}>{r.name}</div>
-                  <div style={{ fontSize: 11.5, color: '#6b7a74' }}>{r.sub}</div>
-                </div>
-                <span style={{ fontSize: 10.5, fontWeight: 600, color: tc.color, background: tc.bg, padding: '2px 8px', borderRadius: 999 }}>{tc.label}</span>
-              </div>
-            );
-          })}
-          <div style={{ padding: '10px 15px', background: '#f8fffe', borderTop: '1px solid #e0faf6', fontSize: 12.5, color: C.primary, fontWeight: 500 }}>
-            🔒 Sign in to use AI search
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+const FEATURES = [
+  { icon: 'leaf',     title: 'Full Database',   desc: 'Every crop, cave item, forageable and NPC in one place.' },
+  { icon: 'sparkles', title: 'AI Guide',         desc: 'Ask anything — get instant answers from an AI trained on the game.' },
+  { icon: 'users',    title: 'Members Only',     desc: 'Create a free account to unlock all features.' },
+];
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -267,7 +103,7 @@ function LoginForm() {
       )}
 
       <div style={{ marginBottom: 16 }}>
-        <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#374151', marginBottom: 6, letterSpacing: '0.02em' }}>Email address</label>
+        <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#374151', marginBottom: 6 }}>Email address</label>
         <div style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: fieldErr.email ? '#dc2626' : '#9ca3af', display: 'flex' }}>
             <Ico n="user" s={16} />
@@ -283,9 +119,7 @@ function LoginForm() {
       </div>
 
       <div style={{ marginBottom: 22 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-          <label style={{ fontSize: 12.5, fontWeight: 600, color: '#374151', letterSpacing: '0.02em' }}>Password</label>
-        </div>
+        <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#374151', marginBottom: 6 }}>Password</label>
         <div style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: fieldErr.password ? '#dc2626' : '#9ca3af', display: 'flex' }}>
             <Ico n="lock" s={16} />
@@ -370,6 +204,7 @@ export default function LoginPage() {
           backgroundSize: '40px 40px',
         }} />
 
+        {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 11, position: 'relative', zIndex: 2 }}>
           <div style={{ width: 40, height: 40, borderRadius: 11, flexShrink: 0, background: 'linear-gradient(135deg, #0d9488, #f97316)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Ico n="leaf" s={20} c="white" />
@@ -380,32 +215,34 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 2, gap: 22, paddingTop: 20 }}>
+        {/* Hero content */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 2, gap: 36 }}>
           <div style={{ animation: 'fadeUp 0.5s ease forwards' }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(26px, 3.2vw, 46px)', fontWeight: 700, color: 'white', lineHeight: 1.15, marginBottom: 12 }}>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 3.5vw, 50px)', fontWeight: 700, color: 'white', lineHeight: 1.15, marginBottom: 16 }}>
               Your complete<br />
               <span style={{ color: '#f97316', fontStyle: 'italic' }}>island</span> companion
             </h1>
-            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, lineHeight: 1.65, maxWidth: 420 }}>
-              Search crops, caves, foraging spots and NPC guides — all in one place. Sign in to unlock the AI guide.
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15.5, lineHeight: 1.7, maxWidth: 440 }}>
+              The ultimate Coral Island reference — crops, caves, forageables, NPCs, and an AI guide. Sign in to get started.
             </p>
           </div>
-          <div style={{ animation: 'fadeUp 0.5s ease 0.1s forwards' }}>
-            <SearchHero />
-          </div>
-          <div style={{ animation: 'fadeUp 0.5s ease 0.2s forwards' }}>
-            <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 9 }}>Popular searches</p>
-            <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
-              {['Best spring crops', 'Water Mine', "Lily's gifts", 'Cranberry', 'Ancient Relic'].map(q => (
-                <span key={q} style={{
-                  padding: '5px 13px', borderRadius: 999, background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.13)', color: 'rgba(255,255,255,0.45)',
-                  fontSize: 12, fontFamily: "'Inter', sans-serif",
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, animation: 'fadeUp 0.5s ease 0.12s forwards' }}>
+            {FEATURES.map(f => (
+              <div key={f.title} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <div style={{
+                  width: 44, height: 44, borderRadius: 13, flexShrink: 0,
+                  background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  {q}
-                </span>
-              ))}
-            </div>
+                  <Ico n={f.icon} s={20} c="#5eead4" />
+                </div>
+                <div>
+                  <div style={{ color: 'white', fontWeight: 600, fontSize: 14, marginBottom: 2 }}>{f.title}</div>
+                  <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12.5 }}>{f.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -433,7 +270,7 @@ export default function LoginPage() {
         <div style={{ marginBottom: 28 }}>
           <div style={{ fontSize: 28, marginBottom: 8 }}>🌴</div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 27, fontWeight: 700, color: C.dark, marginBottom: 7 }}>Welcome back</h2>
-          <p style={{ fontSize: 13.5, color: '#6b7a74', lineHeight: 1.55 }}>Sign in to access AI search, favourites &amp; your island notes.</p>
+          <p style={{ fontSize: 13.5, color: '#6b7a74', lineHeight: 1.55 }}>Sign in to access the full database and AI guide.</p>
         </div>
 
         <LoginForm />
