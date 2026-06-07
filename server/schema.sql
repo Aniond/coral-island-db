@@ -92,3 +92,21 @@ CREATE TABLE npcs (
   birthday VARCHAR(50),       -- e.g. 'Summer 8' (season + day)
   image_url TEXT              -- portrait URL (coral.guide head-portraits)
 );
+
+-- App-level config (key/value). NOT dropped on re-seed — it holds admin-tuned
+-- settings like the AI-search testing limits, which must survive a data re-seed.
+CREATE TABLE IF NOT EXISTS app_settings (
+  key        VARCHAR(64) PRIMARY KEY,
+  value      TEXT,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Seed the AI-search testing limits (editable from the admin dashboard).
+-- global_daily_search_limit:        total AI searches/day across everyone
+-- default_user_daily_search_limit:  fallback per-user/day cap when no explicit limit is set
+-- search_limits_enabled:            master on/off switch for all the above
+INSERT INTO app_settings (key, value) VALUES
+  ('global_daily_search_limit', '50'),
+  ('default_user_daily_search_limit', '50'),
+  ('search_limits_enabled', 'true')
+ON CONFLICT (key) DO NOTHING;

@@ -13,6 +13,7 @@ const pool = new Pool({
 const MIGRATIONS = [
   '001_auth_tables.sql',
   '002_daily_search_limit.sql',
+  '003_search_limits.sql',
 ];
 
 async function main() {

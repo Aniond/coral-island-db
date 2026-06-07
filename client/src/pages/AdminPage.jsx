@@ -51,6 +51,131 @@ function StatCard({ icon, label, value, sub, color }) {
   );
 }
 
+function Toggle({ on, busy, onChange }) {
+  return (
+    <button
+      onClick={() => !busy && onChange(!on)}
+      disabled={busy}
+      title={on ? 'Limits are enforced — click to turn off' : 'Limits are off — click to turn on'}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'none', border: 'none', padding: 0, cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.6 : 1 }}
+    >
+      <span style={{ width: 40, height: 23, borderRadius: 999, position: 'relative', flexShrink: 0, background: on ? C.primary : '#cbd5e1', transition: 'background 0.15s' }}>
+        <span style={{ position: 'absolute', top: 2.5, left: on ? 19.5 : 2.5, width: 18, height: 18, borderRadius: '50%', background: 'white', transition: 'left 0.15s', boxShadow: '0 1px 2px rgba(0,0,0,0.25)' }} />
+      </span>
+      <span style={{ fontSize: 13, fontWeight: 600, color: on ? C.primary : '#9ca3af' }}>
+        {on ? 'Limits ON' : 'Limits OFF'}
+      </span>
+    </button>
+  );
+}
+
+// Editable AI-search testing limits + live usage, on the Stats tab.
+function LimitsPanel({ token, stats, reload }) {
+  const [glob,    setGlob]    = useState('');
+  const [def,     setDef]     = useState('');
+  const [enabled, setEnabled] = useState(true);
+  const [busy,    setBusy]    = useState(false);
+  const [msg,     setMsg]     = useState('');
+
+  useEffect(() => {
+    if (!stats) return;
+    setGlob(stats.globalDailyLimit != null ? String(stats.globalDailyLimit) : '');
+    setDef(stats.defaultUserLimit  != null ? String(stats.defaultUserLimit)  : '');
+    setEnabled(stats.limitsEnabled !== false);
+  }, [stats]);
+
+  async function patch(body, okMsg) {
+    setBusy(true); setMsg('');
+    try {
+      const r = await authFetch('/api/admin/settings', token, { method: 'PATCH', body: JSON.stringify(body) });
+      if (!r.ok) {
+        let m = `Failed (${r.status})`;
+        try { m = (await r.json()).error || m; } catch { /* ignore */ }
+        throw new Error(m);
+      }
+      setMsg(okMsg || 'Saved');
+      reload();
+    } catch (e) { setMsg(e.message); }
+    finally { setBusy(false); }
+  }
+
+  function saveLimits() {
+    const g = glob.trim(), d = def.trim();
+    const gv = g === '' ? null : parseInt(g, 10);
+    const dv = d === '' ? null : parseInt(d, 10);
+    if ((g !== '' && (isNaN(gv) || gv < 1)) || (d !== '' && (isNaN(dv) || dv < 1))) {
+      setMsg('Enter positive numbers, or leave blank for no cap.');
+      return;
+    }
+    patch({ globalDailyLimit: gv, defaultUserLimit: dv }, 'Limits saved');
+  }
+
+  const used = stats?.searchesToday ?? 0;
+  const cap  = stats?.globalDailyLimit ?? null;
+  const pct  = cap ? Math.min(100, Math.round((used / cap) * 100)) : 0;
+  const over = cap != null && used >= cap;
+
+  const fieldStyle = {
+    width: 90, padding: '7px 10px', borderRadius: 8, fontSize: 13,
+    border: '1.5px solid #e5e7eb', outline: 'none', color: C.dark,
+    fontFamily: "'Inter', sans-serif",
+  };
+
+  return (
+    <div style={{ marginTop: 24, background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '20px 22px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>AI Search Testing Limits</div>
+          <div style={{ fontSize: 12.5, color: '#9ca3af', marginTop: 2 }}>
+            Guards against unexpectedly burning Anthropic credits. Flip off when you need unrestricted testing.
+          </div>
+        </div>
+        <Toggle on={enabled} busy={busy} onChange={(next) => { setEnabled(next); patch({ limitsEnabled: next }, next ? 'Limits enabled' : 'Limits disabled'); }} />
+      </div>
+
+      {/* Today's usage vs the global cap */}
+      <div style={{ marginTop: 18, opacity: enabled ? 1 : 0.5 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, marginBottom: 6 }}>
+          <span style={{ color: '#6b7280', fontWeight: 600 }}>Today's searches (all users)</span>
+          <span style={{ fontWeight: 700, color: over ? '#dc2626' : C.dark }}>
+            {used}{cap != null ? ` / ${cap}` : ' (no global cap)'}
+          </span>
+        </div>
+        {cap != null && (
+          <div style={{ height: 8, borderRadius: 999, background: '#f1f5f9', overflow: 'hidden' }}>
+            <div style={{ width: `${pct}%`, height: '100%', borderRadius: 999, background: over ? '#dc2626' : C.primary, transition: 'width 0.2s' }} />
+          </div>
+        )}
+      </div>
+
+      {/* Editable caps */}
+      <div style={{ marginTop: 18, display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'flex-end', opacity: enabled ? 1 : 0.5 }}>
+        <label style={{ display: 'flex', flexDirection: 'column', gap: 5, fontSize: 12, fontWeight: 600, color: '#6b7280' }}>
+          Global daily cap
+          <input type="number" min="1" value={glob} onChange={e => setGlob(e.target.value)} placeholder="no cap" style={fieldStyle} />
+        </label>
+        <label style={{ display: 'flex', flexDirection: 'column', gap: 5, fontSize: 12, fontWeight: 600, color: '#6b7280' }}>
+          Per-user default
+          <input type="number" min="1" value={def} onChange={e => setDef(e.target.value)} placeholder="no cap" style={fieldStyle} />
+        </label>
+        <button
+          onClick={saveLimits}
+          disabled={busy}
+          style={{ padding: '8px 18px', borderRadius: 8, background: C.primary, border: 'none', color: 'white', fontSize: 13, fontWeight: 600, cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.6 : 1 }}
+        >
+          Save limits
+        </button>
+        {msg && <span style={{ fontSize: 12.5, color: msg.toLowerCase().includes('fail') || msg.toLowerCase().includes('enter') ? '#dc2626' : '#15803d', fontWeight: 600 }}>{msg}</span>}
+      </div>
+
+      <div style={{ marginTop: 14, fontSize: 11.5, color: '#9ca3af', lineHeight: 1.5 }}>
+        Blank = no cap for that scope. The <b>global cap</b> stops all AI searches once the day's total is reached; the
+        {' '}<b>per-user default</b> applies to anyone without an explicit limit on the Users tab. Counts reset at midnight UTC.
+      </div>
+    </div>
+  );
+}
+
 function StatsTab({ token }) {
   const [stats, setStats] = useState(null);
   const [err,   setErr]   = useState('');
@@ -76,6 +201,9 @@ function StatsTab({ token }) {
         <StatCard icon="search" label="Total Searches" value={stats?.totalSearches} sub="all time"               color={C.accent} />
         <StatCard icon="chart"  label="Searches Today" value={stats?.searchesToday} sub="since midnight UTC"     color="#0ea5e9" />
       </div>
+
+      <LimitsPanel token={token} stats={stats} reload={load} />
+
       <button onClick={load} style={{
         marginTop: 20, display: 'flex', alignItems: 'center', gap: 6,
         background: 'none', border: `1px solid #e5e7eb`, borderRadius: 8,
@@ -102,6 +230,8 @@ function RoleBadge({ role }) {
 
 function UsersTab({ token, currentUserId }) {
   const [users,        setUsers]        = useState([]);
+  const [defaultLimit, setDefaultLimit] = useState(null);
+  const [limitsEnabled,setLimitsEnabled]= useState(true);
   const [loading,      setLoading]      = useState(true);
   const [err,          setErr]          = useState('');
   const [busy,         setBusy]         = useState({});
@@ -113,7 +243,14 @@ function UsersTab({ token, currentUserId }) {
     try {
       const r = await authFetch('/api/admin/users', token);
       if (!r.ok) throw new Error(await r.text());
-      setUsers(await r.json());
+      const data = await r.json();
+      // New shape: { users, defaultUserLimit, limitsEnabled } (tolerate old array shape)
+      const list = Array.isArray(data) ? data : (data.users || []);
+      setUsers(list);
+      if (!Array.isArray(data)) {
+        setDefaultLimit(data.defaultUserLimit ?? null);
+        setLimitsEnabled(data.limitsEnabled !== false);
+      }
     } catch (e) { setErr(e.message); }
     finally { setLoading(false); }
   }, [token]);
@@ -164,7 +301,14 @@ function UsersTab({ token, currentUserId }) {
   return (
     <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
       <div style={{ padding: '14px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>{users.length} users</span>
+        <span style={{ fontSize: 13, fontWeight: 600, color: '#374151' }}>
+          {users.length} users
+          {!limitsEnabled && (
+            <span style={{ marginLeft: 10, fontSize: 11.5, fontWeight: 600, color: '#b45309', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 999, padding: '2px 9px' }}>
+              Limits OFF
+            </span>
+          )}
+        </span>
         <button onClick={load} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', display: 'flex' }}>
           <Ico n="refresh" s={15} />
         </button>
@@ -179,7 +323,10 @@ function UsersTab({ token, currentUserId }) {
             </tr>
           </thead>
           <tbody>
-            {users.map((u, i) => (
+            {users.map((u, i) => {
+              // Effective per-user cap: explicit value, else the configured default.
+              const eff = u.dailyLimit != null ? u.dailyLimit : defaultLimit;
+              return (
               <tr key={u.id} style={{ borderTop: i > 0 ? '1px solid #f3f4f6' : 'none' }}>
                 <td style={{ padding: '12px 16px', fontSize: 13.5, color: C.dark }}>
                   {u.email}
@@ -197,7 +344,7 @@ function UsersTab({ token, currentUserId }) {
                         value={limitInput}
                         onChange={e => setLimitInput(e.target.value)}
                         onKeyDown={e => { if (e.key === 'Enter') saveLimit(u.id); if (e.key === 'Escape') setEditingLimit(null); }}
-                        placeholder="∞"
+                        placeholder="default"
                         autoFocus
                         style={{
                           width: 58, padding: '4px 7px', borderRadius: 6, fontSize: 12.5,
@@ -222,7 +369,7 @@ function UsersTab({ token, currentUserId }) {
                   ) : (
                     <button
                       onClick={() => startEditLimit(u.id, u.dailyLimit)}
-                      title="Click to set limit"
+                      title="Click to set a per-user limit (leave blank to use the default)"
                       style={{
                         background: u.dailyLimit !== null ? '#f0fdf4' : '#f9fafb',
                         border: `1px solid ${u.dailyLimit !== null ? '#86efac' : '#e5e7eb'}`,
@@ -231,19 +378,21 @@ function UsersTab({ token, currentUserId }) {
                         color: u.dailyLimit !== null ? '#15803d' : '#9ca3af',
                       }}
                     >
-                      {u.dailyLimit !== null ? `${u.dailyLimit}/day` : '∞ unlimited'}
+                      {u.dailyLimit !== null
+                        ? `${u.dailyLimit}/day`
+                        : defaultLimit != null ? `Default (${defaultLimit})` : '∞ none'}
                     </button>
                   )}
                 </td>
 
-                {/* Today's usage */}
+                {/* Today's usage — against the effective limit (explicit or default) */}
                 <td style={{ padding: '12px 16px', fontSize: 12.5 }}>
-                  {u.dailyLimit !== null ? (
+                  {eff != null ? (
                     <span style={{
-                      color: u.searchesToday >= u.dailyLimit ? '#dc2626' : (u.searchesToday > 0 ? C.primary : '#9ca3af'),
-                      fontWeight: u.searchesToday >= u.dailyLimit ? 700 : 500,
+                      color: u.searchesToday >= eff ? '#dc2626' : (u.searchesToday > 0 ? C.primary : '#9ca3af'),
+                      fontWeight: u.searchesToday >= eff ? 700 : 500,
                     }}>
-                      {u.searchesToday}/{u.dailyLimit}
+                      {u.searchesToday}/{eff}
                     </span>
                   ) : (
                     <span style={{ color: u.searchesToday > 0 ? C.primary : '#d1d5db', fontWeight: 500 }}>
@@ -277,7 +426,8 @@ function UsersTab({ token, currentUserId }) {
                   )}
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

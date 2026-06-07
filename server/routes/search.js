@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 const supabase = require('../lib/supabase');
+const { getSearchLimits } = require('../lib/settings');
 
 // @anthropic-ai/sdk exports the client under different shapes across versions;
 // resolve defensively so this works regardless.
@@ -177,22 +178,43 @@ router.post('/', async (req, res) => {
   const userId = user.id;
 
   try {
-    // Check per-user daily limit before hitting the model
-    const { rows: limitRows } = await pool.query(
-      'SELECT daily_search_limit FROM user_roles WHERE user_id = $1',
-      [userId]
-    );
-    const dailyLimit = limitRows.length > 0 ? limitRows[0].daily_search_limit : null;
-    if (dailyLimit !== null) {
-      const { rows: countRows } = await pool.query(
-        "SELECT COUNT(*) FROM search_logs WHERE user_id = $1 AND created_at >= CURRENT_DATE",
+    // ── Testing limits ────────────────────────────────────────────────────────
+    // A master toggle + two caps guard against unexpectedly burning Anthropic
+    // credits: a GLOBAL daily cap (total across everyone) and a per-user daily
+    // cap (explicit limit, else the configured default). All editable from the
+    // admin dashboard; the whole block is skipped when limits are toggled off.
+    const limits = await getSearchLimits();
+    if (limits.enabled) {
+      // Global cap — total AI searches today across all users
+      if (limits.globalLimit !== null) {
+        const { rows } = await pool.query(
+          "SELECT COUNT(*) FROM search_logs WHERE created_at >= CURRENT_DATE"
+        );
+        if (parseInt(rows[0].count, 10) >= limits.globalLimit) {
+          return res.status(429).json({
+            error: `The AI guide's daily testing budget (${limits.globalLimit} searches) is used up for today. Try again tomorrow.`,
+          });
+        }
+      }
+
+      // Per-user cap — the user's explicit limit, else the configured default
+      const { rows: limitRows } = await pool.query(
+        'SELECT daily_search_limit FROM user_roles WHERE user_id = $1',
         [userId]
       );
-      const usedToday = parseInt(countRows[0].count, 10);
-      if (usedToday >= dailyLimit) {
-        return res.status(429).json({
-          error: `Daily limit reached — you've used all ${dailyLimit} AI searches for today. Try again tomorrow.`,
-        });
+      const explicit = limitRows.length > 0 ? limitRows[0].daily_search_limit : null;
+      const effectiveLimit = explicit != null ? explicit : limits.defaultUserLimit;
+      if (effectiveLimit !== null) {
+        const { rows: countRows } = await pool.query(
+          "SELECT COUNT(*) FROM search_logs WHERE user_id = $1 AND created_at >= CURRENT_DATE",
+          [userId]
+        );
+        const usedToday = parseInt(countRows[0].count, 10);
+        if (usedToday >= effectiveLimit) {
+          return res.status(429).json({
+            error: `Daily limit reached — you've used all ${effectiveLimit} AI searches for today. Try again tomorrow.`,
+          });
+        }
       }
     }
 
@@ -202,12 +224,23 @@ router.post('/', async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
 
+    // Prompt caching: the system prompt + game DB context are byte-identical on
+    // every request, so we mark the context block as cacheable (the cached prefix
+    // covers system + context). Repeat searches within the 5-min TTL re-read the
+    // cache at ~0.1x input price instead of resending ~20k tokens at full price —
+    // the question varies and sits AFTER the breakpoint so it never invalidates it.
     const stream = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
-        { role: 'user', content: `Game database context:\n\n${context}\n\nQuestion: ${query.trim()}` },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: `Game database context:\n\n${context}`, cache_control: { type: 'ephemeral' } },
+            { type: 'text', text: `Question: ${query.trim()}` },
+          ],
+        },
       ],
       stream: true,
     });

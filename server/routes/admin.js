@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../db');
 const { requireAuth, requireAdmin } = require('../middleware/requireAuth');
 const supabase = require('../lib/supabase');
+const settings = require('../lib/settings');
 
 // GET /api/admin/me  — lightweight role check (used by AuthContext on login)
 router.get('/me', requireAuth, (req, res) => {
@@ -12,12 +13,13 @@ router.get('/me', requireAuth, (req, res) => {
 // GET /api/admin/stats
 router.get('/stats', requireAdmin, async (req, res) => {
   try {
-    const [usersRes, adminsRes, searchesRes, todayRes] = await Promise.all([
+    const [usersRes, adminsRes, searchesRes, todayRes, limits] = await Promise.all([
       // Supabase lists all auth users via admin API
       supabase.auth.admin.listUsers({ perPage: 1 }),
       pool.query("SELECT COUNT(*) FROM user_roles WHERE role = 'admin'"),
       pool.query('SELECT COUNT(*) FROM search_logs'),
       pool.query("SELECT COUNT(*) FROM search_logs WHERE created_at >= CURRENT_DATE"),
+      settings.getSearchLimits(),
     ]);
 
     res.json({
@@ -25,6 +27,10 @@ router.get('/stats', requireAdmin, async (req, res) => {
       totalAdmins:   parseInt(adminsRes.rows[0].count, 10),
       totalSearches: parseInt(searchesRes.rows[0].count, 10),
       searchesToday: parseInt(todayRes.rows[0].count, 10),
+      // AI-search testing limits (editable below on this tab)
+      limitsEnabled:    limits.enabled,
+      globalDailyLimit: limits.globalLimit,
+      defaultUserLimit: limits.defaultUserLimit,
     });
   } catch (err) {
     console.error('GET /api/admin/stats failed:', err.message);
@@ -35,12 +41,13 @@ router.get('/stats', requireAdmin, async (req, res) => {
 // GET /api/admin/users  — full user list with roles, limits, and today's usage
 router.get('/users', requireAdmin, async (req, res) => {
   try {
-    const [authRes, roleRes, todayRes] = await Promise.all([
+    const [authRes, roleRes, todayRes, limits] = await Promise.all([
       supabase.auth.admin.listUsers({ perPage: 1000 }),
       pool.query('SELECT user_id, role, daily_search_limit FROM user_roles'),
       pool.query(
         'SELECT user_id, COUNT(*) AS count FROM search_logs WHERE created_at >= CURRENT_DATE GROUP BY user_id'
       ),
+      settings.getSearchLimits(),
     ]);
     if (authRes.error) throw authRes.error;
 
@@ -62,10 +69,55 @@ router.get('/users', requireAdmin, async (req, res) => {
       createdAt:     u.created_at,
     }));
 
-    res.json(users);
+    // Include the current per-user default + master toggle so the UI can show
+    // each user's *effective* limit (an explicit null falls back to the default).
+    res.json({
+      users,
+      defaultUserLimit: limits.defaultUserLimit,
+      limitsEnabled:    limits.enabled,
+    });
   } catch (err) {
     console.error('GET /api/admin/users failed:', err.message);
     res.status(500).json({ error: 'Failed to load users' });
+  }
+});
+
+// PATCH /api/admin/settings  { globalDailyLimit?, defaultUserLimit?, limitsEnabled? }
+// Updates the AI-search testing limits. Numeric limits accept a positive integer
+// or null (= no cap for that scope). Any subset of fields may be sent.
+router.patch('/settings', requireAdmin, async (req, res) => {
+  const { globalDailyLimit, defaultUserLimit, limitsEnabled } = req.body || {};
+
+  // null/'' → null (no cap); a positive integer → that cap; anything else → invalid.
+  function normalizeLimit(v) {
+    if (v === null || v === undefined || v === '') return null;
+    const n = parseInt(v, 10);
+    if (!Number.isFinite(n) || n < 1) return undefined;   // sentinel: invalid
+    return n;
+  }
+
+  try {
+    if (globalDailyLimit !== undefined) {
+      const v = normalizeLimit(globalDailyLimit);
+      if (v === undefined) return res.status(400).json({ error: 'globalDailyLimit must be a positive integer or null' });
+      await settings.set('global_daily_search_limit', v);
+    }
+    if (defaultUserLimit !== undefined) {
+      const v = normalizeLimit(defaultUserLimit);
+      if (v === undefined) return res.status(400).json({ error: 'defaultUserLimit must be a positive integer or null' });
+      await settings.set('default_user_daily_search_limit', v);
+    }
+    if (limitsEnabled !== undefined) {
+      await settings.set('search_limits_enabled', limitsEnabled ? 'true' : 'false');
+    }
+
+    res.json({ ok: true, ...(await settings.getSearchLimits()) });
+  } catch (err) {
+    console.error('PATCH /api/admin/settings failed:', err.message);
+    if (err.code === '42P01') {
+      return res.status(503).json({ error: 'Settings table not found — run the DB migration (node migrate.js) first.' });
+    }
+    res.status(500).json({ error: 'Failed to update settings' });
   }
 });
 
