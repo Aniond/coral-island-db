@@ -11,8 +11,9 @@ import CropsPage from './CropsPage.jsx';
 import CavesPage from './CavesPage.jsx';
 import ForagingPage from './ForagingPage.jsx';
 import NPCPage from './NPCPage.jsx';
+import RoadmapPage from './RoadmapPage.jsx';
 
-const PAGES = { crops: CropsPage, caves: CavesPage, foraging: ForagingPage, npcs: NPCPage };
+const PAGES = { crops: CropsPage, caves: CavesPage, foraging: ForagingPage, npcs: NPCPage, roadmap: RoadmapPage };
 
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('crops');

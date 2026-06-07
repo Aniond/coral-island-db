@@ -19,6 +19,8 @@ export default function Icon({ name, size = 20, color = 'currentColor', strokeWi
     refresh:  <><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-3.36"/></>,
     scroll:   <><path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4"/><path d="M19 3H4.5"/></>,
     expand:   <><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></>,
+    check:    <path d="M20 6 9 17l-5-5"/>,
+    route:    <><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
