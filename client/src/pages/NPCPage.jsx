@@ -5,7 +5,7 @@ import { THEME } from '../lib/theme.js';
 import { FilterSelect, EmptyState, LoadingDots } from '../components/ui.jsx';
 import { fetchNpcs } from '../data/api.js';
 
-function Avatar({ npc }) {
+function Avatar({ npc, size = 52 }) {
   const [failed, setFailed] = React.useState(false);
   const ring = { boxShadow: `0 0 0 3px ${npc.color}33` };
   if (npc.image && !failed) {
@@ -16,7 +16,7 @@ function Avatar({ npc }) {
         loading="lazy"
         onError={() => setFailed(true)}
         style={{
-          width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+          width: size, height: size, borderRadius: '50%', flexShrink: 0,
           objectFit: 'cover', background: THEME.primaryXLight, ...ring,
         }}
       />
@@ -24,51 +24,106 @@ function Avatar({ npc }) {
   }
   return (
     <div style={{
-      width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
+      width: size, height: size, borderRadius: '50%', flexShrink: 0,
       background: npc.color,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: 'white', fontFamily: "'Playfair Display', serif",
-      fontWeight: 700, fontSize: 16, ...ring,
+      fontWeight: 700, fontSize: size * 0.32, ...ring,
     }}>
       {npc.initials}
     </div>
   );
 }
 
+function GiftRow({ label, gifts, tone }) {
+  if (!gifts.length) return null;
+  const styles = tone === 'loved'
+    ? { bg: '#fff1f2', fg: '#be123c', bd: '#fecdd3' }
+    : { bg: THEME.primaryXLight, fg: THEME.primary, bd: THEME.primaryLight };
+  return (
+    <div>
+      <div style={{
+        fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
+        textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
+      }}>
+        {label}
+      </div>
+      <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+        {gifts.map(gift => (
+          <span key={gift} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 4,
+            background: styles.bg, color: styles.fg, border: `1px solid ${styles.bd}`,
+            padding: '3px 9px', borderRadius: 999, fontSize: 11, fontWeight: 500,
+          }}>
+            {tone === 'loved' && <Icon name="heart" size={10} color={styles.fg} />}
+            {gift}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function NPCCard({ npc, density }) {
+  const [open, setOpen] = React.useState(false);
   const [hov, setHov] = React.useState(false);
   const hasWhereabouts = npc.location || npc.schedule;
+
   return (
     <div
+      onClick={() => setOpen(o => !o)}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
         background: THEME.cardBg,
-        border: `1px solid ${hov ? THEME.primaryLight : THEME.cardBorder}`,
+        border: `1px solid ${open || hov ? THEME.primaryLight : THEME.cardBorder}`,
         borderRadius: 'var(--radius, 12px)',
-        padding: density === 'compact' ? 16 : 20,
+        padding: density === 'compact' ? 14 : 18,
+        cursor: 'pointer',
         transition: 'box-shadow 0.2s, transform 0.18s, border-color 0.18s',
-        boxShadow: hov ? THEME.shadowHover : THEME.shadow,
-        transform: hov ? 'translateY(-2px)' : 'none',
-        display: 'flex', flexDirection: 'column', gap: 12,
+        boxShadow: hov || open ? THEME.shadowHover : THEME.shadow,
+        transform: hov && !open ? 'translateY(-2px)' : 'none',
+        display: 'flex', flexDirection: 'column', gap: open ? 14 : 0,
       }}
     >
-      {/* Avatar + name */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <Avatar npc={npc} />
-        <div style={{ minWidth: 0 }}>
+      {/* Collapsed header — portrait + name (always visible) */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, position: 'relative' }}>
+        {/* chevron toggle hint */}
+        <div style={{
+          position: 'absolute', top: -2, right: -2,
+          color: THEME.textMuted, display: 'flex',
+          transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'transform 0.2s',
+        }}>
+          <Icon name="chevDown" size={16} color={THEME.textMuted} />
+        </div>
+
+        <Avatar npc={npc} size={72} />
+
+        <div style={{ textAlign: 'center', minWidth: 0, width: '100%' }}>
           <div style={{
             fontFamily: "'Playfair Display', serif",
-            fontWeight: 700, fontSize: 17, color: THEME.textDark, lineHeight: 1.2,
+            fontWeight: 700, fontSize: 16, color: THEME.textDark, lineHeight: 1.2,
           }}>
             {npc.name}
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 5, flexWrap: 'wrap' }}>
+          {!open && (
+            <div style={{ fontSize: 11.5, color: THEME.textMuted, marginTop: 3 }}>
+              {npc.role}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Expanded details */}
+      {open && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, animation: 'fadeUp 0.18s ease' }}>
+          {/* role + birthday badges */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap' }}>
             <span style={{
               display: 'inline-block',
               background: THEME.primaryXLight, color: THEME.primary,
-              padding: '2px 9px', borderRadius: 5,
-              fontSize: 11, fontWeight: 600,
+              padding: '2px 9px', borderRadius: 5, fontSize: 11, fontWeight: 600,
             }}>
               {npc.role}
             </span>
@@ -76,94 +131,45 @@ function NPCCard({ npc, density }) {
               <span style={{
                 display: 'inline-flex', alignItems: 'center', gap: 3,
                 background: '#fdf2f8', color: '#be185d',
-                padding: '2px 8px', borderRadius: 5,
-                fontSize: 11, fontWeight: 600,
+                padding: '2px 8px', borderRadius: 5, fontSize: 11, fontWeight: 600,
               }}>
                 🎂 {npc.birthday}
               </span>
             )}
           </div>
-        </div>
-      </div>
 
-      {/* Location + schedule (only when known) */}
-      {hasWhereabouts && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          {npc.location && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5, color: THEME.textMid }}>
-              <Icon name="mapPin" size={12} color={THEME.textMid} />
-              <span style={{ fontWeight: 500 }}>{npc.location}</span>
+          {/* Location + schedule (only when known) */}
+          {hasWhereabouts && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              {npc.location && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5, color: THEME.textMid }}>
+                  <Icon name="mapPin" size={12} color={THEME.textMid} />
+                  <span style={{ fontWeight: 500 }}>{npc.location}</span>
+                </div>
+              )}
+              {npc.schedule && (
+                <div style={{ fontSize: 12, color: THEME.textMuted, paddingLeft: 17 }}>
+                  {npc.schedule}
+                </div>
+              )}
             </div>
           )}
-          {npc.schedule && (
-            <div style={{ fontSize: 12, color: THEME.textMuted, paddingLeft: 17 }}>
-              {npc.schedule}
+
+          <GiftRow label="Loved Gifts" gifts={npc.lovedGifts} tone="loved" />
+          <GiftRow label="Liked Gifts" gifts={npc.likedGifts} tone="liked" />
+
+          {/* About / bio */}
+          {npc.quest && (
+            <div style={{
+              padding: '10px 13px', borderRadius: 8,
+              background: THEME.primaryXLight,
+              border: `1px solid ${THEME.primaryLight}`,
+              fontSize: 12.5, color: THEME.textDark, lineHeight: 1.55,
+            }}>
+              <span style={{ fontWeight: 700, color: THEME.primary }}>About </span>
+              {npc.quest}
             </div>
           )}
-        </div>
-      )}
-
-      {/* Loved gifts */}
-      {npc.lovedGifts.length > 0 && (
-        <div>
-          <div style={{
-            fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
-            textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
-          }}>
-            Loved Gifts
-          </div>
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-            {npc.lovedGifts.map(gift => (
-              <span key={gift} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 4,
-                background: '#fff1f2', color: '#be123c',
-                border: '1px solid #fecdd3',
-                padding: '3px 9px', borderRadius: 999,
-                fontSize: 11, fontWeight: 500,
-              }}>
-                <Icon name="heart" size={10} color="#be123c" />
-                {gift}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Liked gifts */}
-      {npc.likedGifts.length > 0 && (
-        <div>
-          <div style={{
-            fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
-            textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 7,
-          }}>
-            Liked Gifts
-          </div>
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-            {npc.likedGifts.map(gift => (
-              <span key={gift} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 4,
-                background: THEME.primaryXLight, color: THEME.primary,
-                border: `1px solid ${THEME.primaryLight}`,
-                padding: '3px 9px', borderRadius: 999,
-                fontSize: 11, fontWeight: 500,
-              }}>
-                {gift}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* About / bio */}
-      {npc.quest && (
-        <div style={{
-          padding: '10px 13px', borderRadius: 8,
-          background: THEME.primaryXLight,
-          border: `1px solid ${THEME.primaryLight}`,
-          fontSize: 12.5, color: THEME.textDark, lineHeight: 1.55,
-        }}>
-          <span style={{ fontWeight: 700, color: THEME.primary }}>About </span>
-          {npc.quest}
         </div>
       )}
     </div>
@@ -261,8 +267,9 @@ export default function NPCPage({ density }) {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
           gap: density === 'compact' ? 12 : 16,
+          alignItems: 'start',
         }}>
           {filtered.map(npc => <NPCCard key={npc.id} npc={npc} density={density} />)}
         </div>
