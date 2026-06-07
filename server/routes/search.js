@@ -44,15 +44,26 @@ const SYSTEM_PROMPT =
   '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.';
 
 // Pull the whole database and render it as compact text for the model.
+// Each table is fetched independently: a missing or failing table (e.g. a newly
+// added one that hasn't been seeded into this DB yet) degrades that one section
+// to empty rather than taking down the entire AI search.
 async function buildContext() {
+  const q = async (sql) => {
+    try {
+      return await pool.query(sql);
+    } catch (e) {
+      console.error('buildContext query failed:', e.message);
+      return { rows: [] };
+    }
+  };
   const [crops, caves, forageables, npcs, collectibles, crafting, cooking] = await Promise.all([
-    pool.query('SELECT name, type, season, town_rank, grow_days, sell_price, regrowth_days, notes FROM crops ORDER BY id'),
-    pool.query('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
-    pool.query('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
-    pool.query('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary, birthday FROM npcs ORDER BY id'),
-    pool.query('SELECT category, name, sell_price, rarity, seasons, locations, time_of_day FROM collectibles ORDER BY category, sort_order'),
-    pool.query('SELECT name, output_amount, category, mastery_type, mastery_level, ingredients FROM crafting_recipes ORDER BY category, name'),
-    pool.query('SELECT name, utensil, ingredients, buff, buff_duration_min, health, energy FROM cooking_recipes ORDER BY name'),
+    q('SELECT name, type, season, town_rank, grow_days, sell_price, regrowth_days, notes FROM crops ORDER BY id'),
+    q('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
+    q('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
+    q('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary, birthday FROM npcs ORDER BY id'),
+    q('SELECT category, name, sell_price, rarity, seasons, locations, time_of_day FROM collectibles ORDER BY category, sort_order'),
+    q('SELECT name, output_amount, category, mastery_type, mastery_level, ingredients FROM crafting_recipes ORDER BY category, name'),
+    q('SELECT name, utensil, ingredients, buff, buff_duration_min, health, energy FROM cooking_recipes ORDER BY name'),
   ]);
 
   const cropLines = crops.rows.map(c =>
@@ -115,15 +126,22 @@ async function buildContext() {
     return line;
   });
 
-  return [
-    `# CROPS\n${cropLines.join('\n')}`,
-    `# CAVE ITEMS\n${caveLines.join('\n')}`,
-    `# FORAGEABLES\n${forageLines.join('\n')}`,
-    `# COLLECTIBLES (fish, insects, sea critters, fossils, artifacts, gems)\n${collectibleLines.join('\n')}`,
-    `# CRAFTING RECIPES\n${craftingLines.join('\n')}`,
-    `# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)\n${cookingLines.join('\n')}`,
-    `# NPCS\n${npcLines.join('\n')}`,
-  ].join('\n\n');
+  // If every section is empty the DB is unreachable or completely unseeded —
+  // surface that instead of asking the model to answer with no context.
+  const sections = [
+    ['# CROPS', cropLines],
+    ['# CAVE ITEMS', caveLines],
+    ['# FORAGEABLES', forageLines],
+    ['# COLLECTIBLES (fish, insects, sea critters, fossils, artifacts, gems)', collectibleLines],
+    ['# CRAFTING RECIPES', craftingLines],
+    ['# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)', cookingLines],
+    ['# NPCS', npcLines],
+  ];
+  if (sections.every(([, lines]) => lines.length === 0)) {
+    throw new Error('database context is empty — DB is unreachable or unseeded');
+  }
+
+  return sections.map(([heading, lines]) => `${heading}\n${lines.join('\n')}`).join('\n\n');
 }
 
 // Resolve caller's user_id from Bearer token if present (best-effort, non-blocking).
