@@ -10,10 +10,12 @@ import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
+const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
+
 const MD_COMPONENTS = {
-  h1: ({ children }) => <div style={{ fontSize: 15, fontWeight: 700, color: THEME.textDark, marginBottom: 6, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 4 }}>{children}</div>,
-  h2: ({ children }) => <div style={{ fontSize: 13.5, fontWeight: 700, color: THEME.textDark, marginBottom: 5, marginTop: 10 }}>{children}</div>,
-  h3: ({ children }) => <div style={{ fontSize: 12.5, fontWeight: 700, color: THEME.textDark, marginBottom: 4, marginTop: 8 }}>{children}</div>,
+  h1: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 15, fontWeight: 700, color: THEME.textDark, marginBottom: 6, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 4 }}>{children}</div>,
+  h2: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 13.5, fontWeight: 700, color: THEME.textDark, marginBottom: 5, marginTop: 10, borderBottom: `1px solid ${THEME.primaryLight}`, paddingBottom: 3 }}>{children}</div>,
+  h3: ({ children }) => isEmpty(children) ? null : <div style={{ fontSize: 12, fontWeight: 700, color: THEME.primary, marginBottom: 4, marginTop: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{children}</div>,
   p:  ({ children }) => <div style={{ marginBottom: 6, lineHeight: 1.65 }}>{children}</div>,
   strong: ({ children }) => <strong style={{ fontWeight: 700, color: THEME.dark }}>{children}</strong>,
   em: ({ children }) => <em style={{ color: '#6b7a74' }}>{children}</em>,
