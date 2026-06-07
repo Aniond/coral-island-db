@@ -224,8 +224,21 @@ router.post('/', async (req, res) => {
     res.end();
   } catch (err) {
     console.error('POST /api/search failed:', err.message);
+    // Surface known Anthropic API failures distinctly so the cause is diagnosable
+    // from logs and the client shows something more useful than a generic error.
+    const status = err && err.status;
+    const isBilling = status === 400 && /credit balance|billing|quota/i.test(err.message || '');
+    if (isBilling) {
+      console.error('  ^ Anthropic API credit balance exhausted — add credits/billing at https://console.anthropic.com (Plans & Billing).');
+    }
     if (!res.headersSent) {
-      res.status(500).json({ error: 'AI search failed' });
+      if (status === 429) {
+        res.status(503).json({ error: 'The AI guide is busy right now — please try again in a moment.' });
+      } else if (isBilling || status === 401 || status === 403) {
+        res.status(503).json({ error: 'The AI guide is temporarily unavailable. Please try again later.' });
+      } else {
+        res.status(500).json({ error: 'AI search failed. Please try again.' });
+      }
     } else {
       res.end();
     }
