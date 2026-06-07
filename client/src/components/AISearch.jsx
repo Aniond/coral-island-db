@@ -9,6 +9,7 @@ import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useIsMobile } from '../lib/useIsMobile.js';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
 
@@ -182,6 +183,7 @@ function TypingBubble() {
 
 export default function AISearch({ isOpen, onToggle }) {
   const { session } = useAuth();
+  const isMobile = useIsMobile();
   const [messages, setMessages] = React.useState([]);
   const [input,    setInput]    = React.useState('');
   const [typing,   setTyping]   = React.useState(false);
@@ -225,28 +227,46 @@ export default function AISearch({ isOpen, onToggle }) {
 
   return (
     <>
-      {/* Floating toggle button */}
-      <button
-        onClick={onToggle}
-        title="AI Guide"
-        style={{
-          position: 'fixed', bottom: 24, right: 24,
-          width: 52, height: 52, borderRadius: '50%',
-          background: isOpen ? 'var(--accent, #f97316)' : THEME.primary,
-          border: 'none', cursor: 'pointer',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 4px 18px rgba(0,0,0,0.22)',
-          transition: 'background 0.2s, transform 0.15s',
-          zIndex: 1001,
-        }}
-        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
-        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-      >
-        <Icon name={isOpen ? 'x' : 'sparkles'} size={22} color="white" />
-      </button>
+      {/* Floating toggle button — hidden on mobile (the bottom tab bar's
+          "Guide" button toggles the chat there, and this would overlap it). */}
+      {!isMobile && (
+        <button
+          onClick={onToggle}
+          title="AI Guide"
+          style={{
+            position: 'fixed', bottom: 24, right: 24,
+            width: 52, height: 52, borderRadius: '50%',
+            background: isOpen ? 'var(--accent, #f97316)' : THEME.primary,
+            border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 18px rgba(0,0,0,0.22)',
+            transition: 'background 0.2s, transform 0.15s',
+            zIndex: 1001,
+          }}
+          onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
+          onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+        >
+          <Icon name={isOpen ? 'x' : 'sparkles'} size={22} color="white" />
+        </button>
+      )}
 
-      {/* Chat panel */}
-      <div style={{
+      {/* Chat panel — on mobile, fill the screen above the bottom tab bar;
+          on desktop, a floating 380px panel anchored bottom-right. */}
+      <div style={isMobile ? {
+        position: 'fixed', top: 8, left: 8, right: 8, bottom: 66,
+        background: 'white',
+        borderRadius: 16,
+        boxShadow: '0 24px 64px rgba(0,0,0,0.20)',
+        border: `1px solid ${THEME.cardBorder}`,
+        display: 'flex', flexDirection: 'column',
+        overflow: 'hidden',
+        zIndex: 1000,
+        transformOrigin: 'bottom center',
+        transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.98)',
+        opacity: isOpen ? 1 : 0,
+        pointerEvents: isOpen ? 'all' : 'none',
+        transition: 'transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.18s',
+      } : {
         position: 'fixed', bottom: 88, right: 24,
         width: 380, height: 500,
         background: 'white',

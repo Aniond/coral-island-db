@@ -6,6 +6,7 @@ import React from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
+import { useIsMobile } from '../lib/useIsMobile.js';
 import CropsPage from './CropsPage.jsx';
 import CavesPage from './CavesPage.jsx';
 import ForagingPage from './ForagingPage.jsx';
@@ -27,7 +28,9 @@ export default function AppShell() {
   }
 
   const CurrentPage = PAGES[activePage] || CropsPage;
-  const density = 'comfortable';
+  // On phones, reuse the existing 'compact' density to tighten padding & gaps.
+  const isMobile = useIsMobile();
+  const density = isMobile ? 'compact' : 'comfortable';
 
   return (
     <div style={{
