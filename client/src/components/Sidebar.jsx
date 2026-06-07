@@ -5,12 +5,13 @@ import AuthButton from './AuthButton.jsx';
 import MobileTopBar from './MobileTopBar.jsx';
 
 const NAV_ITEMS = [
-  { id: 'crops',    label: 'Crops & Plants', shortLabel: 'Crops',   icon: 'leaf'     },
-  { id: 'caves',    label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
-  { id: 'foraging', label: 'Foraging',       shortLabel: 'Forage',  icon: 'sprout'   },
-  { id: 'npcs',     label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
-  { id: 'roadmap',  label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
-  { id: 'guide',    label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
+  { id: 'crops',       label: 'Crops & Plants', shortLabel: 'Crops',   icon: 'leaf'     },
+  { id: 'caves',       label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
+  { id: 'foraging',    label: 'Foraging',       shortLabel: 'Forage',  icon: 'sprout'   },
+  { id: 'collections', label: 'Collections',    shortLabel: 'Collect', icon: 'scroll'   },
+  { id: 'npcs',        label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
+  { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
+  { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
 ];
 
 function NavButton({ item, isActive, onClick }) {

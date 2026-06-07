@@ -115,39 +115,16 @@ const caveItems = [
 ];
 
 // ---- FORAGEABLES -----------------------------------------------------------
-const forageables = [
-  // Spring
-  { name: 'Wild Garlic',   season: 'spring', location: 'Forest Path and island paths',                area: 'forest',      notes: null },
-  { name: 'Dandelion',     season: 'spring', location: 'Town meadows and open areas',                 area: 'meadow',      notes: null },
-  { name: 'Spring Onion',  season: 'spring', location: 'Riverbanks near water',                       area: 'river',       notes: null },
-  { name: 'Leek',          season: 'spring', location: 'Deep Forest (unlocks with story progression)', area: 'deep_forest', notes: null },
-  { name: 'Ginseng',       season: 'spring', location: 'Deep Forest (unlocks with story progression)', area: 'deep_forest', notes: null },
+// Full foraging/gathering list (85 items: seasonal land forage, beach, diving,
+// truffles, mushrooms) with seasons, prices, descriptions, and icons.
+// Regenerate with scripts/build-forageables.js.
+const forageables = require('./data/forageables.json');
 
-  // Summer
-  { name: 'Coconut',    season: 'summer', location: 'Tropical areas - shake palm trees',     area: 'beach',  notes: null },
-  { name: 'Shallot',    season: 'summer', location: 'Meadows and fields (rare spawn)',        area: 'meadow', notes: null },
-  { name: 'Wild Basil', season: 'summer', location: 'Garden Lane and garden areas',           area: 'garden', notes: null },
-  { name: 'Sea Urchin', season: 'summer', location: 'Southern Beach and Lighthouse beach',    area: 'beach',  notes: null },
-  { name: 'Firefly',    season: 'summer', location: 'Forest edges at night - use Net',        area: 'forest', notes: 'Critter — catch with the Net at night.' },
-
-  // Fall
-  { name: 'Blackberry',           season: 'fall', location: 'Forest edges and bush areas', area: 'forest',      notes: null },
-  { name: 'Wild Ginger',          season: 'fall', location: 'Forest floor near trees',     area: 'forest',      notes: null },
-  { name: 'Chanterelle Mushroom', season: 'fall', location: 'Deep Forest floor',           area: 'deep_forest', notes: null },
-  { name: 'Hazelnut',             season: 'fall', location: 'Forest Path near nut trees',  area: 'forest',      notes: null },
-
-  // Winter
-  { name: 'Holly Berry',   season: 'winter', location: 'Forest and garden areas',  area: 'forest', notes: null },
-  { name: 'Snowdrop',      season: 'winter', location: 'Open fields and meadows',   area: 'meadow', notes: null },
-  { name: 'Crystal Fruit', season: 'winter', location: 'Frozen or icy areas',       area: 'field',  notes: null },
-
-  // All year / beach
-  { name: 'Coral Fragment', season: 'all', location: 'Southern Beach',                       area: 'beach',       notes: null },
-  { name: 'Seashell',       season: 'all', location: 'Southern Beach and Lighthouse beach',  area: 'beach',       notes: null },
-  { name: 'Driftwood',      season: 'all', location: 'Beach areas along coast',              area: 'beach',       notes: null },
-  { name: 'Sea Glass',      season: 'all', location: 'Southern Beach and east of Lighthouse', area: 'beach',      notes: null },
-  { name: 'Hardwood',       season: 'all', location: 'Deep Forest (requires upgraded axe)',  area: 'deep_forest', notes: null }
-];
+// ---- COLLECTIBLES ----------------------------------------------------------
+// Full museum/journal audit: fish, insects, sea critters, fossils, artifacts,
+// gems (345 items) with prices, rarity, seasons/locations, descriptions, icons.
+// Regenerate with scripts/build-collectibles.js.
+const collectibles = require('./data/collectibles.json');
 
 // ---- NPCS ------------------------------------------------------------------
 // Full giftable roster (71 NPCs) with accurate loved/liked gifts, birthdays,
@@ -184,7 +161,9 @@ async function seed() {
     await insertRows(client, 'cave_items',
       ['cave', 'item_name', 'item_type', 'floor_range', 'notes'], caveItems);
     await insertRows(client, 'forageables',
-      ['name', 'season', 'location', 'area', 'notes'], forageables);
+      ['name', 'season', 'location', 'area', 'notes', 'sell_price', 'image_url'], forageables);
+    await insertRows(client, 'collectibles',
+      ['category', 'name', 'sell_price', 'rarity', 'seasons', 'locations', 'time_of_day', 'description', 'icon', 'sort_order'], collectibles);
     await insertRows(client, 'npcs',
       ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary', 'birthday', 'image_url'], npcs);
 
@@ -194,6 +173,7 @@ async function seed() {
     console.log(`  crops:       ${crops.length}`);
     console.log(`  cave_items:  ${caveItems.length}`);
     console.log(`  forageables: ${forageables.length}`);
+    console.log(`  collectibles:${collectibles.length}`);
     console.log(`  npcs:        ${npcs.length}`);
   } catch (err) {
     await client.query('ROLLBACK');

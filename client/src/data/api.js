@@ -51,10 +51,28 @@ function mapForageable(r) {
   return {
     id: r.id,
     name: r.name,
-    season: r.season,                   // 'spring'..'winter' | 'all'
+    season: r.season,                   // 'spring'..'winter' | 'all' | combos
     location: r.location,
-    area: r.area,                       // tag: 'forest' | 'deep_forest' | 'beach' | ...
+    area: r.area,                       // tag: 'land' | 'beach' | 'ocean' | 'forest' | 'misc'
     notes: r.notes,
+    sellPrice: r.sell_price,
+    image: r.image_url,
+  };
+}
+
+function mapCollectible(r) {
+  return {
+    id: r.id,
+    category: r.category,               // 'fish'|'insect'|'sea_critter'|'fossil'|'artifact'|'gem'
+    name: r.name,
+    sellPrice: r.sell_price,
+    rarity: r.rarity,
+    seasons: r.seasons,
+    locations: r.locations,
+    timeOfDay: r.time_of_day,
+    description: r.description,
+    image: r.icon,
+    sortOrder: r.sort_order,
   };
 }
 
@@ -83,6 +101,7 @@ export async function fetchCrops()      { return (await getJson('/crops')).map(m
 export async function fetchCaves()       { return (await getJson('/caves')).map(mapCave); }
 export async function fetchForageables() { return (await getJson('/forageables')).map(mapForageable); }
 export async function fetchNpcs()        { return (await getJson('/npcs')).map(mapNpc); }
+export async function fetchCollectibles() { return (await getJson('/collectibles')).map(mapCollectible); }
 
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.

@@ -30,8 +30,25 @@ CREATE TABLE forageables (
   name VARCHAR(100),
   season VARCHAR(50),
   location VARCHAR(200),
-  area VARCHAR(100),        -- general area tag: forest, meadow, river, deep_forest, beach, garden, field
-  notes TEXT
+  area VARCHAR(100),        -- general area tag: land, beach, ocean, forest, misc
+  notes TEXT,
+  sell_price INTEGER,
+  image_url TEXT
+);
+
+DROP TABLE IF EXISTS collectibles CASCADE;
+CREATE TABLE collectibles (
+  id SERIAL PRIMARY KEY,
+  category VARCHAR(30),      -- 'fish','insect','sea_critter','fossil','artifact','gem'
+  name VARCHAR(120),
+  sell_price INTEGER,
+  rarity VARCHAR(30),        -- fish/insects/critters only
+  seasons VARCHAR(80),       -- fish/insects/critters only
+  locations VARCHAR(255),
+  time_of_day VARCHAR(60),
+  description TEXT,
+  icon TEXT,                 -- item icon URL
+  sort_order INTEGER         -- museum/journal display order
 );
 
 DROP TABLE IF EXISTS npcs CASCADE;

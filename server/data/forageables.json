@@ -1,0 +1,767 @@
+[
+  {
+    "name": "Bamboo shoot",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "An edible, young stalk.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Bamboo_Shoot_Sprite.webp"
+  },
+  {
+    "name": "Black beauty eggplant",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Dark, smooth skin and white, spongy flesh.",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_Beauty_Eggplant_Sprite.webp"
+  },
+  {
+    "name": "Brussel sprouts",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A cluster of edible green buds on a stalk.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Brussel_sprouts_Sprite.webp"
+  },
+  {
+    "name": "Canola",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "This plant can be foraged in Spring and made into cooking oil.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Canola_Sprite.webp"
+  },
+  {
+    "name": "Celery",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Crunchy stalks.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Celery_Sprite.webp"
+  },
+  {
+    "name": "Cherry",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Sweet, bright-red fruit on a slender stem. There’s a whole festival dedicated to celebrating the arrival of the pale pink blossoms.",
+    "sell_price": 75,
+    "image_url": "https://coral.guide/assets/live/items/icons/Cherry_Sprite.webp"
+  },
+  {
+    "name": "Chestnut",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A wild, dark brown nut.",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Chestnut_Sprite.webp"
+  },
+  {
+    "name": "Coconut",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It has a hard shell. Can it float?",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/coconut_Sprite.webp"
+  },
+  {
+    "name": "Coconut de mer",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It's believed by locals to be a forbidden fruit. Very rare, and usually hollow.",
+    "sell_price": 150,
+    "image_url": "https://coral.guide/assets/live/items/icons/Coconut_De_Mer_Sprite.webp"
+  },
+  {
+    "name": "Coral tall coconut",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "People have been known to be hit by these dropping from trees above. Stay alert!",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_tall_coconut_Sprite.webp"
+  },
+  {
+    "name": "Cosmo",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A smaller member of the sunflower family.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Cosmo_Sprite.webp"
+  },
+  {
+    "name": "Daffodil",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A star-shaped Spring bloom.",
+    "sell_price": 10,
+    "image_url": "https://coral.guide/assets/live/items/icons/Daffodil_Sprite.webp"
+  },
+  {
+    "name": "Fig",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A subdued, dark-colored fruit with pulpy flesh.",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Fig_Sprite.webp"
+  },
+  {
+    "name": "Ginseng",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It's known to have health benefits.",
+    "sell_price": 90,
+    "image_url": "https://coral.guide/assets/live/items/icons/Ginseng_Sprite.webp"
+  },
+  {
+    "name": "Hibiscus",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A common Summer flower.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Hibiscus_Sprite.webp"
+  },
+  {
+    "name": "Jepun",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Associated with the Goddess in local lore.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Jepun_Sprite.webp"
+  },
+  {
+    "name": "Kale",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Curly and nutritious.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Kale_Sprite.webp"
+  },
+  {
+    "name": "Larkspur",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Tall and pretty. It's poisonous.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Larkspur_Sprite.webp"
+  },
+  {
+    "name": "Lotus",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A symbol of unwavering faith.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Lotus_Sprite.webp"
+  },
+  {
+    "name": "Macapuno coconut",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Disappointment awaits anyone expecting fresh coconut water from one of these.",
+    "sell_price": 75,
+    "image_url": "https://coral.guide/assets/live/items/icons/Macapuno_Coconut_Sprite.webp"
+  },
+  {
+    "name": "Mangosteen",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It has a hard, deep-purple skin. Very sweet, with a bit of sour flavor. Its exact origin is unknown.",
+    "sell_price": 60,
+    "image_url": "https://coral.guide/assets/live/items/icons/Mangosteen_Sprite.webp"
+  },
+  {
+    "name": "Pansy",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Survives in cool weather.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Pansy_Sprite.webp"
+  },
+  {
+    "name": "Rafflesia",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "This parasitic plant has enormous, stinky flowers.",
+    "sell_price": 420,
+    "image_url": "https://coral.guide/assets/live/items/icons/Rafflesia_Sprite.webp"
+  },
+  {
+    "name": "Rose hip",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It's known for its healing ability.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Rose_hip_Sprite.webp"
+  },
+  {
+    "name": "Shallot",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A cluster of cloves forming a reddish-grey bulb.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Shallot_Sprite.webp"
+  },
+  {
+    "name": "Tea berry",
+    "season": "Winter",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "It has a spice undertone flavor.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Tea_Berry_Sprite.webp"
+  },
+  {
+    "name": "Titan arum",
+    "season": "Fall",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Smells horrible!",
+    "sell_price": 420,
+    "image_url": "https://coral.guide/assets/live/items/icons/Titan_Arum_Sprite.webp"
+  },
+  {
+    "name": "Tulip",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A common Spring bulb flower.",
+    "sell_price": 10,
+    "image_url": "https://coral.guide/assets/live/items/icons/Tulip_Sprite.webp"
+  },
+  {
+    "name": "Violet",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A wildflower.",
+    "sell_price": 10,
+    "image_url": "https://coral.guide/assets/live/items/icons/Violet_Sprite.webp"
+  },
+  {
+    "name": "Wasabi",
+    "season": "Spring",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "A greenish root with a smooth, hot flavor, commonly eaten as condiment.",
+    "sell_price": 55,
+    "image_url": "https://coral.guide/assets/live/items/icons/Wasabi_Sprite.webp"
+  },
+  {
+    "name": "Watercress",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "Crunchy, semi-aquatic greens.",
+    "sell_price": 50,
+    "image_url": "https://coral.guide/assets/live/items/icons/Watercress_Sprite.webp"
+  },
+  {
+    "name": "White hibiscus",
+    "season": "Summer",
+    "location": "Foraged on land",
+    "area": "land",
+    "notes": "The petals feel as delicate as their color is faint.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Hibiscus_Sprite.webp"
+  },
+  {
+    "name": "Clam shell",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "An empty shell.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Clam_shell_Sprite.webp"
+  },
+  {
+    "name": "Cockle",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "A wavy-shelled clam.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Cockle_Sprite.webp"
+  },
+  {
+    "name": "Flame scallop",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "Electric red strands surround its mouth.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Flame_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Junonia shell",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "This is one spotty shell.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Junonia_Shell_Sprite.webp"
+  },
+  {
+    "name": "Murex",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "Spiky and pretty.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Murex_Sprite.webp"
+  },
+  {
+    "name": "Purple cowry shell",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "A very purple, shiny shell.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Purple_cowry_shell_Sprite.webp"
+  },
+  {
+    "name": "Sunray venus shell",
+    "season": "all",
+    "location": "Beach shoreline",
+    "area": "beach",
+    "notes": "Commonly found on the beach and in the bay.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Sunray_Venus_Shell_Sprite.webp"
+  },
+  {
+    "name": "Amber pen shell",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Perfectly camouflaged in the seabed among corals and algae.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Amber_pen_shell_Sprite.webp"
+  },
+  {
+    "name": "Arame",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A species of brown algae. Often used in Pokyo cuisine.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Arame_Sprite.webp"
+  },
+  {
+    "name": "Bay scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "It feeds on algae and organic matter in the water.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Bay_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Belon oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Brought over from another continent, it flourishes here.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Belon_Oyster_Sprite.webp"
+  },
+  {
+    "name": "Black sea urchin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A ball with sharp spikes found at sea.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_sea_urchin_Sprite.webp"
+  },
+  {
+    "name": "Blood clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Lives in saltwater.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Blood_Clam_Sprite.webp"
+  },
+  {
+    "name": "Blue mussel",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Not to be confused with “muscle.” This one comes from the sea.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Blue_Mussel_Sprite.webp"
+  },
+  {
+    "name": "Blue oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Coral Island’s native oyster. It’s bluish and delicious!",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Blue_oyster_Sprite.webp"
+  },
+  {
+    "name": "Calico scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Smells like the ocean…very faint.",
+    "sell_price": 25,
+    "image_url": "https://coral.guide/assets/live/items/icons/Calico_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Cherrystone clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The shell is able to withstand pressure and rough tides.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Cherrystone_clam_Sprite.webp"
+  },
+  {
+    "name": "Duck mussel",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Generally found in fresh water, but able to live in the sea as well.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Duck_Mussel_Sprite.webp"
+  },
+  {
+    "name": "Eastern oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The calcite shell forms a defense against predators.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Eastern_Oyster_Sprite.webp"
+  },
+  {
+    "name": "Geoduck",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Surprisingly able to live for more than a century. It’s chewy and tender at the same time.",
+    "sell_price": 50,
+    "image_url": "https://coral.guide/assets/live/items/icons/Geoduck_Sprite.webp"
+  },
+  {
+    "name": "Giant clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A very large clam.",
+    "sell_price": 80,
+    "image_url": "https://coral.guide/assets/live/items/icons/Giant_Clam_Sprite.webp"
+  },
+  {
+    "name": "Gold coin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A token of exchange from olden days.",
+    "sell_price": 155,
+    "image_url": "https://coral.guide/assets/live/items/icons/Gold_Coin_Sprite.webp"
+  },
+  {
+    "name": "Gooseneck barnacle",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Looks like a creature from a sci-fi film. It attaches to hard surfaces, like rocks.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Gooseneck_Barnacle_Sprite.webp"
+  },
+  {
+    "name": "Green lipped mussel",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "It has a green tinge on the edge of its shell. Can be used as anti-inflammatory medicine.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_lipped_mussel_Sprite.webp"
+  },
+  {
+    "name": "Green sea urchin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The spikes, although not venomous, can hurt a lot. Very cool-looking.",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_Sea_Urchin_Sprite.webp"
+  },
+  {
+    "name": "Heart urchin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Often only glimpsed in part, since it likes to stay buried.",
+    "sell_price": 55,
+    "image_url": "https://coral.guide/assets/live/items/icons/Heart_Urchin_Sprite.webp"
+  },
+  {
+    "name": "Horse mussel",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Despite the name, it doesn’t resemble a horse at all.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Horse_Mussel_Sprite.webp"
+  },
+  {
+    "name": "Jackknife clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The shell’s rim is rather sharp, like a razor.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Jackknife_Clam_Sprite.webp"
+  },
+  {
+    "name": "King scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Also known as the Great scallop. It’s a symbol of fertility because of its ability to fertilize itself.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/King_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Kombu",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Used as a base for various local delicacies. Salty and mildly sweet.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Kombu_Sprite.webp"
+  },
+  {
+    "name": "Kumamoto oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Native to the warmer waters of Pokyo. Renowned for its fruity and sweet flavor.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Kumamoto_Oyster_Sprite.webp"
+  },
+  {
+    "name": "Mediterranean scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The beautiful shell mesmerizes people and aquatic critters alike.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Mediterranean_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Olympia oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Easily identifiable by its unique shell shape.",
+    "sell_price": 55,
+    "image_url": "https://coral.guide/assets/live/items/icons/Olympia_oyster_Sprite.webp"
+  },
+  {
+    "name": "Pacific oyster",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A common oyster.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Pacific_Oyster_Sprite.webp"
+  },
+  {
+    "name": "Patagonian scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Cute-looking scallop. Widely thought to be extinct, it still roams freely around these parts.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Patagonian_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Pearl",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Precious and very rare.",
+    "sell_price": 225,
+    "image_url": "https://coral.guide/assets/live/items/icons/Pearl_Sprite.webp"
+  },
+  {
+    "name": "Purple urchin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Can bite with venom when threatened. Handle with care.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Purple_urchin_Sprite.webp"
+  },
+  {
+    "name": "Quahog",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Also known as the hard clam because of its hard shell. It has a strong muscle used to pull itself under the sand when needed.",
+    "sell_price": 35,
+    "image_url": "https://coral.guide/assets/live/items/icons/Quahog_Sprite.webp"
+  },
+  {
+    "name": "Queen scallop",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Smaller than its king counterpart. Eats plankton.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Queen_Scallop_Sprite.webp"
+  },
+  {
+    "name": "Razor clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Dangerous to eat because of its high levels of marine toxins.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Razor_Clam_Sprite.webp"
+  },
+  {
+    "name": "Red sea urchin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Although venomous, they’re not harmful to humans.",
+    "sell_price": 60,
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Sea_Urchin_Sprite.webp"
+  },
+  {
+    "name": "Sea grapes",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "They look like grapes, but taste like seaweed.",
+    "sell_price": 50,
+    "image_url": "https://coral.guide/assets/live/items/icons/Sea_Grapes_Sprite.webp"
+  },
+  {
+    "name": "Sea lettuce",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Edible green algae, usually dried as a seasoning. It may have some health benefits, like improving bone health.",
+    "sell_price": 30,
+    "image_url": "https://coral.guide/assets/live/items/icons/Sea_Lettuce_Sprite.webp"
+  },
+  {
+    "name": "Sea mushroom",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Can only be found in the deep sea.",
+    "sell_price": 40,
+    "image_url": "https://coral.guide/assets/live/items/icons/Sea_Mushroom_Sprite.webp"
+  },
+  {
+    "name": "Sea salt",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Can be processed into gourmet salt.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Sea_Salt_Sprite.webp"
+  },
+  {
+    "name": "Seaweed",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Slimy green leaves from the sea.",
+    "sell_price": 2,
+    "image_url": "https://coral.guide/assets/live/items/icons/Seaweed_Sprite.webp"
+  },
+  {
+    "name": "Silver coin",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Origin unknown.",
+    "sell_price": 75,
+    "image_url": "https://coral.guide/assets/live/items/icons/Silver_Coin_Sprite.webp"
+  },
+  {
+    "name": "Steamer clam",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "The shell is rather thin and fragile. Handle with care.",
+    "sell_price": 15,
+    "image_url": "https://coral.guide/assets/live/items/icons/Steamer_Clam_Sprite.webp"
+  },
+  {
+    "name": "Wakame weed",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "Edible and highly nutritious. Often used in delicacies.",
+    "sell_price": 45,
+    "image_url": "https://coral.guide/assets/live/items/icons/Wakame_weed_Sprite.webp"
+  },
+  {
+    "name": "Zebra mussel",
+    "season": "all",
+    "location": "Ocean floor (diving)",
+    "area": "ocean",
+    "notes": "A striped pattern adorns the shell. It’s pretty like a zebra.",
+    "sell_price": 20,
+    "image_url": "https://coral.guide/assets/live/items/icons/Zebra_Mussel_Sprite.webp"
+  },
+  {
+    "name": "Black truffle",
+    "season": "all",
+    "location": "Forest & caves",
+    "area": "forest",
+    "notes": "A walnut-sized knob of a precious fungus prized for its enticing aroma and earthy flavor.",
+    "sell_price": 620,
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_Truffle_Sprite.webp"
+  },
+  {
+    "name": "White truffle",
+    "season": "all",
+    "location": "Forest & caves",
+    "area": "forest",
+    "notes": "A fist-sized knob of a precious fungus prized for its enticing aroma and earthy flavor.",
+    "sell_price": 970,
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Truffle_Sprite.webp"
+  },
+  {
+    "name": "Manganese node",
+    "season": "all",
+    "location": "Various",
+    "area": "misc",
+    "notes": "Can be cracked open. The cavity may hold something valuable.",
+    "sell_price": 90,
+    "image_url": "https://coral.guide/assets/live/items/icons/Manganese_node_Sprite.webp"
+  }
+]

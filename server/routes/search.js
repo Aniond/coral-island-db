@@ -26,11 +26,12 @@ const SYSTEM_PROMPT =
 
 // Pull the whole database and render it as compact text for the model.
 async function buildContext() {
-  const [crops, caves, forageables, npcs] = await Promise.all([
+  const [crops, caves, forageables, npcs, collectibles] = await Promise.all([
     pool.query('SELECT name, type, season, town_rank, grow_days, sell_price, regrowth_days, notes FROM crops ORDER BY id'),
     pool.query('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
-    pool.query('SELECT name, season, location, area, notes FROM forageables ORDER BY id'),
+    pool.query('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
     pool.query('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary, birthday FROM npcs ORDER BY id'),
+    pool.query('SELECT category, name, sell_price, rarity, seasons, locations, time_of_day FROM collectibles ORDER BY category, sort_order'),
   ]);
 
   const cropLines = crops.rows.map(c =>
@@ -44,7 +45,19 @@ async function buildContext() {
     `${c.notes ? `. ${c.notes}` : ''}`);
 
   const forageLines = forageables.rows.map(f =>
-    `- ${f.name} (${f.season}) — ${f.location} [${f.area}]${f.notes ? `. ${f.notes}` : ''}`);
+    `- ${f.name} (${f.season}) — ${f.location} [${f.area}]` +
+    `${f.sell_price != null ? `, sells ${f.sell_price}g` : ''}${f.notes ? `. ${f.notes}` : ''}`);
+
+  const collectibleLines = collectibles.rows.map(c => {
+    let line = `- ${c.name} (${c.category}`;
+    if (c.rarity) line += `, ${c.rarity}`;
+    line += `)`;
+    if (c.seasons) line += `, ${c.seasons}`;
+    if (c.locations) line += ` @ ${c.locations}`;
+    if (c.time_of_day && c.time_of_day !== 'Any time') line += `, ${c.time_of_day}`;
+    if (c.sell_price != null) line += `: sells ${c.sell_price}g`;
+    return line;
+  });
 
   const npcLines = npcs.rows.map(n => {
     let line = `- ${n.name} (${n.role})`;
@@ -61,6 +74,7 @@ async function buildContext() {
     `# CROPS\n${cropLines.join('\n')}`,
     `# CAVE ITEMS\n${caveLines.join('\n')}`,
     `# FORAGEABLES\n${forageLines.join('\n')}`,
+    `# COLLECTIBLES (fish, insects, sea critters, fossils, artifacts, gems)\n${collectibleLines.join('\n')}`,
     `# NPCS\n${npcLines.join('\n')}`,
   ].join('\n\n');
 }

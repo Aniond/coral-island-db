@@ -5,6 +5,32 @@ import { THEME } from '../lib/theme.js';
 import { SeasonPill, FilterSelect, EmptyState, LoadingDots, prettifyTag } from '../components/ui.jsx';
 import { fetchForageables } from '../data/api.js';
 
+function SeasonChip({ season }) {
+  if (!season) return null;
+  const parts = String(season).toLowerCase().split('/');
+  if (season === 'all' || parts.length >= 4) return <SeasonPill season="all" />;
+  if (parts.length === 1) return <SeasonPill season={parts[0]} />;
+  // combo (e.g. Spring/Fall) — render as a neutral text pill
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center', padding: '2px 10px', borderRadius: 999,
+      background: '#f1f5f9', color: '#475569', fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap',
+    }}>
+      {season}
+    </span>
+  );
+}
+
+function ForageIcon({ src }) {
+  const [failed, setFailed] = React.useState(false);
+  if (!src || failed) return null;
+  return (
+    <img src={src} alt="" loading="lazy" onError={() => setFailed(true)}
+      style={{ width: 36, height: 36, objectFit: 'contain', flexShrink: 0,
+        background: THEME.primaryXLight, borderRadius: 9, padding: 3 }} />
+  );
+}
+
 function ForagingCard({ item, density }) {
   const [hov, setHov] = React.useState(false);
   return (
@@ -22,15 +48,25 @@ function ForagingCard({ item, density }) {
         display: 'flex', flexDirection: 'column', gap: 9,
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
-        <div style={{
-          fontFamily: "'Playfair Display', serif",
-          fontWeight: 700, fontSize: density === 'compact' ? 14 : 15.5,
-          color: THEME.textDark, lineHeight: 1.2,
-        }}>
-          {item.name}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+        <ForageIcon src={item.image} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+            <div style={{
+              fontFamily: "'Playfair Display', serif",
+              fontWeight: 700, fontSize: density === 'compact' ? 14 : 15.5,
+              color: THEME.textDark, lineHeight: 1.2,
+            }}>
+              {item.name}
+            </div>
+            <SeasonChip season={item.season} />
+          </div>
+          {item.sellPrice != null && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 3, marginTop: 4, fontSize: 12, fontWeight: 700, color: '#92400e' }}>
+              <Icon name="coin" size={12} color="#b45309" />{item.sellPrice}g
+            </div>
+          )}
         </div>
-        <SeasonPill season={item.season} />
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: THEME.textMid, fontSize: 12.5 }}>
@@ -48,7 +84,7 @@ function ForagingCard({ item, density }) {
       </span>
 
       {item.notes && (
-        <div style={{ fontSize: 12, color: THEME.textMuted, lineHeight: 1.45 }}>{item.notes}</div>
+        <div style={{ fontSize: 12, color: THEME.textMuted, lineHeight: 1.45, fontStyle: 'italic' }}>{item.notes}</div>
       )}
     </div>
   );
@@ -78,7 +114,8 @@ export default function ForagingPage({ density }) {
   const cap     = s => s.charAt(0).toUpperCase() + s.slice(1);
 
   const filtered = forageables.filter(f => {
-    if (season && f.season !== season && f.season !== 'all') return false;
+    // season values can be 'Spring', combos like 'Spring/Fall', or 'all'
+    if (season && !(String(f.season).toLowerCase().includes(season) || f.season === 'all')) return false;
     if (area   && f.area   !== area)   return false;
     if (search && !f.name.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
