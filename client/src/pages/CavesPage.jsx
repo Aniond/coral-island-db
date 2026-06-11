@@ -4,7 +4,7 @@ import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { MineBadge, TypeBadge, FilterSelect, EmptyState, LoadingDots, mineConfig, typeLabel, prettifyTag } from '../components/ui.jsx';
 import { fetchCaves } from '../data/api.js';
-import { mineUnlocks } from '../data/index.js';
+import mineUnlocks from '../data/mineUnlocks.json';
 
 // DB floor ranges are mixed: "1-20" (numeric) vs "all floors" / "water pockets".
 function floorText(floors) {

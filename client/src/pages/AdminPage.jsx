@@ -4,16 +4,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { refreshAccessToken } from '../lib/authToken.js';
+import { API_ROOT as API, timeoutSignal } from '../lib/apiBase.js';
 
 const { useState, useEffect, useCallback } = React;
-
-const API = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 const C = { primary: '#0f766e', dark: '#134e4a', accent: '#f97316', cream: '#fefce8' };
 
 // Authenticated fetch — a 401 (expired token) triggers one session refresh and
 // retry before the response is handed back to the caller.
 async function authFetch(path, token, opts = {}) {
   const call = (tok) => fetch(`${API}${path}`, {
+    signal: timeoutSignal(),
     ...opts,
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tok}`, ...(opts.headers || {}) },
   });
@@ -246,6 +246,7 @@ function UsersTab({ token, currentUserId }) {
   const [busy,         setBusy]         = useState({});
   const [editingLimit, setEditingLimit] = useState(null);
   const [limitInput,   setLimitInput]   = useState('');
+  const [actionErr,    setActionErr]    = useState('');   // per-row action failures (inline, not alert)
 
   const load = useCallback(async () => {
     setLoading(true); setErr('');
@@ -268,6 +269,7 @@ function UsersTab({ token, currentUserId }) {
 
   async function toggleAdmin(userId, currentRole) {
     setBusy(p => ({ ...p, [userId]: true }));
+    setActionErr('');
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
     try {
       const r = await authFetch(`/api/admin/users/${userId}/role`, token, {
@@ -276,7 +278,7 @@ function UsersTab({ token, currentUserId }) {
       });
       if (!r.ok) throw new Error(await r.text());
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
-    } catch (e) { alert(e.message); }
+    } catch (e) { setActionErr(`Role change failed: ${e.message}`); }
     finally { setBusy(p => ({ ...p, [userId]: false })); }
   }
 
@@ -288,10 +290,11 @@ function UsersTab({ token, currentUserId }) {
   async function saveLimit(userId) {
     const parsed = limitInput.trim() === '' ? null : parseInt(limitInput.trim(), 10);
     if (limitInput.trim() !== '' && (isNaN(parsed) || parsed < 1)) {
-      alert('Enter a positive number, or leave blank for unlimited.');
+      setActionErr('Enter a positive number, or leave blank for unlimited.');
       return;
     }
     setBusy(p => ({ ...p, [userId + '_limit']: true }));
+    setActionErr('');
     try {
       const r = await authFetch(`/api/admin/users/${userId}/limit`, token, {
         method: 'PATCH',
@@ -300,7 +303,7 @@ function UsersTab({ token, currentUserId }) {
       if (!r.ok) throw new Error(await r.text());
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, dailyLimit: parsed } : u));
       setEditingLimit(null);
-    } catch (e) { alert(e.message); }
+    } catch (e) { setActionErr(`Limit update failed: ${e.message}`); }
     finally { setBusy(p => ({ ...p, [userId + '_limit']: false })); }
   }
 
@@ -322,6 +325,18 @@ function UsersTab({ token, currentUserId }) {
           <Ico n="refresh" s={15} />
         </button>
       </div>
+      {actionErr && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+          padding: '9px 20px', fontSize: 12.5, color: '#b91c1c',
+          background: '#fef2f2', borderBottom: '1px solid #fecaca',
+        }}>
+          <span>{actionErr}</span>
+          <button onClick={() => setActionErr('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#b91c1c', display: 'flex' }}>
+            <Ico n="x" s={13} />
+          </button>
+        </div>
+      )}
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>

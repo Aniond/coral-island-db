@@ -147,16 +147,6 @@ async function buildContext() {
   return sections.map(([heading, lines]) => `${heading}\n${lines.join('\n')}`).join('\n\n');
 }
 
-// Resolve caller's user_id from Bearer token if present (best-effort, non-blocking).
-async function resolveUserId(req) {
-  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
-  if (!token) return null;
-  try {
-    const { data: { user } } = await supabase.auth.getUser(token);
-    return user?.id || null;
-  } catch { return null; }
-}
-
 // Hard cap on question length — everything past this is either an accident or
 // an attempt to burn API credits; real questions fit comfortably under it.
 const MAX_QUERY_CHARS = 500;

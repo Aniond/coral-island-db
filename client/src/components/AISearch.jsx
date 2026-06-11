@@ -50,14 +50,22 @@ const MD_COMPONENTS       = makeMdComponents(false);
 const MD_COMPONENTS_LARGE = makeMdComponents(true);
 
 function ExpandModal({ content, query, onClose }) {
+  const closeRef = React.useRef(null);
+
   React.useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    // Move focus into the dialog on open, back to the opener on close.
+    const opener = document.activeElement;
+    closeRef.current?.focus();
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      opener?.focus?.();
+    };
   }, [onClose]);
 
   return (
-    <div style={{
+    <div role="dialog" aria-modal="true" aria-label="AI Guide result" style={{
       position: 'fixed', inset: 0, zIndex: 2000,
       background: 'rgba(7,30,28,0.7)', backdropFilter: 'blur(4px)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -83,7 +91,7 @@ function ExpandModal({ content, query, onClose }) {
             <div style={{ color: 'white', fontWeight: 700, fontSize: 14, fontFamily: "'Playfair Display', serif" }}>AI Guide Result</div>
             {query && <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11.5, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>"{query}"</div>}
           </div>
-          <button onClick={onClose} style={{
+          <button ref={closeRef} onClick={onClose} style={{
             background: 'rgba(255,255,255,0.15)', border: 'none', borderRadius: 8,
             color: 'white', cursor: 'pointer', padding: '6px 12px',
             fontSize: 12.5, fontFamily: "'Inter', sans-serif", display: 'flex', alignItems: 'center', gap: 5,
@@ -204,24 +212,24 @@ export default function AISearch({ isOpen, onToggle }) {
     setInput('');
     setTyping(true);
 
+    // The assistant bubble is created inside the state updater on first chunk,
+    // so creation/append stays atomic no matter how chunks and errors interleave.
+    const appendChunk = (chunk) => {
+      setTyping(false);
+      setMessages(prev => prev.some(m => m.id === aiId)
+        ? prev.map(m => (m.id === aiId ? { ...m, content: m.content + chunk } : m))
+        : [...prev, { role: 'assistant', content: chunk, id: aiId, query: t }]);
+    };
+
     let started = false;
     try {
-      await streamSearch(t, (chunk) => {
-        if (!started) {
-          started = true;
-          setTyping(false);
-          setMessages(prev => [...prev, { role: 'assistant', content: chunk, id: aiId, query: t }]);
-        } else {
-          setMessages(prev => prev.map(m => (m.id === aiId ? { ...m, content: m.content + chunk } : m)));
-        }
-      }, session?.access_token);
-      if (!started) {
-        setTyping(false);
-        setMessages(prev => [...prev, { role: 'assistant', content: '(No response received.)', id: aiId }]);
-      }
-    } catch (err) {
+      await streamSearch(t, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      if (!started) appendChunk('(No response received.)');
       setTyping(false);
-      setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${err.message}`, id: aiId }]);
+    } catch (err) {
+      // Mid-stream failure appends to the partial answer instead of adding a
+      // second orphaned bubble; pre-stream failure creates the bubble.
+      appendChunk(`${started ? '\n\n' : ''}⚠️ ${err.message}`);
     }
   }
 

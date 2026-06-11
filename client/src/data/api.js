@@ -5,14 +5,13 @@
 // cross-origin call to the Railway backend.
 
 import { refreshAccessToken } from '../lib/authToken.js';
-
-const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '') + '/api';
+import { API_BASE, timeoutSignal } from '../lib/apiBase.js';
 
 async function getJson(path, params) {
   const qs = params
     ? '?' + new URLSearchParams(Object.entries(params).filter(([, v]) => v)).toString()
     : '';
-  const res = await fetch(`${API_BASE}${path}${qs}`);
+  const res = await fetch(`${API_BASE}${path}${qs}`, { signal: timeoutSignal() });
   if (!res.ok) {
     let msg = `Request failed (${res.status})`;
     try { const j = await res.json(); if (j && j.error) msg = j.error; } catch { /* ignore */ }

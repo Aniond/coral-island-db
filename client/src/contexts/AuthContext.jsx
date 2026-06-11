@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase.js';
+import { API_ROOT as API, timeoutSignal } from '../lib/apiBase.js';
 
 const AuthContext = createContext(null);
-
-const API = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 export function AuthProvider({ children }) {
   const [session,  setSession]  = useState(undefined); // undefined = loading
@@ -14,6 +13,7 @@ export function AuthProvider({ children }) {
     try {
       const res = await fetch(`${API}/api/admin/me`, {
         headers: { Authorization: `Bearer ${token}` },
+        signal: timeoutSignal(),
       });
       if (res.ok) {
         const { isAdmin } = await res.json();
