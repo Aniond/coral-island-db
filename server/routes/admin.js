@@ -136,12 +136,12 @@ router.patch('/users/:id/role', requireAdmin, async (req, res) => {
   }
 
   try {
-    // Get user email from Supabase for the user_roles record
-    const { data: userData, error: userError } = await supabase.auth.admin.getUserById(id);
-    if (userError) throw userError;
-    const email = userData?.user?.email || '';
-
     if (role === 'admin') {
+      // Get user email from Supabase for the user_roles record
+      const { data: userData, error: userError } = await supabase.auth.admin.getUserById(id);
+      if (userError) throw userError;
+      const email = userData?.user?.email || '';
+
       await pool.query(
         `INSERT INTO user_roles (user_id, role, email, created_at)
          VALUES ($1, 'admin', $2, NOW())
@@ -149,7 +149,9 @@ router.patch('/users/:id/role', requireAdmin, async (req, res) => {
         [id, email],
       );
     } else {
-      await pool.query('DELETE FROM user_roles WHERE user_id = $1', [id]);
+      // Demote in place — deleting the row would also wipe the user's
+      // daily_search_limit and stored email.
+      await pool.query("UPDATE user_roles SET role = 'user' WHERE user_id = $1", [id]);
     }
 
     res.json({ ok: true, role });
@@ -194,15 +196,21 @@ router.patch('/users/:id/limit', requireAdmin, async (req, res) => {
 
 // GET /api/admin/search-logs?page=1&limit=20
 router.get('/search-logs', requireAdmin, async (req, res) => {
-  const page  = Math.max(1, parseInt(req.query.page  || '1',  10));
-  const limit = Math.min(100, parseInt(req.query.limit || '20', 10));
+  // Non-numeric input parses to NaN, which would reach LIMIT/OFFSET as a SQL
+  // error — fall back to defaults and clamp to sane ranges instead.
+  const toInt = (v, def) => {
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : def;
+  };
+  const page  = Math.max(1, toInt(req.query.page, 1));
+  const limit = Math.min(100, Math.max(1, toInt(req.query.limit, 20)));
   const offset = (page - 1) * limit;
 
   try {
     const [logsRes, countRes] = await Promise.all([
       pool.query(
         `SELECT sl.id, sl.user_id, sl.query, sl.created_at,
-                ur.email AS user_email
+                COALESCE(sl.user_email, ur.email) AS user_email
          FROM search_logs sl
          LEFT JOIN user_roles ur ON ur.user_id = sl.user_id
          ORDER BY sl.created_at DESC

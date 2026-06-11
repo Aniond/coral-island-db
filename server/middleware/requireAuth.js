@@ -6,8 +6,16 @@ async function requireAuth(req, res, next) {
   const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
   if (!token) return res.status(401).json({ error: 'Unauthorised' });
 
-  const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (error || !user) return res.status(401).json({ error: 'Invalid token' });
+  let user;
+  try {
+    const { data, error } = await supabase.auth.getUser(token);
+    if (error || !data.user) return res.status(401).json({ error: 'Invalid token' });
+    user = data.user;
+  } catch (err) {
+    // e.g. Supabase env vars missing — fail this request, not the process
+    console.error('requireAuth failed:', err.message);
+    return res.status(500).json({ error: 'Auth service unavailable' });
+  }
 
   req.user = user;
   req.authToken = token;

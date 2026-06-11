@@ -4,10 +4,7 @@ const pool = require('../db');
 const supabase = require('../lib/supabase');
 const { getSearchLimits } = require('../lib/settings');
 
-// @anthropic-ai/sdk exports the client under different shapes across versions;
-// resolve defensively so this works regardless.
-const sdk = require('@anthropic-ai/sdk');
-const Anthropic = sdk.Anthropic || sdk.default || sdk;
+const Anthropic = require('@anthropic-ai/sdk');
 
 // Current Sonnet. (The original spec named claude-sonnet-4-20250514, which is the
 // deprecated Sonnet 4; claude-sonnet-4-6 is its supported replacement.)
@@ -92,9 +89,15 @@ async function buildContext() {
     return line;
   });
 
+  // ingredients is JSONB (arrives parsed) on freshly-seeded DBs, but a JSON
+  // string on DBs seeded before the type change — handle both.
+  const parseIngredients = (v) => {
+    if (Array.isArray(v)) return v;
+    try { return JSON.parse(v) || []; } catch { return []; }
+  };
+
   const craftingLines = crafting.rows.map(r => {
-    let ingredients = [];
-    try { ingredients = JSON.parse(r.ingredients) || []; } catch { /* ignore */ }
+    const ingredients = parseIngredients(r.ingredients);
     const ingStr = ingredients.map(i => `${i.amount}x ${i.name}`).join(', ') || 'unknown';
     let line = `- ${r.name}${r.output_amount > 1 ? ` (makes ${r.output_amount})` : ''} [${r.category}]`;
     if (r.mastery_type) line += ` — unlocks at ${r.mastery_type} mastery lvl ${r.mastery_level}`;
@@ -103,8 +106,7 @@ async function buildContext() {
   });
 
   const cookingLines = cooking.rows.map(r => {
-    let ingredients = [];
-    try { ingredients = JSON.parse(r.ingredients) || []; } catch { /* ignore */ }
+    const ingredients = parseIngredients(r.ingredients);
     const ingStr = ingredients.map(i => `${i.amount}x ${i.name}`).join(', ') || 'unknown';
     let line = `- ${r.name} [cooked in ${r.utensil}]`;
     if (r.buff) line += ` — buff: ${r.buff}${r.buff_duration_min ? ` (~${r.buff_duration_min}m)` : ''}`;
@@ -155,12 +157,19 @@ async function resolveUserId(req) {
   } catch { return null; }
 }
 
+// Hard cap on question length — everything past this is either an accident or
+// an attempt to burn API credits; real questions fit comfortably under it.
+const MAX_QUERY_CHARS = 500;
+
 // POST /api/search  { query }
 // Streams the AI answer back as plain text. Requires a valid auth token.
 router.post('/', async (req, res) => {
   const query = req.body && req.body.query;
-  if (!query || !query.trim()) {
+  if (!query || typeof query !== 'string' || !query.trim()) {
     return res.status(400).json({ error: 'Missing "query" in request body' });
+  }
+  if (query.trim().length > MAX_QUERY_CHARS) {
+    return res.status(400).json({ error: `Question is too long — keep it under ${MAX_QUERY_CHARS} characters.` });
   }
   if (!process.env.ANTHROPIC_API_KEY) {
     return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not configured' });
@@ -171,11 +180,26 @@ router.post('/', async (req, res) => {
   if (!token) {
     return res.status(401).json({ error: 'Sign in to use AI search' });
   }
-  const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
-  if (authErr || !user) {
-    return res.status(401).json({ error: 'Invalid or expired session' });
+  let user;
+  try {
+    const { data, error: authErr } = await supabase.auth.getUser(token);
+    if (authErr || !data.user) {
+      return res.status(401).json({ error: 'Invalid or expired session' });
+    }
+    user = data.user;
+  } catch (err) {
+    console.error('POST /api/search auth check failed:', err.message);
+    return res.status(500).json({ error: 'Auth service unavailable' });
   }
   const userId = user.id;
+
+  // Abort the Anthropic stream if the caller disconnects mid-answer so we stop
+  // paying for tokens nobody will read. ServerResponse 'close' also fires after
+  // a normal finish, hence the writableFinished guard.
+  const abort = new AbortController();
+  res.on('close', () => {
+    if (!res.writableFinished) abort.abort();
+  });
 
   try {
     // ── Testing limits ────────────────────────────────────────────────────────
@@ -243,11 +267,20 @@ router.post('/', async (req, res) => {
         },
       ],
       stream: true,
-    });
+    }, { signal: abort.signal });
 
-    // Log the search (fire-and-forget — don't block the stream)
-    pool.query('INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW())', [userId, query.trim()])
-      .catch(e => console.error('search log insert failed:', e.message));
+    // Log the search (fire-and-forget — don't block the stream). Falls back to
+    // the old column set if migration 004 (user_email) hasn't been applied yet.
+    pool.query('INSERT INTO search_logs (user_id, user_email, query, created_at) VALUES ($1, $2, $3, NOW())',
+      [userId, user.email || null, query.trim()])
+      .catch(e => {
+        if (e.code !== '42703') {
+          console.error('search log insert failed:', e.message);
+          return;
+        }
+        pool.query('INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW())', [userId, query.trim()])
+          .catch(e2 => console.error('search log insert failed:', e2.message));
+      });
 
     for await (const event of stream) {
       if (event.type === 'content_block_delta' && event.delta && event.delta.type === 'text_delta') {
@@ -256,6 +289,11 @@ router.post('/', async (req, res) => {
     }
     res.end();
   } catch (err) {
+    // Caller hung up and we cancelled the stream — not a failure, just stop.
+    if (abort.signal.aborted) {
+      console.log('POST /api/search: client disconnected, stream aborted');
+      return res.end();
+    }
     console.error('POST /api/search failed:', err.message);
     // Surface known Anthropic API failures distinctly so the cause is diagnosable
     // from logs and the client shows something more useful than a generic error.
