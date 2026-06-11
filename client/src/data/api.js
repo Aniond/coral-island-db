@@ -4,6 +4,8 @@
 // and a Vercel rewrite both work; override with VITE_API_URL for a direct
 // cross-origin call to the Railway backend.
 
+import { refreshAccessToken } from '../lib/authToken.js';
+
 const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '') + '/api';
 
 async function getJson(path, params) {
@@ -139,14 +141,22 @@ export async function fetchCraftingRecipes() { return (await getJson('/crafting'
 
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.
+// A 401 (expired token) triggers one session refresh + retry before failing.
 export async function streamSearch(query, onChunk, token) {
-  const headers = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(`${API_BASE}/search`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ query }),
-  });
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/search`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ query }),
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
   if (!res.ok) {
     let msg = `Request failed (${res.status})`;
     try { const j = await res.json(); if (j && j.error) msg = j.error; } catch { /* ignore */ }

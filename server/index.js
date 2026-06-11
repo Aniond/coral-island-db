@@ -27,6 +27,20 @@ app.use('/api/npcs', require('./routes/npcs'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/admin',  require('./routes/admin'));
 
+// search_logs retention — prune entries older than 90 days on boot and daily,
+// so the table (and the admin views' COUNT(*) queries) don't grow unbounded.
+const pool = require('./db');
+async function pruneSearchLogs() {
+  try {
+    const r = await pool.query("DELETE FROM search_logs WHERE created_at < NOW() - INTERVAL '90 days'");
+    if (r.rowCount > 0) console.log(`Pruned ${r.rowCount} search log(s) older than 90 days`);
+  } catch (err) {
+    console.error('search_logs prune failed:', err.message);
+  }
+}
+pruneSearchLogs();
+setInterval(pruneSearchLogs, 24 * 60 * 60 * 1000).unref();
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Coral Island DB API listening on http://localhost:${PORT}`);

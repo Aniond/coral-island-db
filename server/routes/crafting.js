@@ -21,8 +21,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-function safeParse(s) {
-  try { return JSON.parse(s) || []; } catch { return []; }
+// ingredients is JSONB (arrives parsed) on freshly-seeded DBs, but a JSON
+// string on DBs seeded before the type change — handle both.
+function safeParse(v) {
+  if (Array.isArray(v)) return v;
+  try { return JSON.parse(v) || []; } catch { return []; }
 }
 
 module.exports = router;

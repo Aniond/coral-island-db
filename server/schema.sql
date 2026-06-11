@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS crops CASCADE;
 CREATE TABLE crops (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL UNIQUE,
   type VARCHAR(50),         -- 'seed', 'fruit_plant', 'fruit_tree', 'ocean_crop'
   season VARCHAR(100),      -- 'spring', 'summer', 'fall', 'winter', 'all', or combos like 'summer/fall'
   town_rank VARCHAR(5),     -- 'F', 'E', 'D', 'C', 'B', 'A'
@@ -17,17 +17,18 @@ CREATE TABLE crops (
 DROP TABLE IF EXISTS cave_items CASCADE;
 CREATE TABLE cave_items (
   id SERIAL PRIMARY KEY,
-  cave VARCHAR(50),         -- 'earth', 'water', 'wind', 'fire', 'memories'
-  item_name VARCHAR(100),
+  cave VARCHAR(50) NOT NULL, -- 'earth', 'water', 'wind', 'fire', 'memories'
+  item_name VARCHAR(100) NOT NULL,
   item_type VARCHAR(50),    -- 'ore', 'gem', 'geode', 'monster_drop', 'fish', 'scavengeable'
   floor_range VARCHAR(50),  -- e.g. '1-20', 'all floors'
-  notes TEXT
+  notes TEXT,
+  UNIQUE (cave, item_name)
 );
 
 DROP TABLE IF EXISTS forageables CASCADE;
 CREATE TABLE forageables (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL UNIQUE,
   season VARCHAR(50),
   location VARCHAR(200),
   area VARCHAR(100),        -- general area tag: land, beach, ocean, forest, misc
@@ -39,9 +40,9 @@ CREATE TABLE forageables (
 DROP TABLE IF EXISTS cooking_recipes CASCADE;
 CREATE TABLE cooking_recipes (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(150),
+  name VARCHAR(150) NOT NULL UNIQUE,
   utensil VARCHAR(40),       -- Oven, Pot, Grill, Chef Knife… (tool needed)
-  ingredients TEXT,          -- JSON array of {name, amount, icon}
+  ingredients JSONB,         -- array of {name, amount, icon}; null for a few no-ingredient dishes
   buff VARCHAR(80),          -- skill/stat bonus, e.g. 'Fishing +3' (null = none)
   buff_duration_min INTEGER,
   health INTEGER,            -- HP restored
@@ -54,12 +55,12 @@ CREATE TABLE cooking_recipes (
 DROP TABLE IF EXISTS crafting_recipes CASCADE;
 CREATE TABLE crafting_recipes (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(150),
+  name VARCHAR(150) NOT NULL UNIQUE,
   output_amount INTEGER,
-  category VARCHAR(60),       -- Misc, Farming, Artisan, Decor, Scarecrow
+  category VARCHAR(60) NOT NULL, -- Misc, Farming, Artisan, Decor, Scarecrow
   mastery_type VARCHAR(40),   -- unlock skill (Farming, Mining…); null = no requirement
   mastery_level INTEGER,
-  ingredients TEXT,           -- JSON array of {name, amount, icon}
+  ingredients JSONB NOT NULL, -- array of {name, amount, icon}
   description TEXT,
   image_url TEXT              -- output item icon
 );
@@ -67,8 +68,8 @@ CREATE TABLE crafting_recipes (
 DROP TABLE IF EXISTS collectibles CASCADE;
 CREATE TABLE collectibles (
   id SERIAL PRIMARY KEY,
-  category VARCHAR(30),      -- 'fish','insect','sea_critter','fossil','artifact','gem'
-  name VARCHAR(120),
+  category VARCHAR(30) NOT NULL, -- 'fish','insect','sea_critter','fossil','artifact','gem'
+  name VARCHAR(120) NOT NULL,
   sell_price INTEGER,
   rarity VARCHAR(30),        -- fish/insects/critters only
   seasons VARCHAR(80),       -- fish/insects/critters only
@@ -76,13 +77,14 @@ CREATE TABLE collectibles (
   time_of_day VARCHAR(60),
   description TEXT,
   icon TEXT,                 -- item icon URL
-  sort_order INTEGER         -- museum/journal display order
+  sort_order INTEGER,        -- museum/journal display order
+  UNIQUE (category, name)
 );
 
 DROP TABLE IF EXISTS npcs CASCADE;
 CREATE TABLE npcs (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL UNIQUE,
   role VARCHAR(100),
   location VARCHAR(100),
   schedule TEXT,

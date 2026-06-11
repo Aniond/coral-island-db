@@ -3,17 +3,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { refreshAccessToken } from '../lib/authToken.js';
 
 const { useState, useEffect, useCallback } = React;
 
 const API = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 const C = { primary: '#0f766e', dark: '#134e4a', accent: '#f97316', cream: '#fefce8' };
 
-function authFetch(path, token, opts = {}) {
-  return fetch(`${API}${path}`, {
+// Authenticated fetch — a 401 (expired token) triggers one session refresh and
+// retry before the response is handed back to the caller.
+async function authFetch(path, token, opts = {}) {
+  const call = (tok) => fetch(`${API}${path}`, {
     ...opts,
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tok}`, ...(opts.headers || {}) },
   });
+  let res = await call(token);
+  if (res.status === 401) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await call(fresh);
+  }
+  return res;
 }
 
 function Ico({ n, s = 18, c = 'currentColor', w = 1.75 }) {
