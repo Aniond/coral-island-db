@@ -92,6 +92,7 @@ export default function CavesPage({ density }) {
   const [mine,     setMine]     = React.useState('');
   const [itemType, setItemType] = React.useState('');
   const [search,   setSearch]   = React.useState('');
+  const [viewMode, setViewMode] = React.useState('grid');
 
   React.useEffect(() => {
     let alive = true;
@@ -167,6 +168,37 @@ export default function CavesPage({ density }) {
             <Icon name="x" size={13} color="var(--accent, #f97316)" /> Clear
           </button>
         )}
+
+        <div style={{ marginLeft: 'auto', display: 'flex', background: THEME.bg, borderRadius: 8, padding: 4, border: `1px solid ${THEME.cardBorder}` }}>
+          <button
+            onClick={() => setViewMode('grid')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'grid' ? 'white' : 'transparent',
+              color: viewMode === 'grid' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'grid' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="layout" size={14} color="currentColor" />
+            Grid
+          </button>
+          <button
+            onClick={() => setViewMode('list')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'list' ? 'white' : 'transparent',
+              color: viewMode === 'list' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'list' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="list" size={14} color="currentColor" />
+            List
+          </button>
+        </div>
       </div>
 
       {mine && <MineBanner mine={mine} />}
@@ -177,13 +209,45 @@ export default function CavesPage({ density }) {
         <EmptyState message="Couldn't load cave items" sub={error} />
       ) : filtered.length === 0 ? (
         <EmptyState message="No cave items found" sub="Try a different mine or item type" />
-      ) : (
+      ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(item => <CaveCard key={item.id} item={item} density={density} />)}
+        </div>
+      ) : (
+        <div style={{
+          background: 'white', borderRadius: 12, border: `1px solid ${THEME.cardBorder}`,
+          overflow: 'hidden', boxShadow: THEME.shadow
+        }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
+            <thead>
+              <tr style={{ background: THEME.bg, borderBottom: `2px solid ${THEME.cardBorder}`, color: THEME.textMid, fontSize: 12, textTransform: 'uppercase' }}>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Name</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Type</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Mine</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Floors</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((item, i) => (
+                <tr key={item.id} style={{ borderBottom: `1px solid ${THEME.cardBorder}`, background: i % 2 === 0 ? 'white' : THEME.bg }}>
+                  <td style={{ padding: '12px 16px', fontWeight: 600, color: THEME.textDark }}>{item.name}</td>
+                  <td style={{ padding: '12px 16px' }}><TypeBadge type={item.type} /></td>
+                  <td style={{ padding: '12px 16px' }}><MineBadge mine={item.mine} /></td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMid, fontWeight: 500 }}>
+                    {floorText(item.floors)}
+                  </td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMuted, fontSize: 13, lineHeight: 1.4 }}>
+                    {item.notes || '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

@@ -254,6 +254,21 @@ export async function deletePlan(id, token) {
   return res.json();
 }
 
+export async function fetchSearchHistory(token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/search/history`, { headers });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to fetch search history (${res.status})`);
+  return res.json();
+}
+
 // ── User Checklists ────────────────────────────────────────────────────────
 export async function getChecklist(token) {
   if (!token) return { tasks: [] };

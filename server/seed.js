@@ -164,6 +164,26 @@ const cooking = require('./data/cooking-recipes.json').map(r => ({
 // Regenerate with scripts/build-npcs.js if the game updates.
 const npcs = require('./data/npcs.json');
 
+// ---- GODDESS OFFERINGS -----------------------------------------------------
+const goddessOfferings = [
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Wood', amount: 10, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Stone', amount: 10, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Fiber', amount: 10, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Sap', amount: 10, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Oak Resin', amount: 5, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Maple Syrup', amount: 5, quality: 'Base' },
+  
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Turnip', amount: 1, quality: 'Bronze' },
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Carrot', amount: 1, quality: 'Bronze' },
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Daisy', amount: 1, quality: 'Bronze' },
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Wasabi', amount: 1, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Morel', amount: 1, quality: 'Base' },
+
+  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Tilapia', amount: 1, quality: 'Base' },
+  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Catfish', amount: 1, quality: 'Base' },
+  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Silver Arowana', amount: 1, quality: 'Base' }
+];
+
 /**
  * Inserts an array of row objects into `table` using a single multi-row
  * parameterized INSERT. `columns` defines both the column list and the order
@@ -180,6 +200,10 @@ async function insertRows(client, table, columns, rows) {
 }
 
 async function seed() {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error("Destructive seed script blocked in production environment!");
+  }
+
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -201,6 +225,8 @@ async function seed() {
       ['name', 'utensil', 'ingredients', 'buff', 'buff_duration_min', 'health', 'energy', 'sell_price', 'description', 'image_url'], cooking);
     await insertRows(client, 'npcs',
       ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary', 'birthday', 'image_url'], npcs);
+    await insertRows(client, 'goddess_offerings',
+      ['altar_name', 'bundle_name', 'item_name', 'amount', 'quality'], goddessOfferings);
 
     await client.query('COMMIT');
 
@@ -212,6 +238,7 @@ async function seed() {
     console.log(`  crafting:    ${crafting.length}`);
     console.log(`  cooking:     ${cooking.length}`);
     console.log(`  npcs:        ${npcs.length}`);
+    console.log(`  offerings:   ${goddessOfferings.length}`);
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;

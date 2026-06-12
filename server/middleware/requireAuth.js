@@ -1,5 +1,6 @@
 const supabase = require('../lib/supabase');
 const pool = require('../db');
+const jwt = require('jsonwebtoken');
 
 // Verifies the Supabase JWT and attaches req.user + req.isAdmin.
 async function requireAuth(req, res, next) {
@@ -8,13 +9,19 @@ async function requireAuth(req, res, next) {
 
   let user;
   try {
-    const { data, error } = await supabase.auth.getUser(token);
-    if (error || !data.user) return res.status(401).json({ error: 'Invalid token' });
-    user = data.user;
+    if (process.env.SUPABASE_JWT_SECRET) {
+      // Validate locally (zero network overhead)
+      const decoded = jwt.verify(token, process.env.SUPABASE_JWT_SECRET);
+      user = { id: decoded.sub, email: decoded.email };
+    } else {
+      // Fallback to Supabase API if secret isn't provided
+      const { data, error } = await supabase.auth.getUser(token);
+      if (error || !data.user) return res.status(401).json({ error: 'Invalid token' });
+      user = data.user;
+    }
   } catch (err) {
-    // e.g. Supabase env vars missing — fail this request, not the process
     console.error('requireAuth failed:', err.message);
-    return res.status(500).json({ error: 'Auth service unavailable' });
+    return res.status(401).json({ error: 'Invalid token or Auth service unavailable' });
   }
 
   req.user = user;

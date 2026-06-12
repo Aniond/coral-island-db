@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
-import { streamSearch, savePlan } from '../data/api.js';
+import { streamSearch, savePlan, fetchSearchHistory } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
@@ -238,11 +238,35 @@ export default function AISearch({ isOpen, onToggle, initialQuery }) {
   const [typing,   setTyping]   = React.useState(false);
   const scrollRef = React.useRef(null);
 
+  const [historyLoaded, setHistoryLoaded] = React.useState(false);
+
   React.useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, typing]);
+
+  React.useEffect(() => {
+    async function loadHistory() {
+      if (!session?.access_token || !isOpen || historyLoaded) return;
+      try {
+        const history = await fetchSearchHistory(session.access_token);
+        if (history && history.length > 0) {
+          const loadedMessages = [];
+          for (const row of history) {
+            loadedMessages.push({ role: 'user', content: row.query, id: row.id, query: row.query });
+            loadedMessages.push({ role: 'assistant', content: row.response, id: row.id + '_ai', query: row.query });
+          }
+          setMessages(loadedMessages);
+        }
+      } catch (err) {
+        console.error('Failed to load search history:', err);
+      } finally {
+        setHistoryLoaded(true);
+      }
+    }
+    loadHistory();
+  }, [isOpen, session, historyLoaded]);
 
   React.useEffect(() => {
     if (initialQuery && isOpen) {
@@ -252,7 +276,7 @@ export default function AISearch({ isOpen, onToggle, initialQuery }) {
         send(initialQuery);
       }
     }
-  }, [initialQuery, isOpen]);
+  }, [initialQuery, isOpen, messages]);
 
   async function send(text) {
     const t = text.trim();

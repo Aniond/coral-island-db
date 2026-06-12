@@ -2,22 +2,23 @@
 // The main database app: sidebar + active page + floating AI guide.
 // Adapted from the handoff's app.jsx (Tweaks panel omitted per README note #4;
 // density fixed to 'comfortable', --accent/--radius defaults live in index.css).
-import React from 'react';
+import React, { Suspense } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
 import { useIsMobile } from '../lib/useIsMobile.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import CommandPalette from '../components/CommandPalette.jsx';
-import CropsPage from './CropsPage.jsx';
-import CavesPage from './CavesPage.jsx';
-import ForagingPage from './ForagingPage.jsx';
-import CollectionsPage from './CollectionsPage.jsx';
-import RecipesPage from './RecipesPage.jsx';
-import NPCPage from './NPCPage.jsx';
-import RoadmapPage from './RoadmapPage.jsx';
-import PlansPage from './PlansPage.jsx';
-import HomePage from './HomePage.jsx';
+
+const CropsPage = React.lazy(() => import('./CropsPage.jsx'));
+const CavesPage = React.lazy(() => import('./CavesPage.jsx'));
+const ForagingPage = React.lazy(() => import('./ForagingPage.jsx'));
+const CollectionsPage = React.lazy(() => import('./CollectionsPage.jsx'));
+const RecipesPage = React.lazy(() => import('./RecipesPage.jsx'));
+const NPCPage = React.lazy(() => import('./NPCPage.jsx'));
+const RoadmapPage = React.lazy(() => import('./RoadmapPage.jsx'));
+const PlansPage = React.lazy(() => import('./PlansPage.jsx'));
+const HomePage = React.lazy(() => import('./HomePage.jsx'));
 
 const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage };
 
@@ -61,7 +62,9 @@ export default function AppShell() {
         background: THEME.bg,
         animation: 'ciPageIn 0.18s ease',
       }}>
-        <CurrentPage density={density} onNavigate={handleNavigate} />
+        <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
+          <CurrentPage density={density} onNavigate={handleNavigate} />
+        </Suspense>
       </main>
 
       <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} initialQuery={chatQuery} />

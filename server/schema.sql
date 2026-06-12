@@ -108,6 +108,16 @@ CREATE TABLE IF NOT EXISTS app_settings (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+DROP TABLE IF EXISTS goddess_offerings CASCADE;
+CREATE TABLE goddess_offerings (
+  id SERIAL PRIMARY KEY,
+  altar_name VARCHAR(100) NOT NULL,
+  bundle_name VARCHAR(100) NOT NULL,
+  item_name VARCHAR(100) NOT NULL,
+  amount INTEGER DEFAULT 1,
+  quality VARCHAR(20) DEFAULT 'Base'
+);
+
 -- Seed the AI-search testing limits (editable from the admin dashboard).
 -- global_daily_search_limit:        total AI searches/day across everyone
 -- default_user_daily_search_limit:  fallback per-user/day cap when no explicit limit is set

@@ -35,6 +35,9 @@ const SYSTEM_PROMPT =
   '4. For COOKING recipes, also state the utensil used, the food buff (skill/stat bonus + duration), and HP/energy restored.\n' +
   '5. Optionally end with a short > blockquote tip (e.g. cheapest/easiest ingredient route).\n' +
   '\n' +
+  'When the user asks about Goddess Offerings, Bundles, or Fairies, list the required items for the requested bundle. ' +
+  'CROSS-REFERENCE the database to tell the user EXACTLY where to find those required items (season, location, mine floors, etc).\n' +
+  '\n' +
   'When the user asks which food boosts a skill or stat (e.g. "what food increases Fishing"), list every matching dish ' +
   'in a markdown table: Dish | Buff | Utensil | Key ingredients. Note that proficiency buffs map to skills ' +
   '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.';
@@ -52,7 +55,7 @@ async function buildContext() {
       return { rows: [] };
     }
   };
-  const [crops, caves, forageables, npcs, collectibles, crafting, cooking] = await Promise.all([
+  const [crops, caves, forageables, npcs, collectibles, crafting, cooking, offerings] = await Promise.all([
     q('SELECT name, type, season, town_rank, grow_days, seed_price, sell_price, price_bronze, price_silver, price_gold, price_osmium, regrowth_days, notes FROM crops ORDER BY id'),
     q('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
     q('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
@@ -60,6 +63,7 @@ async function buildContext() {
     q('SELECT category, name, sell_price, rarity, seasons, locations, time_of_day FROM collectibles ORDER BY category, sort_order'),
     q('SELECT name, output_amount, category, mastery_type, mastery_level, ingredients FROM crafting_recipes ORDER BY category, name'),
     q('SELECT name, utensil, ingredients, buff, buff_duration_min, health, energy FROM cooking_recipes ORDER BY name'),
+    q('SELECT altar_name, bundle_name, item_name, amount, quality FROM goddess_offerings ORDER BY altar_name, bundle_name, item_name'),
   ]);
 
   const cropLines = crops.rows.map(c =>
@@ -128,6 +132,10 @@ async function buildContext() {
     return line;
   });
 
+  const offeringLines = offerings.rows.map(o => 
+    `- [${o.altar_name}] ${o.bundle_name}: requires ${o.amount}x ${o.quality} ${o.item_name}`
+  );
+
   // If every section is empty the DB is unreachable or completely unseeded —
   // surface that instead of asking the model to answer with no context.
   const sections = [
@@ -138,6 +146,7 @@ async function buildContext() {
     ['# CRAFTING RECIPES', craftingLines],
     ['# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)', cookingLines],
     ['# NPCS', npcLines],
+    ['# GODDESS OFFERINGS (bundles)', offeringLines],
   ];
   if (sections.every(([, lines]) => lines.length === 0)) {
     throw new Error('database context is empty — DB is unreachable or unseeded');
@@ -149,6 +158,33 @@ async function buildContext() {
 // Hard cap on question length — everything past this is either an accident or
 // an attempt to burn API credits; real questions fit comfortably under it.
 const MAX_QUERY_CHARS = 500;
+
+// GET /api/search/history
+// Returns the user's past searches and AI responses.
+router.get('/history', async (req, res) => {
+  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
+  if (!token) return res.status(401).json({ error: 'Unauthorised' });
+
+  let user;
+  try {
+    const { data, error } = await supabase.auth.getUser(token);
+    if (error || !data.user) return res.status(401).json({ error: 'Invalid token' });
+    user = data.user;
+  } catch (err) {
+    return res.status(500).json({ error: 'Auth service unavailable' });
+  }
+
+  try {
+    const { rows } = await pool.query(
+      'SELECT id, query, response, created_at FROM search_logs WHERE user_id = $1 AND response IS NOT NULL ORDER BY created_at DESC LIMIT 50',
+      [user.id]
+    );
+    res.json(rows.reverse());
+  } catch (err) {
+    console.error('GET /api/search/history failed:', err.message);
+    res.status(500).json({ error: 'Failed to fetch search history' });
+  }
+});
 
 // POST /api/search  { query }
 // Streams the AI answer back as plain text. Requires a valid auth token.
@@ -245,26 +281,46 @@ router.post('/', async (req, res) => {
       }
     });
 
-    // Log the search (fire-and-forget — don't block the stream). Falls back to
-    // the old column set if migration 004 (user_email) hasn't been applied yet.
-    pool.query('INSERT INTO search_logs (user_id, user_email, query, created_at) VALUES ($1, $2, $3, NOW())',
-      [userId, user.email || null, query.trim()])
-      .catch(e => {
-        if (e.code !== '42703') {
-          console.error('search log insert failed:', e.message);
-          return;
+    // Log the search and get its ID to update later with the response.
+    // We do this BEFORE the stream to ensure it counts against the daily quota immediately.
+    let logId = null;
+    try {
+      const { rows } = await pool.query(
+        'INSERT INTO search_logs (user_id, user_email, query, created_at) VALUES ($1, $2, $3, NOW()) RETURNING id',
+        [userId, user.email || null, query.trim()]
+      );
+      logId = rows[0].id;
+    } catch (e) {
+      if (e.code === '42703') { // Fallback if migration 004 is missing
+        try {
+          const { rows } = await pool.query(
+            'INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW()) RETURNING id',
+            [userId, query.trim()]
+          );
+          logId = rows[0].id;
+        } catch (e2) {
+          console.error('search log insert fallback failed:', e2.message);
         }
-        pool.query('INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW())', [userId, query.trim()])
-          .catch(e2 => console.error('search log insert failed:', e2.message));
-      });
+      } else {
+        console.error('search log insert failed:', e.message);
+      }
+    }
 
+    let fullResponse = '';
     for await (const chunk of stream) {
       if (abort.signal.aborted) break;
       if (chunk.text) {
+        fullResponse += chunk.text;
         res.write(chunk.text);
       }
     }
     res.end();
+
+    // Save the AI response asynchronously
+    if (logId && fullResponse) {
+      pool.query('UPDATE search_logs SET response = $1 WHERE id = $2', [fullResponse, logId])
+        .catch(e => console.error('search log update failed:', e.message));
+    }
   } catch (err) {
     // Caller hung up and we cancelled the stream — not a failure, just stop.
     if (abort.signal.aborted) {
