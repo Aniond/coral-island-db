@@ -44,6 +44,18 @@ async function pruneSearchLogs() {
 pruneSearchLogs();
 setInterval(pruneSearchLogs, 24 * 60 * 60 * 1000).unref();
 
+// Auto-create ai_plans table if it doesn't exist (migration)
+pool.query(`
+  CREATE TABLE IF NOT EXISTS ai_plans (
+    id SERIAL PRIMARY KEY,
+    user_id UUID NOT NULL,
+    query TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+  );
+`).then(() => console.log('Checked ai_plans table.'))
+  .catch(err => console.error('Failed to create ai_plans table:', err.message));
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Coral Island DB API listening on http://localhost:${PORT}`);
