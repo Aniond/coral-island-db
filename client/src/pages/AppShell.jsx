@@ -7,6 +7,8 @@ import Sidebar from '../components/Sidebar.jsx';
 import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
 import { useIsMobile } from '../lib/useIsMobile.js';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import CommandPalette from '../components/CommandPalette.jsx';
 import CropsPage from './CropsPage.jsx';
 import CavesPage from './CavesPage.jsx';
 import ForagingPage from './ForagingPage.jsx';
@@ -45,6 +47,8 @@ export default function AppShell() {
       background: THEME.bg,
       fontFamily: "'Inter', sans-serif",
     }}>
+      <CommandPalette />
+
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}

@@ -9,6 +9,7 @@ import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch, savePlan } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
@@ -110,6 +111,7 @@ function ExpandModal({ content, query, onClose }) {
 
 function ChatBubble({ msg, query, isTyping }) {
   const { session } = useAuth();
+  const toast = useToast();
   const [expanded, setExpanded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
@@ -121,9 +123,10 @@ function ChatBubble({ msg, query, isTyping }) {
     try {
       await savePlan(query, msg.content, session.access_token);
       setSaved(true);
+      if (toast) toast.success('AI Plan saved to your dashboard!');
     } catch (err) {
       console.error('Save failed:', err);
-      alert('Failed to save plan.');
+      if (toast) toast.error('Failed to save plan.');
     } finally {
       setSaving(false);
     }

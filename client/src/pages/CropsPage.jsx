@@ -179,6 +179,7 @@ export default function CropsPage({ density }) {
   const [rank,   setRank]   = React.useState('');
   const [search, setSearch] = React.useState('');
   const [calcOpen, setCalcOpen] = React.useState(false);
+  const [viewMode, setViewMode] = React.useState('grid');
 
   React.useEffect(() => {
     let alive = true;
@@ -280,6 +281,37 @@ export default function CropsPage({ density }) {
             Clear
           </button>
         )}
+
+        <div style={{ marginLeft: 'auto', display: 'flex', background: THEME.bg, borderRadius: 8, padding: 4, border: `1px solid ${THEME.cardBorder}` }}>
+          <button
+            onClick={() => setViewMode('grid')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'grid' ? 'white' : 'transparent',
+              color: viewMode === 'grid' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'grid' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="layout" size={14} color="currentColor" />
+            Grid
+          </button>
+          <button
+            onClick={() => setViewMode('list')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'list' ? 'white' : 'transparent',
+              color: viewMode === 'list' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'list' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="list" size={14} color="currentColor" />
+            List
+          </button>
+        </div>
       </div>
 
       {/* Body */}
@@ -289,13 +321,46 @@ export default function CropsPage({ density }) {
         <EmptyState message="Couldn't load crops" sub={error} />
       ) : filtered.length === 0 ? (
         <EmptyState message="No crops match these filters" sub="Try a different season, type, or rank" />
-      ) : (
+      ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(crop => <CropCard key={crop.id} crop={crop} density={density} />)}
+        </div>
+      ) : (
+        <div style={{
+          background: 'white', borderRadius: 12, border: `1px solid ${THEME.cardBorder}`,
+          overflow: 'hidden', boxShadow: THEME.shadow
+        }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
+            <thead>
+              <tr style={{ background: THEME.bg, borderBottom: `2px solid ${THEME.cardBorder}`, color: THEME.textMid, fontSize: 12, textTransform: 'uppercase' }}>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Name</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Season</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Type</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Rank</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Grow Time</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Sell Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((crop, i) => (
+                <tr key={crop.id} style={{ borderBottom: `1px solid ${THEME.cardBorder}`, background: i % 2 === 0 ? 'white' : THEME.bg }}>
+                  <td style={{ padding: '12px 16px', fontWeight: 600, color: THEME.textDark }}>{crop.name}</td>
+                  <td style={{ padding: '12px 16px' }}><SeasonPill season={crop.season} /></td>
+                  <td style={{ padding: '12px 16px' }}><TypeBadge type={crop.type} /></td>
+                  <td style={{ padding: '12px 16px' }}><RankBadge rank={crop.rank} /></td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMid }}>
+                    {crop.growTime != null ? `${crop.growTime}d` : '—'}
+                    {crop.regrows && <span style={{ color: '#15803d', fontSize: 12, marginLeft: 6 }}>↩ {crop.regrowthDays}d</span>}
+                  </td>
+                  <td style={{ padding: '12px 16px', fontWeight: 700, color: '#92400e' }}>{crop.sellPrice}g</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

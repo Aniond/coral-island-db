@@ -3,9 +3,10 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { fetchPlans, getChecklist, saveChecklist } from '../data/api.js';
+import { fetchPlans, getChecklist, saveChecklist, deletePlan } from '../data/api.js';
 import { SkeletonLoader } from '../components/ui.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import { useToast } from '../contexts/ToastContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function makeMdComponents(large = false) {
@@ -45,6 +46,8 @@ const MD_COMPONENTS = makeMdComponents(false);
 
 export default function HomePage({ onNavigate }) {
   const { session, profile } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedPlanId, setExpandedPlanId] = useState(null);
@@ -86,15 +89,22 @@ export default function HomePage({ onNavigate }) {
     const newTasks = checklist.map(t => t.id === taskId ? { ...t, done: !t.done } : t);
     setChecklist(newTasks);
     if (session?.access_token) {
-      saveChecklist(newTasks, session.access_token).catch(e => console.error("Failed to save checklist", e));
+      saveChecklist(newTasks, session.access_token).catch(e => {
+        console.error("Failed to save checklist", e);
+        if (toast) toast.error('Failed to save checklist to database');
+      });
     }
   };
 
   const resetChecklist = async () => {
     const newTasks = checklist.map(t => ({ ...t, done: false }));
     setChecklist(newTasks);
+    if (toast) toast.info('Checklist reset');
     if (session?.access_token) {
-      saveChecklist(newTasks, session.access_token).catch(e => console.error("Failed to save checklist", e));
+      saveChecklist(newTasks, session.access_token).catch(e => {
+        console.error("Failed to save checklist", e);
+        if (toast) toast.error('Failed to save checklist to database');
+      });
     }
   };
 
@@ -311,6 +321,26 @@ export default function HomePage({ onNavigate }) {
                       <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
                         {plan.content}
                       </ReactMarkdown>
+                      <button
+                        onClick={() => {
+                          const confirmed = window.confirm("Delete this plan?");
+                          if (confirmed) {
+                            deletePlan(plan.id, session.access_token)
+                              .then(() => {
+                                setPlans(plans.filter(x => x.id !== plan.id));
+                                if (expandedPlanId === plan.id) setExpandedPlanId(null);
+                                if (toast) toast.success('Plan deleted');
+                              })
+                              .catch(err => {
+                                console.error(err);
+                                if (toast) toast.error('Failed to delete plan');
+                              });
+                          }
+                        }}
+                        style={{ marginTop: 12, color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', fontSize: 12 }}
+                      >
+                        Delete Plan
+                      </button>
                     </div>
                   )}
                 </div>

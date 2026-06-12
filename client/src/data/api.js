@@ -138,6 +138,29 @@ export async function fetchCollectibles() { return (await getJson('/collectibles
 export async function fetchCookingRecipes()  { return (await getJson('/cooking')).map(mapCookingRecipe); }
 export async function fetchCraftingRecipes() { return (await getJson('/crafting')).map(mapCraftingRecipe); }
 
+export async function fetchGlobalSearchIndex() {
+  const [crops, caves, forageables, npcs, collectibles, cooking, crafting] = await Promise.all([
+    fetchCrops().catch(() => []),
+    fetchCaves().catch(() => []),
+    fetchForageables().catch(() => []),
+    fetchNpcs().catch(() => []),
+    fetchCollectibles().catch(() => []),
+    fetchCookingRecipes().catch(() => []),
+    fetchCraftingRecipes().catch(() => [])
+  ]);
+
+  const index = [];
+  crops.forEach(c => index.push({ id: `crop-${c.id}`, type: 'Crop', name: c.name, subtitle: `${c.season} • ${c.type}`, route: '/app/crops' }));
+  caves.forEach(c => index.push({ id: `cave-${c.id}`, type: 'Cave Item', name: c.name, subtitle: `${c.type} • ${c.mine} mine`, route: '/app/caves' }));
+  forageables.forEach(c => index.push({ id: `forage-${c.id}`, type: 'Forageable', name: c.name, subtitle: `${c.season} • ${c.location}`, route: '/app/foraging' }));
+  npcs.forEach(c => index.push({ id: `npc-${c.id}`, type: 'NPC', name: c.name, subtitle: c.role || 'Villager', route: '/app/npcs' }));
+  collectibles.forEach(c => index.push({ id: `coll-${c.id}`, type: 'Collectible', name: c.name, subtitle: c.category, route: '/app/collections' }));
+  cooking.forEach(c => index.push({ id: `cook-${c.id}`, type: 'Cooking', name: c.name, subtitle: `Utensil: ${c.utensil}`, route: '/app/recipes' }));
+  crafting.forEach(c => index.push({ id: `craft-${c.id}`, type: 'Crafting', name: c.name, subtitle: `Category: ${c.category}`, route: '/app/recipes' }));
+
+  return index.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.
 // A 401 (expired token) triggers one session refresh + retry before failing.
