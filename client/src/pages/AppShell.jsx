@@ -15,11 +15,12 @@ import RecipesPage from './RecipesPage.jsx';
 import NPCPage from './NPCPage.jsx';
 import RoadmapPage from './RoadmapPage.jsx';
 import PlansPage from './PlansPage.jsx';
+import HomePage from './HomePage.jsx';
 
-const PAGES = { crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage };
+const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage };
 
 export default function AppShell() {
-  const [activePage, setActivePage] = React.useState('crops');
+  const [activePage, setActivePage] = React.useState('home');
   const [chatOpen,   setChatOpen]   = React.useState(false);
 
   function handleNavigate(page) {
@@ -31,7 +32,7 @@ export default function AppShell() {
     }
   }
 
-  const CurrentPage = PAGES[activePage] || CropsPage;
+  const CurrentPage = PAGES[activePage] || HomePage;
   // On phones, reuse the existing 'compact' density to tighten padding & gaps.
   const isMobile = useIsMobile();
   const density = isMobile ? 'compact' : 'comfortable';
@@ -54,7 +55,7 @@ export default function AppShell() {
         background: THEME.bg,
         animation: 'ciPageIn 0.18s ease',
       }}>
-        <CurrentPage density={density} />
+        <CurrentPage density={density} onNavigate={handleNavigate} />
       </main>
 
       <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} />

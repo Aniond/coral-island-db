@@ -5,6 +5,7 @@ import AuthButton from './AuthButton.jsx';
 import MobileTopBar from './MobileTopBar.jsx';
 
 const NAV_ITEMS = [
+  { id: 'home',        label: 'Home',           shortLabel: 'Home',    icon: 'home'     },
   { id: 'crops',       label: 'Crops & Plants', shortLabel: 'Crops',   icon: 'leaf'     },
   { id: 'caves',       label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
   { id: 'foraging',    label: 'Foraging',       shortLabel: 'Forage',  icon: 'sprout'   },
