@@ -225,3 +225,38 @@ export async function deletePlan(id, token) {
   if (!res.ok) throw new Error(`Failed to delete plan (${res.status})`);
   return res.json();
 }
+
+// ── User Checklists ────────────────────────────────────────────────────────
+export async function getChecklist(token) {
+  if (!token) return { tasks: [] };
+  const headers = { 'Authorization': `Bearer ${token}` };
+  let res = await fetch(`${API_BASE}/checklists`, { headers });
+  if (res.status === 401) {
+    const fresh = await refreshAccessToken();
+    if (fresh) {
+      headers['Authorization'] = `Bearer ${fresh}`;
+      res = await fetch(`${API_BASE}/checklists`, { headers });
+    }
+  }
+  if (!res.ok) throw new Error(`Failed to fetch checklist (${res.status})`);
+  return res.json();
+}
+
+export async function saveChecklist(tasks, token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/checklists`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ tasks }),
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to save checklist (${res.status})`);
+  return res.json();
+}
