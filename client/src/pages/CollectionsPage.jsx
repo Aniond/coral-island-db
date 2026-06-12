@@ -4,7 +4,7 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { EmptyState, LoadingDots } from '../components/ui.jsx';
+import { EmptyState, SkeletonLoader } from '../components/ui.jsx';
 import { fetchCollectibles } from '../data/api.js';
 
 const CATEGORIES = [
@@ -202,7 +202,7 @@ export default function CollectionsPage({ density }) {
 
       {/* Body */}
       {loading ? (
-        <LoadingDots />
+        <SkeletonLoader count={6} height={60} />
       ) : error ? (
         <EmptyState message="Couldn't load collectibles" sub={error} />
       ) : filtered.length === 0 ? (

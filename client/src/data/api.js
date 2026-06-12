@@ -173,3 +173,55 @@ export async function streamSearch(query, onChunk, token) {
     if (value) onChunk(decoder.decode(value, { stream: true }));
   }
 }
+
+export async function fetchPlans(token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/plans`, { headers });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to fetch plans (${res.status})`);
+  return res.json();
+}
+
+export async function savePlan(query, content, token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/plans`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ query, content }),
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to save plan (${res.status})`);
+  return res.json();
+}
+
+export async function deletePlan(id, token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/plans/${id}`, {
+      method: 'DELETE',
+      headers,
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to delete plan (${res.status})`);
+  return res.json();
+}

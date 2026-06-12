@@ -6,6 +6,8 @@ const app = express();
 app.use(cors({
   origin: [
     'https://coral-island-db.vercel.app',
+    'https://coralislanddb.com',
+    'https://www.coralislanddb.com',
     /^http:\/\/localhost(:\d+)?$/,
   ],
 }));
@@ -26,6 +28,7 @@ app.use('/api/cooking', require('./routes/cooking'));
 app.use('/api/npcs', require('./routes/npcs'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/admin',  require('./routes/admin'));
+app.use('/api/plans',  require('./routes/plans'));
 
 // search_logs retention — prune entries older than 90 days on boot and daily,
 // so the table (and the admin views' COUNT(*) queries) don't grow unbounded.

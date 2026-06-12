@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS ai_plans (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  query TEXT NOT NULL,
+  content TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);

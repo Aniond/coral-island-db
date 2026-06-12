@@ -139,6 +139,30 @@ export function LoadingDots() {
   );
 }
 
+// ── Skeleton Loader ──────────────────────────────────────────────────────────
+export function SkeletonLoader({ count = 3, height = 80 }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '24px 0' }}>
+      <style>{`
+        @keyframes ciPulse {
+          0% { opacity: 0.6; }
+          50% { opacity: 0.3; }
+          100% { opacity: 0.6; }
+        }
+      `}</style>
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} style={{
+          height,
+          borderRadius: 8,
+          background: THEME.cardBorder,
+          animation: 'ciPulse 1.5s ease-in-out infinite',
+        }} />
+      ))}
+    </div>
+  );
+}
+
+
 // ── Empty State ──────────────────────────────────────────────────────────────
 export function EmptyState({ message = 'No results found', sub = 'Try adjusting your filters' }) {
   return (

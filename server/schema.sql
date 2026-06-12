@@ -112,3 +112,12 @@ INSERT INTO app_settings (key, value) VALUES
   ('default_user_daily_search_limit', '50'),
   ('search_limits_enabled', 'true')
 ON CONFLICT (key) DO NOTHING;
+
+DROP TABLE IF EXISTS ai_plans CASCADE;
+CREATE TABLE ai_plans (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  query TEXT NOT NULL,
+  content TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);

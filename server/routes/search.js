@@ -4,11 +4,9 @@ const pool = require('../db');
 const supabase = require('../lib/supabase');
 const { getSearchLimits } = require('../lib/settings');
 
-const Anthropic = require('@anthropic-ai/sdk');
+const { GoogleGenAI } = require('@google/genai');
 
-// Current Sonnet. (The original spec named claude-sonnet-4-20250514, which is the
-// deprecated Sonnet 4; claude-sonnet-4-6 is its supported replacement.)
-const MODEL = 'claude-sonnet-4-6';
+const MODEL = 'gemini-2.5-flash';
 
 const SYSTEM_PROMPT =
   'You are an expert guide for the farming game Coral Island. ' +
@@ -161,8 +159,8 @@ router.post('/', async (req, res) => {
   if (query.trim().length > MAX_QUERY_CHARS) {
     return res.status(400).json({ error: `Question is too long — keep it under ${MAX_QUERY_CHARS} characters.` });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not configured' });
+  if (!process.env.GEMINI_API_KEY) {
+    return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
   }
 
   // Require auth — AI features are locked behind registered accounts.
@@ -233,31 +231,18 @@ router.post('/', async (req, res) => {
     }
 
     const context = await buildContext();
-    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
 
-    // Prompt caching: the system prompt + game DB context are byte-identical on
-    // every request, so we mark the context block as cacheable (the cached prefix
-    // covers system + context). Repeat searches within the 5-min TTL re-read the
-    // cache at ~0.1x input price instead of resending ~20k tokens at full price —
-    // the question varies and sits AFTER the breakpoint so it never invalidates it.
-    const stream = await anthropic.messages.create({
+    const stream = await ai.models.generateContentStream({
       model: MODEL,
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: `Game database context:\n\n${context}`, cache_control: { type: 'ephemeral' } },
-            { type: 'text', text: `Question: ${query.trim()}` },
-          ],
-        },
-      ],
-      stream: true,
-    }, { signal: abort.signal });
+      contents: `Game database context:\n\n${context}\n\nQuestion: ${query.trim()}`,
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+      }
+    });
 
     // Log the search (fire-and-forget — don't block the stream). Falls back to
     // the old column set if migration 004 (user_email) hasn't been applied yet.
@@ -272,9 +257,10 @@ router.post('/', async (req, res) => {
           .catch(e2 => console.error('search log insert failed:', e2.message));
       });
 
-    for await (const event of stream) {
-      if (event.type === 'content_block_delta' && event.delta && event.delta.type === 'text_delta') {
-        res.write(event.delta.text);
+    for await (const chunk of stream) {
+      if (abort.signal.aborted) break;
+      if (chunk.text) {
+        res.write(chunk.text);
       }
     }
     res.end();
@@ -285,12 +271,10 @@ router.post('/', async (req, res) => {
       return res.end();
     }
     console.error('POST /api/search failed:', err.message);
-    // Surface known Anthropic API failures distinctly so the cause is diagnosable
-    // from logs and the client shows something more useful than a generic error.
     const status = err && err.status;
     const isBilling = status === 400 && /credit balance|billing|quota/i.test(err.message || '');
     if (isBilling) {
-      console.error('  ^ Anthropic API credit balance exhausted — add credits/billing at https://console.anthropic.com (Plans & Billing).');
+      console.error('  ^ Gemini API credit balance exhausted or quota reached.');
     }
     if (!res.headersSent) {
       if (status === 429) {

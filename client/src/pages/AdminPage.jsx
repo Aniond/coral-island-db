@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { refreshAccessToken } from '../lib/authToken.js';
 import { API_ROOT as API, timeoutSignal } from '../lib/apiBase.js';
+import { SkeletonLoader } from '../components/ui.jsx';
 
 const { useState, useEffect, useCallback } = React;
 const C = { primary: '#0f766e', dark: '#134e4a', accent: '#f97316', cream: '#fefce8' };
@@ -307,7 +308,13 @@ function UsersTab({ token, currentUserId }) {
     finally { setBusy(p => ({ ...p, [userId + '_limit']: false })); }
   }
 
-  if (loading) return <div style={{ padding: 20, color: '#9ca3af' }}>Loading users…</div>;
+  if (loading) {
+    return (
+      <div style={{ padding: 48, maxWidth: 860, margin: '0 auto', width: '100%' }}>
+        <SkeletonLoader count={5} height={60} />
+      </div>
+    );
+  }
   if (err) return <div style={{ color: '#dc2626', padding: 20 }}>Error: {err}</div>;
 
   return (
@@ -495,7 +502,9 @@ function LogsTab({ token }) {
           </button>
         </div>
         {loading ? (
-          <div style={{ padding: 30, textAlign: 'center', color: '#9ca3af' }}>Loading…</div>
+          <div style={{ padding: 48, margin: '0 auto', width: '100%' }}>
+            <SkeletonLoader count={5} height={40} />
+          </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>

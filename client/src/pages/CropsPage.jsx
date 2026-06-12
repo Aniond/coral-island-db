@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { SeasonPill, RankBadge, TypeBadge, FilterSelect, EmptyState, LoadingDots, typeLabel } from '../components/ui.jsx';
+import { SeasonPill, RankBadge, TypeBadge, FilterSelect, EmptyState, SkeletonLoader, typeLabel } from '../components/ui.jsx';
 import { fetchCrops } from '../data/api.js';
 
 function CropCard({ crop, density }) {
@@ -171,7 +171,7 @@ export default function CropsPage({ density }) {
 
       {/* Body */}
       {loading ? (
-        <LoadingDots />
+        <SkeletonLoader count={6} height={60} />
       ) : error ? (
         <EmptyState message="Couldn't load crops" sub={error} />
       ) : filtered.length === 0 ? (

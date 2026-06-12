@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { id: 'npcs',        label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
   { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
   { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
+  { id: 'plans',       label: 'Saved Plans',    shortLabel: 'Plans',   icon: 'bookmark' },
 ];
 
 function NavButton({ item, isActive, onClick }) {

@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
-import { streamSearch } from '../data/api.js';
+import { streamSearch, savePlan } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
 
@@ -108,9 +108,26 @@ function ExpandModal({ content, query, onClose }) {
   );
 }
 
-function ChatBubble({ msg, query }) {
+function ChatBubble({ msg, query, isTyping }) {
+  const { session } = useAuth();
   const [expanded, setExpanded] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
   const isUser = msg.role === 'user';
+
+  async function handleSave() {
+    if (!session?.access_token || saved || saving) return;
+    setSaving(true);
+    try {
+      await savePlan(query, msg.content, session.access_token);
+      setSaved(true);
+    } catch (err) {
+      console.error('Save failed:', err);
+      alert('Failed to save plan.');
+    } finally {
+      setSaving(false);
+    }
+  }
   return (
     <>
       {expanded && <ExpandModal content={msg.content} query={query} onClose={() => setExpanded(false)} />}
@@ -144,18 +161,38 @@ function ChatBubble({ msg, query }) {
             }
           </div>
           {!isUser && (
-            <button onClick={() => setExpanded(true)} style={{
-              alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: 5,
-              background: 'none', border: `1px solid ${THEME.primaryLight}`,
-              borderRadius: 6, padding: '3px 10px', cursor: 'pointer',
-              color: THEME.primary, fontSize: 11, fontWeight: 500,
-              fontFamily: "'Inter', sans-serif",
-              transition: 'all 0.12s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = THEME.primaryXLight; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}>
-              <Icon name="expand" size={12} color={THEME.primary} /> Expand
-            </button>
+            <div style={{ display: 'flex', gap: 6, alignSelf: 'flex-start' }}>
+              <button onClick={() => setExpanded(true)} style={{
+                display: 'flex', alignItems: 'center', gap: 5,
+                background: 'none', border: `1px solid ${THEME.primaryLight}`,
+                borderRadius: 6, padding: '3px 10px', cursor: 'pointer',
+                color: THEME.primary, fontSize: 11, fontWeight: 500,
+                fontFamily: "'Inter', sans-serif",
+                transition: 'all 0.12s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = THEME.primaryXLight; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}>
+                <Icon name="expand" size={12} color={THEME.primary} /> Expand
+              </button>
+
+              {!isTyping && (
+                <button onClick={handleSave} disabled={saved || saving} style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  background: saved ? THEME.primaryXLight : 'none',
+                  border: `1px solid ${THEME.primaryLight}`,
+                  borderRadius: 6, padding: '3px 10px',
+                  cursor: saved || saving ? 'default' : 'pointer',
+                  color: THEME.primary, fontSize: 11, fontWeight: 500,
+                  fontFamily: "'Inter', sans-serif",
+                  transition: 'all 0.12s',
+                  opacity: saved || saving ? 0.7 : 1,
+                }}
+                onMouseEnter={e => { if (!saved && !saving) e.currentTarget.style.background = THEME.primaryXLight; }}
+                onMouseLeave={e => { if (!saved && !saving) e.currentTarget.style.background = 'none'; }}>
+                  <Icon name={saved ? 'check' : 'bookmark'} size={12} color={THEME.primary} /> {saved ? 'Saved' : saving ? 'Saving...' : 'Save Plan'}
+                </button>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -372,7 +409,7 @@ export default function AISearch({ isOpen, onToggle }) {
             </div>
           ) : (
             <>
-              {messages.map(msg => <ChatBubble key={msg.id} msg={msg} query={msg.query} />)}
+              {messages.map((msg, idx) => <ChatBubble key={msg.id} msg={msg} query={msg.query} isTyping={typing && idx === messages.length - 1} />)}
               {typing && <TypingBubble />}
             </>
           )}
