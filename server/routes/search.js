@@ -67,7 +67,7 @@ async function buildContext() {
       return { rows: [] };
     }
   };
-  const [crops, caves, forageables, npcs, collectibles, crafting, cooking, offerings, animals, artisan] = await Promise.all([
+  const [crops, caves, forageables, npcs, collectibles, crafting, cooking, offerings, animals, artisan, tools] = await Promise.all([
     q('SELECT name, type, season, town_rank, grow_days, seed_price, sell_price, price_bronze, price_silver, price_gold, price_osmium, regrowth_days, notes FROM crops ORDER BY id'),
     q('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
     q('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
