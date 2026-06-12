@@ -21,6 +21,7 @@ const OCEAN_NOTE = 'Underwater farm. Requires completing One of Us quest and rea
 const crops = [
   // Seeds
   { name: 'Turnip',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 5,  sell_price: 40,  regrowth_days: null, notes: null },
+  { name: 'Carrot',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 5,  sell_price: 45,  regrowth_days: null, notes: null },
   { name: 'Parsnip',     type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 4,  sell_price: 35,  regrowth_days: null, notes: null },
   { name: 'Potato',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 6,  sell_price: 80,  regrowth_days: null, notes: null },
   { name: 'Cauliflower', type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 12, sell_price: 175, regrowth_days: null, notes: null },
@@ -177,7 +178,7 @@ const goddessOfferings = [
   { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Carrot', amount: 1, quality: 'Bronze' },
   { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Daisy', amount: 1, quality: 'Bronze' },
   { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Wasabi', amount: 1, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Morel', amount: 1, quality: 'Base' },
+  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Bamboo shoot', amount: 1, quality: 'Base' },
 
   { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Tilapia', amount: 1, quality: 'Base' },
   { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Catfish', amount: 1, quality: 'Base' },
