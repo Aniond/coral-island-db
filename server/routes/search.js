@@ -307,14 +307,15 @@ router.post('/', searchRateLimiter, async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
 
-    let dynamicPrompt = SYSTEM_PROMPT;
-    if (gameState) {
-      dynamicPrompt += `\n\nCRITICAL CONTEXT: The user's current in-game state is Season: ${gameState.season}, Time: ${gameState.time}, Weather: ${gameState.weather}. You MUST heavily weigh this state in your answer. Only recommend activities, fish, bugs, or shops that are available in this exact season, time, and weather condition.`;
-    }
+    let dynamicPrompt = "You are a helpful assistant for Coral Island.";
+    dynamicPrompt += `\n\nCRITICAL TOOL INSTRUCTIONS:
+- If the user asks to set a reminder, add a task, or do something related to a checklist, YOU MUST use the 'add_custom_task' tool.
+- If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.
+- Tool execution is independent of the game database context. NEVER decline a task simply because it is not found in the context.`;
 
     const stream = await ai.models.generateContentStream({
       model: MODEL,
-      contents: `Game database context:\n\n${context}\n\nQuestion: ${query.trim()}`,
+      contents: `User Request: ${query.trim()}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}`,
       config: {
         systemInstruction: dynamicPrompt,
         tools: [
@@ -370,61 +371,105 @@ router.post('/', searchRateLimiter, async (req, res) => {
     }
 
     let fullResponse = '';
-    for await (const chunk of stream) {
-      if (abort.signal.aborted) break;
 
-      // Intercept and execute function calls mid-stream
-      if (chunk.functionCalls && chunk.functionCalls.length > 0) {
-        for (const call of chunk.functionCalls) {
-          if (call.name === 'mark_offering_complete') {
-            const itemName = call.args.itemName;
-            let msg = '';
-            if (!userId) {
-              msg = `\n\n❌ **Action Failed:** You must be logged in to save offerings to your profile.`;
-            } else {
-              await pool.query(
-                'INSERT INTO user_offerings (user_id, item_name) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-                [userId, itemName]
-              );
-              msg = `\n\n✅ **Action Taken:** Marked *${itemName}* as donated to the Lake Temple!`;
-            }
-            fullResponse += msg;
-            res.write(msg);
-          } else if (call.name === 'add_custom_task') {
-            const taskName = call.args.taskName;
-            let msg = '';
-            if (!userId) {
-              msg = `\n\n❌ **Action Failed:** You must be logged in to save tasks to your itinerary.`;
-            } else {
-              const { rows } = await pool.query('SELECT tasks FROM user_checklists WHERE user_id = $1', [userId]);
-              let tasks = rows.length > 0 ? rows[0].tasks : [];
-              if (typeof tasks === 'string') {
-                try { tasks = JSON.parse(tasks); } catch(e) { tasks = []; }
+    async function processStream(streamObj) {
+      let yielded = false;
+      for await (const chunk of streamObj) {
+        if (abort.signal.aborted) break;
+        if (chunk.functionCalls && chunk.functionCalls.length > 0) {
+          yielded = true;
+          for (const call of chunk.functionCalls) {
+            if (call.name === 'mark_offering_complete') {
+              const itemName = call.args.itemName;
+              let msg = '';
+              if (!userId) {
+                msg = `\n\n❌ **Action Failed:** You must be logged in to mark offerings as complete.`;
+              } else {
+                const { rows } = await pool.query('SELECT items FROM user_offerings WHERE user_id = $1', [userId]);
+                let items = rows.length > 0 ? rows[0].items : [];
+                if (typeof items === 'string') {
+                  try { items = JSON.parse(items); } catch(e) { items = []; }
+                }
+                if (!Array.isArray(items)) items = [];
+                const norm = itemName.trim().toLowerCase();
+                if (!items.includes(norm)) items.push(norm);
+                await pool.query(
+                  'INSERT INTO user_offerings (user_id, items) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET items = EXCLUDED.items',
+                  [userId, JSON.stringify(items)]
+                );
+                msg = `\n\n✅ **Action Taken:** Marked *"${itemName}"* as completed!`;
               }
-              if (!Array.isArray(tasks)) {
-                tasks = [];
+              fullResponse += msg;
+              res.write(msg);
+            } else if (call.name === 'add_custom_task') {
+              const taskName = call.args.taskName;
+              let msg = '';
+              if (!userId) {
+                msg = `\n\n❌ **Action Failed:** You must be logged in to save tasks to your itinerary.`;
+              } else {
+                const { rows } = await pool.query('SELECT tasks FROM user_checklists WHERE user_id = $1', [userId]);
+                let tasks = rows.length > 0 ? rows[0].tasks : [];
+                if (typeof tasks === 'string') {
+                  try { tasks = JSON.parse(tasks); } catch(e) { tasks = []; }
+                }
+                if (!Array.isArray(tasks)) tasks = [];
+                tasks.push({ id: Date.now().toString(), text: taskName, completed: false });
+                await pool.query(
+                  'INSERT INTO user_checklists (user_id, tasks) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET tasks = EXCLUDED.tasks',
+                  [userId, JSON.stringify(tasks)]
+                );
+                msg = `\n\n✅ **Action Taken:** Added *"${taskName}"* to your tasks!`;
               }
-              tasks.push({ id: Date.now().toString(), text: taskName, completed: false });
-              await pool.query(
-                'INSERT INTO user_checklists (user_id, tasks) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET tasks = EXCLUDED.tasks',
-                [userId, JSON.stringify(tasks)]
-              );
-              msg = `\n\n✅ **Action Taken:** Added *"${taskName}"* to your tasks!`;
+              fullResponse += msg;
+              res.write(msg);
             }
-            fullResponse += msg;
-            res.write(msg);
           }
         }
-      }
-
-      // Forward text content to the client (ignoring missing-text warnings from SDK)
-      try {
-        if (chunk.text) {
-          fullResponse += chunk.text;
-          res.write(chunk.text);
+        try {
+          if (chunk.text) {
+            yielded = true;
+            fullResponse += chunk.text;
+            res.write(chunk.text);
+          }
+        } catch (e) {
         }
-      } catch (e) {
-        // SDK throws or warns if you read .text when only a functionCall is present
+      }
+      return yielded;
+    }
+
+    let success = await processStream(stream);
+
+    // If Flash returned an empty response, it was likely overwhelmed by the huge context
+    // when trying to answer a simple tool-call prompt. Retry with no context!
+    if (!success && !abort.signal.aborted) {
+      console.log('Model returned empty response. Retrying without context...');
+      const fallbackStream = await ai.models.generateContentStream({
+        model: MODEL,
+        contents: `User Request: ${query.trim()}`,
+        config: {
+          systemInstruction: dynamicPrompt,
+          tools: [{
+            functionDeclarations: [
+              {
+                name: "mark_offering_complete",
+                description: "Mark a Lake Temple Goddess Offering item as completed/donated.",
+                parameters: { type: "OBJECT", properties: { itemName: { type: "STRING" } }, required: ["itemName"] }
+              },
+              {
+                name: "add_custom_task",
+                description: "Add a task to the user's custom daily checklist. Use this when the user asks to be reminded to do something.",
+                parameters: { type: "OBJECT", properties: { taskName: { type: "STRING" } }, required: ["taskName"] }
+              }
+            ]
+          }]
+        }
+      });
+      success = await processStream(fallbackStream);
+      
+      if (!success) {
+        const msg = `\n\n⚠️ The AI encountered an issue processing your request. Please try rephrasing.`;
+        fullResponse += msg;
+        res.write(msg);
       }
     }
     res.end();
