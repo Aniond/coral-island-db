@@ -378,29 +378,39 @@ router.post('/', searchRateLimiter, async (req, res) => {
         for (const call of chunk.functionCalls) {
           if (call.name === 'mark_offering_complete') {
             const itemName = call.args.itemName;
-            await pool.query(
-              'INSERT INTO user_offerings (user_id, item_name) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-              [userId, itemName]
-            );
-            const msg = `\n\n✅ **Action Taken:** Marked *${itemName}* as donated to the Lake Temple!`;
+            let msg = '';
+            if (!userId) {
+              msg = `\n\n❌ **Action Failed:** You must be logged in to save offerings to your profile.`;
+            } else {
+              await pool.query(
+                'INSERT INTO user_offerings (user_id, item_name) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+                [userId, itemName]
+              );
+              msg = `\n\n✅ **Action Taken:** Marked *${itemName}* as donated to the Lake Temple!`;
+            }
             fullResponse += msg;
             res.write(msg);
           } else if (call.name === 'add_custom_task') {
             const taskName = call.args.taskName;
-            const { rows } = await pool.query('SELECT tasks FROM user_checklists WHERE user_id = $1', [userId]);
-            let tasks = rows.length > 0 ? rows[0].tasks : [];
-            if (typeof tasks === 'string') {
-              try { tasks = JSON.parse(tasks); } catch(e) { tasks = []; }
+            let msg = '';
+            if (!userId) {
+              msg = `\n\n❌ **Action Failed:** You must be logged in to save tasks to your itinerary.`;
+            } else {
+              const { rows } = await pool.query('SELECT tasks FROM user_checklists WHERE user_id = $1', [userId]);
+              let tasks = rows.length > 0 ? rows[0].tasks : [];
+              if (typeof tasks === 'string') {
+                try { tasks = JSON.parse(tasks); } catch(e) { tasks = []; }
+              }
+              if (!Array.isArray(tasks)) {
+                tasks = [];
+              }
+              tasks.push({ id: Date.now().toString(), text: taskName, completed: false });
+              await pool.query(
+                'INSERT INTO user_checklists (user_id, tasks) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET tasks = EXCLUDED.tasks',
+                [userId, JSON.stringify(tasks)]
+              );
+              msg = `\n\n✅ **Action Taken:** Added *"${taskName}"* to your tasks!`;
             }
-            if (!Array.isArray(tasks)) {
-              tasks = [];
-            }
-            tasks.push({ id: Date.now().toString(), text: taskName, completed: false });
-            await pool.query(
-              'INSERT INTO user_checklists (user_id, tasks) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET tasks = EXCLUDED.tasks',
-              [userId, JSON.stringify(tasks)]
-            );
-            const msg = `\n\n✅ **Action Taken:** Added *"${taskName}"* to your tasks!`;
             fullResponse += msg;
             res.write(msg);
           }
