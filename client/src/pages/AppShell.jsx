@@ -3,6 +3,7 @@
 // Adapted from the handoff's app.jsx (Tweaks panel omitted per README note #4;
 // density fixed to 'comfortable', --accent/--radius defaults live in index.css).
 import React, { Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
 import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
@@ -19,8 +20,11 @@ const NPCPage = React.lazy(() => import('./NPCPage.jsx'));
 const RoadmapPage = React.lazy(() => import('./RoadmapPage.jsx'));
 const PlansPage = React.lazy(() => import('./PlansPage.jsx'));
 const HomePage = React.lazy(() => import('./HomePage.jsx'));
+const OfferingsPage = React.lazy(() => import('./OfferingsPage.jsx'));
+const ProductsPage = React.lazy(() => import('./ProductsPage.jsx'));
+const ToolsPage = React.lazy(() => import('./ToolsPage.jsx'));
 
-const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage };
+const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage, offerings: OfferingsPage, products: ProductsPage, tools: ToolsPage };
 
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('home');
@@ -33,12 +37,11 @@ export default function AppShell() {
       if (query) setChatQuery(query);
     } else {
       setActivePage(page);
-      // don't auto-close chat when navigating pages
     }
   }
 
   const CurrentPage = PAGES[activePage] || HomePage;
-  // On phones, reuse the existing 'compact' density to tighten padding & gaps.
+
   const isMobile = useIsMobile();
   const density = isMobile ? 'compact' : 'comfortable';
 
@@ -56,7 +59,7 @@ export default function AppShell() {
         aiChatOpen={chatOpen}
       />
 
-      {/* Page content — key forces re-mount (triggers fade animation) */}
+      {/* Page content */}
       <main key={activePage} style={{
         flex: 1, height: '100vh', overflowY: 'auto',
         background: THEME.bg,

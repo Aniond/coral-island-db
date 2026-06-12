@@ -13,75 +13,11 @@ const path = require('path');
 const pool = require('./db');
 
 // ---- CROPS -----------------------------------------------------------------
-// Structural notes reused for entries the source data didn't annotate individually.
-const FRUIT_PLANT_NOTE = '2x2 space needed. Needs watering. Dies off-season.';
-const FRUIT_TREE_NOTE = '3x3 clear space needed. No watering. Dormant off-season.';
-const OCEAN_NOTE = 'Underwater farm. Requires completing One of Us quest and reaching Town Rank A.';
-
-const crops = [
-  // Seeds
-  { name: 'Turnip',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 5,  sell_price: 40,  regrowth_days: null, notes: null },
-  { name: 'Carrot',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 5,  sell_price: 45,  regrowth_days: null, notes: null },
-  { name: 'Parsnip',     type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 4,  sell_price: 35,  regrowth_days: null, notes: null },
-  { name: 'Potato',      type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 6,  sell_price: 80,  regrowth_days: null, notes: null },
-  { name: 'Cauliflower', type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 12, sell_price: 175, regrowth_days: null, notes: null },
-  { name: 'Daisy',       type: 'seed', season: 'spring',      town_rank: 'F', grow_days: 4,  sell_price: 40,  regrowth_days: null, notes: null },
-  { name: 'Strawberry',  type: 'seed', season: 'spring',      town_rank: 'E', grow_days: 8,  sell_price: 120, regrowth_days: 4,    notes: null },
-  { name: 'Tomato',      type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 11, sell_price: 60,  regrowth_days: 4,    notes: null },
-  { name: 'Blueberry',   type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 13, sell_price: 50,  regrowth_days: 4,    notes: null },
-  { name: 'Corn',        type: 'seed', season: 'summer/fall', town_rank: 'F', grow_days: 14, sell_price: 50,  regrowth_days: 4,    notes: null },
-  { name: 'Sunflower',   type: 'seed', season: 'summer',      town_rank: 'F', grow_days: 8,  sell_price: 80,  regrowth_days: null, notes: null },
-  { name: 'Radish',      type: 'seed', season: 'summer',      town_rank: 'D', grow_days: 6,  sell_price: 90,  regrowth_days: null, notes: null },
-  { name: 'Melon',       type: 'seed', season: 'summer',      town_rank: 'D', grow_days: 12, sell_price: 250, regrowth_days: null, notes: null },
-  { name: 'Pumpkin',     type: 'seed', season: 'fall',        town_rank: 'F', grow_days: 13, sell_price: 320, regrowth_days: null, notes: null },
-  { name: 'Yam',         type: 'seed', season: 'fall',        town_rank: 'F', grow_days: 10, sell_price: 160, regrowth_days: null, notes: null },
-  { name: 'Amaranth',    type: 'seed', season: 'fall',        town_rank: 'D', grow_days: 7,  sell_price: 150, regrowth_days: null, notes: null },
-  { name: 'Bok Choy',    type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 4,  sell_price: 80,  regrowth_days: null, notes: null },
-  { name: 'Eggplant',    type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 5,  sell_price: 60,  regrowth_days: 5,    notes: null },
-  { name: 'Grape',       type: 'seed', season: 'fall',        town_rank: 'C', grow_days: 10, sell_price: 80,  regrowth_days: 3,    notes: null },
-
-  // Fruit plants (2x2, need watering, die off-season)
-  { name: 'Plum',        type: 'fruit_plant', season: 'winter/spring',  town_rank: 'E', grow_days: null, sell_price: 80,  regrowth_days: null, notes: '2x2 space needed. Dies off-season.' },
-  { name: 'Banana',      type: 'fruit_plant', season: 'spring/summer',  town_rank: 'E', grow_days: null, sell_price: 150, regrowth_days: null, notes: '2x2 space needed. Dies off-season.' },
-  { name: 'Rambutan',    type: 'fruit_plant', season: 'spring/summer',  town_rank: 'E', grow_days: null, sell_price: 120, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Jackfruit',   type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Dragonfruit', type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 400, regrowth_days: null, notes: 'Highest value fruit plant.' },
-  { name: 'Papaya',      type: 'fruit_plant', season: 'summer/fall',    town_rank: 'E', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Avocado',     type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Cocoa',       type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 270, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Lemon',       type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 150, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Pear',        type: 'fruit_plant', season: 'fall/winter',    town_rank: 'C', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Lychee',      type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 180, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-  { name: 'Snakefruit',  type: 'fruit_plant', season: 'winter/spring',  town_rank: 'C', grow_days: null, sell_price: 250, regrowth_days: null, notes: FRUIT_PLANT_NOTE },
-
-  // Fruit trees (3x3 untilled, no watering, dormant off-season, all rank C)
-  { name: 'Durian', type: 'fruit_tree', season: 'spring', town_rank: 'C', grow_days: null, sell_price: 600, regrowth_days: null, notes: '3x3 clear space needed. No watering. Dormant off-season.' },
-  { name: 'Orange', type: 'fruit_tree', season: 'spring', town_rank: 'C', grow_days: null, sell_price: 160, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-  { name: 'Mango',  type: 'fruit_tree', season: 'summer', town_rank: 'C', grow_days: null, sell_price: 130, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-  { name: 'Peach',  type: 'fruit_tree', season: 'summer', town_rank: 'C', grow_days: null, sell_price: 140, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-  { name: 'Apple',  type: 'fruit_tree', season: 'fall',   town_rank: 'C', grow_days: null, sell_price: 100, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-  { name: 'Olive',  type: 'fruit_tree', season: 'fall',   town_rank: 'C', grow_days: null, sell_price: 150, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-  { name: 'Almond', type: 'fruit_tree', season: 'winter', town_rank: 'C', grow_days: null, sell_price: 200, regrowth_days: null, notes: FRUIT_TREE_NOTE },
-
-  // Ocean crops (unlock after One of Us quest + rank A)
-  { name: 'Kelp',         type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 4,  sell_price: 500,  regrowth_days: null, notes: OCEAN_NOTE },
-  { name: 'Sea Grape',    type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 6,  sell_price: 600,  regrowth_days: null, notes: OCEAN_NOTE },
-  { name: 'Pearl Oyster', type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 10, sell_price: 1200, regrowth_days: null, notes: 'Most valuable ocean crop.' }
-];
-
-// Automatically calculate seed costs and quality tiers for crops
-crops.forEach(c => {
-  // Hardcoded known seed costs
-  if (c.name === 'Turnip') c.seed_price = 15;
-  else if (c.name === 'Parsnip') c.seed_price = 15;
-  else c.seed_price = Math.floor(c.sell_price * 0.4);
-
-  // Quality price multipliers
-  c.price_bronze = Math.floor(c.sell_price * 1.15);
-  c.price_silver = Math.floor(c.sell_price * 1.30);
-  c.price_gold   = Math.floor(c.sell_price * 1.50);
-  c.price_osmium = Math.floor(c.sell_price * 2.00);
-});
+// Full crop and seed list automatically pulled from coral.guide database.
+// Includes base prices, automatically calculated qualities (Bronze, Silver,
+// Gold, Osmium), and descriptions of planting rules for fruit trees/plants.
+// Regenerate with scripts/build-crops.js.
+const crops = require('./data/crops.json');
 
 // ---- CAVE ITEMS ------------------------------------------------------------
 const caveItems = [
@@ -166,24 +102,19 @@ const cooking = require('./data/cooking-recipes.json').map(r => ({
 const npcs = require('./data/npcs.json');
 
 // ---- GODDESS OFFERINGS -----------------------------------------------------
-const goddessOfferings = [
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Wood', amount: 10, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Stone', amount: 10, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Fiber', amount: 10, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Sap', amount: 10, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Oak Resin', amount: 5, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Essential Resources', item_name: 'Maple Syrup', amount: 5, quality: 'Base' },
-  
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Turnip', amount: 1, quality: 'Bronze' },
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Carrot', amount: 1, quality: 'Bronze' },
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Daisy', amount: 1, quality: 'Bronze' },
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Wasabi', amount: 1, quality: 'Base' },
-  { altar_name: 'Crop Altar', bundle_name: 'Spring Sesajen', item_name: 'Bamboo shoot', amount: 1, quality: 'Base' },
+// Full listing of all altars and bundles from the Lake Temple.
+// Regenerate with scripts/build-offerings.js.
+const goddessOfferings = require('./data/goddess-offerings.json');
 
-  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Tilapia', amount: 1, quality: 'Base' },
-  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Catfish', amount: 1, quality: 'Base' },
-  { altar_name: 'Catch Altar', bundle_name: 'Fresh Water Fish', item_name: 'Silver Arowana', amount: 1, quality: 'Base' }
-];
+// ---- ANIMAL PRODUCTS -------------------------------------------------------
+// Full listing of items from ranch animals (milk, eggs, wool, etc).
+// Regenerate with scripts/build-animals.js.
+const animalProducts = require('./data/animal-products.json');
+
+// ---- ARTISAN PRODUCTS ------------------------------------------------------
+// Full listing of processed artisan goods (cheese, mayonnaise, pickled items).
+// Regenerate with scripts/build-artisan.js.
+const artisanProducts = require('./data/artisan-products.json');
 
 /**
  * Inserts an array of row objects into `table` using a single multi-row
@@ -204,6 +135,11 @@ async function seed() {
   if (process.env.NODE_ENV === 'production') {
     throw new Error("Destructive seed script blocked in production environment!");
   }
+
+  const goddessOfferingsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/goddess-offerings.json'), 'utf-8'));
+  const animalProductsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/animal-products.json'), 'utf-8'));
+  const artisanProductsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/artisan-products.json'), 'utf-8'));
+  const toolsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/tools.json'), 'utf-8'));
 
   const client = await pool.connect();
   try {
@@ -227,7 +163,13 @@ async function seed() {
     await insertRows(client, 'npcs',
       ['name', 'role', 'location', 'schedule', 'loved_gifts', 'liked_gifts', 'quest_summary', 'birthday', 'image_url'], npcs);
     await insertRows(client, 'goddess_offerings',
-      ['altar_name', 'bundle_name', 'item_name', 'amount', 'quality'], goddessOfferings);
+      ['altar_name', 'bundle_name', 'item_name', 'amount', 'quality'], goddessOfferingsData);
+    await insertRows(client, 'animal_products',
+      ['name', 'sell_price', 'description', 'image_url'], animalProductsData);
+    await insertRows(client, 'artisan_products',
+      ['name', 'sell_price', 'description', 'image_url'], artisanProductsData);
+    await insertRows(client, 'tools',
+      ['name', 'tool_type', 'tier', 'price', 'days_delay', 'requirements'], toolsData.map(t => ({...t, requirements: JSON.stringify(t.requirements)})));
 
     await client.query('COMMIT');
 
@@ -239,7 +181,10 @@ async function seed() {
     console.log(`  crafting:    ${crafting.length}`);
     console.log(`  cooking:     ${cooking.length}`);
     console.log(`  npcs:        ${npcs.length}`);
-    console.log(`  offerings:   ${goddessOfferings.length}`);
+    console.log(`  offerings:   ${goddessOfferingsData.length}`);
+    console.log(`  animals:     ${animalProductsData.length}`);
+    console.log(`  artisan:     ${artisanProductsData.length}`);
+    console.log(`  tools:       ${toolsData.length}`);
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;

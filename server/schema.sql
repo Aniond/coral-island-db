@@ -118,6 +118,35 @@ CREATE TABLE goddess_offerings (
   quality VARCHAR(20) DEFAULT 'Base'
 );
 
+DROP TABLE IF EXISTS animal_products CASCADE;
+CREATE TABLE animal_products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  sell_price INTEGER,
+  description TEXT,
+  image_url TEXT
+);
+
+DROP TABLE IF EXISTS artisan_products CASCADE;
+CREATE TABLE artisan_products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  sell_price INTEGER,
+  description TEXT,
+  image_url TEXT
+);
+
+DROP TABLE IF EXISTS tools CASCADE;
+CREATE TABLE tools (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  tool_type VARCHAR(255),
+  tier VARCHAR(50),
+  price INTEGER,
+  days_delay INTEGER,
+  requirements JSONB DEFAULT '[]'::jsonb
+);
+
 -- Seed the AI-search testing limits (editable from the admin dashboard).
 -- global_daily_search_limit:        total AI searches/day across everyone
 -- default_user_daily_search_limit:  fallback per-user/day cap when no explicit limit is set

@@ -55,7 +55,7 @@ async function buildContext() {
       return { rows: [] };
     }
   };
-  const [crops, caves, forageables, npcs, collectibles, crafting, cooking, offerings] = await Promise.all([
+  const [crops, caves, forageables, npcs, collectibles, crafting, cooking, offerings, animals, artisan] = await Promise.all([
     q('SELECT name, type, season, town_rank, grow_days, seed_price, sell_price, price_bronze, price_silver, price_gold, price_osmium, regrowth_days, notes FROM crops ORDER BY id'),
     q('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
     q('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
@@ -64,6 +64,9 @@ async function buildContext() {
     q('SELECT name, output_amount, category, mastery_type, mastery_level, ingredients FROM crafting_recipes ORDER BY category, name'),
     q('SELECT name, utensil, ingredients, buff, buff_duration_min, health, energy FROM cooking_recipes ORDER BY name'),
     q('SELECT altar_name, bundle_name, item_name, amount, quality FROM goddess_offerings ORDER BY altar_name, bundle_name, item_name'),
+    q('SELECT name, sell_price, description FROM animal_products ORDER BY name'),
+    q('SELECT name, sell_price, description FROM artisan_products ORDER BY name'),
+    q('SELECT name, tool_type, tier, price, days_delay, requirements FROM tools ORDER BY tool_type, tier'),
   ]);
 
   const cropLines = crops.rows.map(c =>
@@ -136,6 +139,21 @@ async function buildContext() {
     `- [${o.altar_name}] ${o.bundle_name}: requires ${o.amount}x ${o.quality} ${o.item_name}`
   );
 
+  const animalLines = animals.rows.map(a => 
+    `- ${a.name}: ${a.description || 'Animal product'}${a.sell_price ? `, sells for ${a.sell_price}g` : ''}`
+  );
+
+  const artisanLines = artisan.rows.map(a => 
+    `- ${a.name}: ${a.description || 'Artisan product'}${a.sell_price ? `, sells for ${a.sell_price}g` : ''}`
+  );
+
+  const toolLines = tools.rows.map(t => {
+    let reqs = [];
+    try { reqs = JSON.parse(t.requirements); } catch(e) {}
+    const reqStr = reqs.map(r => `${r.amount}x ${r.name}`).join(', ');
+    return `- ${t.name} (${t.tool_type}, ${t.tier}): Costs ${t.price}g and takes ${t.days_delay} days. Requires: ${reqStr}`;
+  });
+
   // If every section is empty the DB is unreachable or completely unseeded —
   // surface that instead of asking the model to answer with no context.
   const sections = [
@@ -147,6 +165,9 @@ async function buildContext() {
     ['# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)', cookingLines],
     ['# NPCS', npcLines],
     ['# GODDESS OFFERINGS (bundles)', offeringLines],
+    ['# ANIMAL PRODUCTS', animalLines],
+    ['# ARTISAN PRODUCTS', artisanLines],
+    ['# TOOLS AND EQUIPMENT UPGRADES', toolLines],
   ];
   if (sections.every(([, lines]) => lines.length === 0)) {
     throw new Error('database context is empty — DB is unreachable or unseeded');

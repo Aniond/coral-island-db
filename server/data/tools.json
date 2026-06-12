@@ -1,0 +1,654 @@
+[
+  {
+    "name": "Bronze axe",
+    "tool_type": "Axe",
+    "tier": "Copper",
+    "price": 1500,
+    "days_delay": 1,
+    "requirements": [
+      {
+        "name": "Axe",
+        "amount": 1
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Bronze hoe",
+    "tool_type": "Hoe",
+    "tier": "Copper",
+    "price": 1500,
+    "days_delay": 1,
+    "requirements": [
+      {
+        "name": "Hoe",
+        "amount": 1
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Bronze pickaxe",
+    "tool_type": "Pickaxe",
+    "tier": "Copper",
+    "price": 1500,
+    "days_delay": 1,
+    "requirements": [
+      {
+        "name": "Pickaxe",
+        "amount": 1
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Bronze watering can",
+    "tool_type": "WateringCan",
+    "tier": "Copper",
+    "price": 1500,
+    "days_delay": 1,
+    "requirements": [
+      {
+        "name": "Watering can",
+        "amount": 1
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Bronze scythe",
+    "tool_type": "Scythe",
+    "tier": "Copper",
+    "price": 1500,
+    "days_delay": 1,
+    "requirements": [
+      {
+        "name": "Scythe",
+        "amount": 1
+      },
+      {
+        "name": "Bronze bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Silver axe",
+    "tool_type": "Axe",
+    "tier": "Silver",
+    "price": 3000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze axe",
+        "amount": 1
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Silver hoe",
+    "tool_type": "Hoe",
+    "tier": "Silver",
+    "price": 3000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze hoe",
+        "amount": 1
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Silver pickaxe",
+    "tool_type": "Pickaxe",
+    "tier": "Silver",
+    "price": 3000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze pickaxe",
+        "amount": 1
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Silver watering can",
+    "tool_type": "WateringCan",
+    "tier": "Silver",
+    "price": 3000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze watering can",
+        "amount": 1
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Silver scythe",
+    "tool_type": "Scythe",
+    "tier": "Silver",
+    "price": 3000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze scythe",
+        "amount": 1
+      },
+      {
+        "name": "Silver bar",
+        "amount": 5
+      },
+      {
+        "name": "Wood",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "name": "Gold axe",
+    "tool_type": "Axe",
+    "tier": "Gold",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver axe",
+        "amount": 1
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Gold hoe",
+    "tool_type": "Hoe",
+    "tier": "Gold",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver hoe",
+        "amount": 1
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Gold pickaxe",
+    "tool_type": "Pickaxe",
+    "tier": "Gold",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver pickaxe",
+        "amount": 1
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Gold watering can",
+    "tool_type": "WateringCan",
+    "tier": "Gold",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver watering can",
+        "amount": 1
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3
+      },
+      {
+        "name": "Resin",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "name": "Gold scythe",
+    "tool_type": "Scythe",
+    "tier": "Gold",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver scythe",
+        "amount": 1
+      },
+      {
+        "name": "Gold bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium axe",
+    "tool_type": "Axe",
+    "tier": "Osmium",
+    "price": 20000,
+    "days_delay": 4,
+    "requirements": [
+      {
+        "name": "Gold axe",
+        "amount": 1
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium hoe",
+    "tool_type": "Hoe",
+    "tier": "Osmium",
+    "price": 20000,
+    "days_delay": 4,
+    "requirements": [
+      {
+        "name": "Gold hoe",
+        "amount": 1
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium pickaxe",
+    "tool_type": "Pickaxe",
+    "tier": "Osmium",
+    "price": 20000,
+    "days_delay": 4,
+    "requirements": [
+      {
+        "name": "Gold pickaxe",
+        "amount": 1
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 5
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium watering can",
+    "tool_type": "WateringCan",
+    "tier": "Osmium",
+    "price": 20000,
+    "days_delay": 4,
+    "requirements": [
+      {
+        "name": "Gold watering can",
+        "amount": 1
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 3
+      },
+      {
+        "name": "Resin",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium scythe",
+    "tool_type": "Scythe",
+    "tier": "Osmium",
+    "price": 20000,
+    "days_delay": 4,
+    "requirements": [
+      {
+        "name": "Gold scythe",
+        "amount": 1
+      },
+      {
+        "name": "Osmium bar",
+        "amount": 3
+      },
+      {
+        "name": "Hardwood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Bronze seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 2000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze kelp essence",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Bronze seedling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 2000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze kelp essence",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "name": "Bronze sapling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 2000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze kelp essence",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "name": "Bronze hay",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 2000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Bronze kelp essence",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "name": "Silver seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 5000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver kelp essence",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Silver seedling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 5000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver kelp essence",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "name": "Silver sapling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 5000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver kelp essence",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "name": "Silver hay",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 5000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Silver kelp essence",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "name": "Gold seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Gold kelp essence",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Gold seedling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Gold kelp essence",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "name": "Gold sapling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Gold kelp essence",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "name": "Gold hay",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Gold kelp essence",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "name": "Osmium seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 20000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Osmium kelp essence",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "name": "Osmium seedling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 20000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Osmium kelp essence",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "name": "Osmium sapling",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 20000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Osmium kelp essence",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "name": "Osmium hay",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 20000,
+    "days_delay": 2,
+    "requirements": [
+      {
+        "name": "Osmium kelp essence",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "name": "Bronze seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 2000,
+    "days_delay": 2,
+    "requirements": []
+  },
+  {
+    "name": "Silver seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 5000,
+    "days_delay": 2,
+    "requirements": []
+  },
+  {
+    "name": "Gold seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 10000,
+    "days_delay": 2,
+    "requirements": []
+  },
+  {
+    "name": "Osmium seeds",
+    "tool_type": "None",
+    "tier": "Basic",
+    "price": 20000,
+    "days_delay": 2,
+    "requirements": []
+  }
+]

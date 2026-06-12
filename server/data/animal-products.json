@@ -1,0 +1,212 @@
+[
+  {
+    "name": "Black pearl",
+    "sell_price": 2400,
+    "description": "A shellcluck's black pearl.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_sphere_Sprite.webp"
+  },
+  {
+    "name": "Buffalo milk",
+    "sell_price": 350,
+    "description": "A buffalo milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Buffalo_Milk_Sprite.webp"
+  },
+  {
+    "name": "Cara egg",
+    "sell_price": 180,
+    "description": "A small cara's egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Deepvoid ink",
+    "sell_price": 200,
+    "description": "A small inkhog's ink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Deepvoid_ink_Sprite.webp"
+  },
+  {
+    "name": "Duck egg",
+    "sell_price": 100,
+    "description": "A small duck egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Duck_egg_Sprite_.webp"
+  },
+  {
+    "name": "Egg",
+    "sell_price": 50,
+    "description": "A small chicken egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Egg_Sprite_.webp"
+  },
+  {
+    "name": "Feather",
+    "sell_price": 1085,
+    "description": "A gorgeous little feather.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Feather_Sprite.webp"
+  },
+  {
+    "name": "Gesha Coffee Bean",
+    "sell_price": 430,
+    "description": "A handful of gourmet coffee beans, carefully selected and naturally fermented by a friendly local luwak.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Gesha_coffee_bean_Sprite.webp"
+  },
+  {
+    "name": "Goat milk",
+    "sell_price": 210,
+    "description": "A small bottle of goat's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Goat_milk_Sprite_.webp"
+  },
+  {
+    "name": "Golden egg",
+    "sell_price": 150,
+    "description": "A golden egg. It's shiny.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Golden_egg_Sprite.webp"
+  },
+  {
+    "name": "Golden milk",
+    "sell_price": 240,
+    "description": "A golden milk. It's shiny.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Golden_milk_Sprite.webp"
+  },
+  {
+    "name": "Large buffalo milk",
+    "sell_price": 500,
+    "description": "A large buffalo milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_buffalo_milk_Sprite.webp"
+  },
+  {
+    "name": "Large cara egg",
+    "sell_price": 295,
+    "description": "A large cara's egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Large deepvoid ink",
+    "sell_price": 330,
+    "description": "A large inkhog's ink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_deepvoid_ink_Sprite.webp"
+  },
+  {
+    "name": "Large duck egg",
+    "sell_price": 165,
+    "description": "A large duck egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_duck_egg_Sprite_.webp"
+  },
+  {
+    "name": "Large egg",
+    "sell_price": 75,
+    "description": "A large chicken egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_egg_Sprite_.webp"
+  },
+  {
+    "name": "Large feather",
+    "sell_price": 1475,
+    "description": "A big, pretty feather.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_feather_Sprite.webp"
+  },
+  {
+    "name": "Large Gesha Coffee Bean",
+    "sell_price": 715,
+    "description": "A big batch of gourmet coffee beans, carefully selected and naturally fermented by a friendly local luwak.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_gesha_coffee_bean_Sprite.webp"
+  },
+  {
+    "name": "Large goat milk",
+    "sell_price": 350,
+    "description": "A large bottle of goat's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_goat_milk_Sprite_.webp"
+  },
+  {
+    "name": "Large golden egg",
+    "sell_price": 225,
+    "description": "A golden egg. It's big and shiny.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_golden_egg_Sprite.webp"
+  },
+  {
+    "name": "Large golden milk",
+    "sell_price": 390,
+    "description": "A golden milk. It's big and shiny.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_golden_milk_Sprite.webp"
+  },
+  {
+    "name": "Large llama wool",
+    "sell_price": 885,
+    "description": "A bundle of fluffy, lightweight wool from a llama.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_llama_wool_Sprite.webp"
+  },
+  {
+    "name": "Large mermoo milk",
+    "sell_price": 365,
+    "description": "A large mermoo's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_mermoo_milk_Sprite.webp"
+  },
+  {
+    "name": "Large milk",
+    "sell_price": 130,
+    "description": "A large bottle of cow's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_milk_Sprite_.webp"
+  },
+  {
+    "name": "Large ostrich egg",
+    "sell_price": 400,
+    "description": "A large ostrich's egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Large quail egg",
+    "sell_price": 395,
+    "description": "A large quail egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_quail_egg_Sprite.webp"
+  },
+  {
+    "name": "Large wool",
+    "sell_price": 285,
+    "description": "A bundle of sheep's wool. The lanolin gives it a soft, oily feel.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_wool_Sprite.webp"
+  },
+  {
+    "name": "Llama wool",
+    "sell_price": 530,
+    "description": "A tuft of fluffy, lightweight wool from a llama.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Llama_wool_Sprite.webp"
+  },
+  {
+    "name": "Mermoo milk",
+    "sell_price": 220,
+    "description": "A small mermoo's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mermoo_milk_Sprite.webp"
+  },
+  {
+    "name": "Milk",
+    "sell_price": 80,
+    "description": "A small bottle of cow’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Milk_Sprite_.webp"
+  },
+  {
+    "name": "Ostrich egg",
+    "sell_price": 280,
+    "description": "An ostrich's egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Purple egg",
+    "sell_price": 10,
+    "description": "????",
+    "image_url": "https://coral.guide/assets/live/items/icons/placeholder_icon.webp"
+  },
+  {
+    "name": "Quail egg",
+    "sell_price": 245,
+    "description": "A small quail egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Quail_egg_Sprite.webp"
+  },
+  {
+    "name": "White pearl",
+    "sell_price": 1500,
+    "description": "A shellcluck's white pearl.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pearl_Sprite.webp"
+  },
+  {
+    "name": "Wool",
+    "sell_price": 170,
+    "description": "A tuft of sheep's wool. The lanolin gives it a soft, oily feel.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wool_Sprite.webp"
+  }
+]

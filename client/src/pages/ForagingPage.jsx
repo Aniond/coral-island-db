@@ -98,6 +98,7 @@ export default function ForagingPage({ density }) {
   const [season, setSeason] = React.useState('');
   const [area,   setArea]   = React.useState('');
   const [search, setSearch] = React.useState('');
+  const [viewMode, setViewMode] = React.useState('grid');
 
   React.useEffect(() => {
     let alive = true;
@@ -174,6 +175,37 @@ export default function ForagingPage({ density }) {
             <Icon name="x" size={13} color="var(--accent, #f97316)" /> Clear
           </button>
         )}
+
+        <div style={{ marginLeft: 'auto', display: 'flex', background: THEME.bg, borderRadius: 8, padding: 4, border: `1px solid ${THEME.cardBorder}` }}>
+          <button
+            onClick={() => setViewMode('grid')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'grid' ? 'white' : 'transparent',
+              color: viewMode === 'grid' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'grid' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="layout" size={14} color="currentColor" />
+            Grid
+          </button>
+          <button
+            onClick={() => setViewMode('list')}
+            style={{
+              padding: '6px 12px', display: 'flex', alignItems: 'center', gap: 6,
+              background: viewMode === 'list' ? 'white' : 'transparent',
+              color: viewMode === 'list' ? THEME.textDark : THEME.textMuted,
+              border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600,
+              boxShadow: viewMode === 'list' ? THEME.shadow : 'none',
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <Icon name="list" size={14} color="currentColor" />
+            List
+          </button>
+        </div>
       </div>
 
       {loading ? (
@@ -182,13 +214,66 @@ export default function ForagingPage({ density }) {
         <EmptyState message="Couldn't load forageables" sub={error} />
       ) : filtered.length === 0 ? (
         <EmptyState message="Nothing found here" sub="Try a different season or area" />
-      ) : (
+      ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(item => <ForagingCard key={item.id} item={item} density={density} />)}
+        </div>
+      ) : (
+        <div style={{
+          background: 'white', borderRadius: 12, border: `1px solid ${THEME.cardBorder}`,
+          overflow: 'hidden', boxShadow: THEME.shadow
+        }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: 14 }}>
+            <thead>
+              <tr style={{ background: THEME.bg, borderBottom: `2px solid ${THEME.cardBorder}`, color: THEME.textMid, fontSize: 12, textTransform: 'uppercase' }}>
+                <th style={{ padding: '12px 16px', fontWeight: 600, width: 50 }}></th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Name</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Season</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Area</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Location</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Sell Price</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((item, i) => (
+                <tr key={item.id} style={{ borderBottom: `1px solid ${THEME.cardBorder}`, background: i % 2 === 0 ? 'white' : THEME.bg }}>
+                  <td style={{ padding: '8px 16px' }}>
+                    <ForageIcon src={item.image} />
+                  </td>
+                  <td style={{ padding: '12px 16px', fontWeight: 600, color: THEME.textDark }}>{item.name}</td>
+                  <td style={{ padding: '12px 16px' }}><SeasonChip season={item.season} /></td>
+                  <td style={{ padding: '12px 16px' }}>
+                    <span style={{
+                      display: 'inline-block',
+                      background: THEME.primaryXLight, color: THEME.primary,
+                      padding: '3px 10px', borderRadius: 6,
+                      fontSize: 11, fontWeight: 600,
+                    }}>
+                      {prettifyTag(item.area)}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMid, fontWeight: 500, fontSize: 13 }}>
+                    {item.location}
+                  </td>
+                  <td style={{ padding: '12px 16px', fontWeight: 700, color: '#92400e', fontSize: 13 }}>
+                    {item.sellPrice != null ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                        <Icon name="coin" size={12} color="#b45309" />{item.sellPrice}g
+                      </div>
+                    ) : '—'}
+                  </td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMuted, fontSize: 13, lineHeight: 1.4, fontStyle: 'italic' }}>
+                    {item.notes || '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

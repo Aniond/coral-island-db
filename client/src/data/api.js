@@ -142,6 +142,10 @@ export async function fetchNpcs()        { return (await getJson('/npcs')).map(m
 export async function fetchCollectibles() { return (await getJson('/collectibles')).map(mapCollectible); }
 export async function fetchCookingRecipes()  { return (await getJson('/cooking')).map(mapCookingRecipe); }
 export async function fetchCraftingRecipes() { return (await getJson('/crafting')).map(mapCraftingRecipe); }
+export async function fetchOfferings()       { return await getJson('/offerings'); }
+export async function fetchAnimalProducts()  { return await getJson('/products/animal'); }
+export async function fetchArtisanProducts() { return await getJson('/products/artisan'); }
+export async function fetchTools()           { return await getJson('/tools'); }
 
 export async function fetchGlobalSearchIndex() {
   const [crops, caves, forageables, npcs, collectibles, cooking, crafting] = await Promise.all([

@@ -1,0 +1,1017 @@
+[
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Wood",
+    "amount": 10,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Stone",
+    "amount": 10,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Fiber",
+    "amount": 10,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Sap",
+    "amount": 10,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Maple seeds",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Oak seeds",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Essential Resources",
+    "item_name": "Pine cone",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Spring Sesajen",
+    "item_name": "Wasabi",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Spring Sesajen",
+    "item_name": "Morel",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Spring Sesajen",
+    "item_name": "Turnip",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Spring Sesajen",
+    "item_name": "Carrot",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Spring Sesajen",
+    "item_name": "Daisy",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Summer Sesajen",
+    "item_name": "Shallot",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Summer Sesajen",
+    "item_name": "Hibiscus",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Summer Sesajen",
+    "item_name": "Blueberry",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Summer Sesajen",
+    "item_name": "Hot pepper",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Summer Sesajen",
+    "item_name": "Sunflower",
+    "amount": 1,
+    "quality": "Bronze"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Fall Sesajen",
+    "item_name": "Black trumpet",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Fall Sesajen",
+    "item_name": "Fig",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Fall Sesajen",
+    "item_name": "Orchid",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Fall Sesajen",
+    "item_name": "Pumpkin",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Fall Sesajen",
+    "item_name": "Rice",
+    "amount": 1,
+    "quality": "Bronze"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Winter Sesajen",
+    "item_name": "Brussel sprouts",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Winter Sesajen",
+    "item_name": "Kale",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Winter Sesajen",
+    "item_name": "Rose hip",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Winter Sesajen",
+    "item_name": "Snowdrop",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Winter Sesajen",
+    "item_name": "Tea leaf",
+    "amount": 1,
+    "quality": "Bronze"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Ocean Loot",
+    "item_name": "Sea salt",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Ocean Loot",
+    "item_name": "King scallop",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Ocean Loot",
+    "item_name": "Eastern oyster",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Ocean Loot",
+    "item_name": "Blue mussel",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Crop Altar",
+    "bundle_name": "Ocean Loot",
+    "item_name": "Green sea urchin",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Fresh Water Fish",
+    "item_name": "Catfish",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Fresh Water Fish",
+    "item_name": "Tilapia",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Fresh Water Fish",
+    "item_name": "Rainbow fish",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Fresh Water Fish",
+    "item_name": "Silver arowana",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Fresh Water Fish",
+    "item_name": "Koi",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Salt Water Fish",
+    "item_name": "Pink snapper",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Salt Water Fish",
+    "item_name": "Lionfish",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Salt Water Fish",
+    "item_name": "Asian sheepshead",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Salt Water Fish",
+    "item_name": "Yellowfin tuna",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Salt Water Fish",
+    "item_name": "Sardine",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Rare Fish",
+    "item_name": "Sturgeon",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Rare Fish",
+    "item_name": "Gator gar",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Rare Fish",
+    "item_name": "Arapaima",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Rare Fish",
+    "item_name": "Giant sea bass",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Rare Fish",
+    "item_name": "Yellow moray eel",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Day Insect",
+    "item_name": "Pipevine swallowtail butterfly",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Day Insect",
+    "item_name": "Tiger beetle",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Day Insect",
+    "item_name": "Yucca moth",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Day Insect",
+    "item_name": "Assam silk moth",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Day Insect",
+    "item_name": "Monarch caterpillar",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Night Insect",
+    "item_name": "Firefly",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Night Insect",
+    "item_name": "Cecropia caterpillar",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Night Insect",
+    "item_name": "Centipede",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Night Insect",
+    "item_name": "Rove beetle",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Night Insect",
+    "item_name": "Atlas moth",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Ocean Critters",
+    "item_name": "Cannonball jellyfish",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Ocean Critters",
+    "item_name": "Hermit crab",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Ocean Critters",
+    "item_name": "Sexy shrimp",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Ocean Critters",
+    "item_name": "Sunflower sea star",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Catch Altar",
+    "bundle_name": "Ocean Critters",
+    "item_name": "Pom-pom crab",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Milk",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Goat milk",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Wool",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Large goat milk",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Large wool",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Barn Animals",
+    "item_name": "Large milk",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Coop Animals",
+    "item_name": "Egg",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Coop Animals",
+    "item_name": "Duck egg",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Coop Animals",
+    "item_name": "Large egg",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Coop Animals",
+    "item_name": "Large duck egg",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Basic Cooking",
+    "item_name": "Smoothie",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Basic Cooking",
+    "item_name": "Grilled fish",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Basic Cooking",
+    "item_name": "Sunny-side-up eggs",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Basic Cooking",
+    "item_name": "Tomato soup",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Basic Cooking",
+    "item_name": "Onigiri",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Rambutan",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Durian",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Mango",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Dragonfruit",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Apple",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Lemon",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Almond",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Fruit Plant",
+    "item_name": "Cocoa bean",
+    "amount": 1,
+    "quality": "Silver"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Monster Loot",
+    "item_name": "Silky fur",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Monster Loot",
+    "item_name": "Monster essence",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Monster Loot",
+    "item_name": "Bat wing",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Monster Loot",
+    "item_name": "Tough meat",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Advanced Altar",
+    "bundle_name": "Monster Loot",
+    "item_name": "Slime goop",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Crops",
+    "item_name": "Snowdrop",
+    "amount": 1,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Crops",
+    "item_name": "Coffee bean",
+    "amount": 1,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Crops",
+    "item_name": "Garlic",
+    "amount": 1,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Crops",
+    "item_name": "Cotton",
+    "amount": 1,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Crops",
+    "item_name": "Cactus",
+    "amount": 1,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Cooking",
+    "item_name": "Vegan taco",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Cooking",
+    "item_name": "Apple pie",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Cooking",
+    "item_name": "Serabi",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Cooking",
+    "item_name": "Pad thai",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Cooking",
+    "item_name": "Es cendol",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Artisan",
+    "item_name": "Titan arum black honey",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Artisan",
+    "item_name": "Fermented goat cheese wheel",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Artisan",
+    "item_name": "White truffle oil",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Ranching Products",
+    "item_name": "Black truffle",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Ranching Products",
+    "item_name": "Large quail egg",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Ranching Products",
+    "item_name": "Large llama wool",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Ranching Products",
+    "item_name": "Large feather",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Ranching Products",
+    "item_name": "Large Gesha Coffee Bean",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Gold bar",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Silver bar",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Bronze bar",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Gold kelp essence",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Silver kelp essence",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Rare Altar",
+    "bundle_name": "Rare Resources",
+    "item_name": "Bronze kelp essence",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Se Pulu (10m)",
+    "item_name": "Bronze kelp essence",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Se Pulu (10m)",
+    "item_name": "Marinip",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Se Pulu (10m)",
+    "item_name": "Bluebell blossom",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Se Pulu (10m)",
+    "item_name": "Twinshade sealeaf",
+    "amount": 3,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Dua Pulu (20m)",
+    "item_name": "Silver kelp essence",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Dua Pulu (20m)",
+    "item_name": "Sproutfruit",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Dua Pulu (20m)",
+    "item_name": "Helixpur blossom",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Dua Pulu (20m)",
+    "item_name": "Spring sealeaf",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Empat Pulu (40m)",
+    "item_name": "Gold kelp essence",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Empat Pulu (40m)",
+    "item_name": "Pink coralcap",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Empat Pulu (40m)",
+    "item_name": "Petalia",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Empat Pulu (40m)",
+    "item_name": "Red reefbud",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Lima Pulu (50m)",
+    "item_name": "Osmium kelp essence",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Lima Pulu (50m)",
+    "item_name": "Goldglow",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Lima Pulu (50m)",
+    "item_name": "Bluecole",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Diving Altar",
+    "bundle_name": "Lima Pulu (50m)",
+    "item_name": "Mermoo cheese wheel",
+    "amount": 5,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Master Slime",
+    "item_name": "Plop backpack",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Master Slime",
+    "item_name": "Hoarder ring",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Master Slime",
+    "item_name": "Sturdy computer",
+    "amount": 1,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "King Tan",
+    "item_name": "Durian jam",
+    "amount": 8,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "King Tan",
+    "item_name": "Mangosteen jam",
+    "amount": 8,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "King Tan",
+    "item_name": "Lychee",
+    "amount": 8,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "King Tan",
+    "item_name": "Mango",
+    "amount": 8,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Pandazen",
+    "item_name": "Popiah",
+    "amount": 4,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Pandazen",
+    "item_name": "Es doger",
+    "amount": 4,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Pandazen",
+    "item_name": "Herbed tempeh",
+    "amount": 4,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Pandazen",
+    "item_name": "Jackfruit casserole",
+    "amount": 4,
+    "quality": "Base"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Lady Lavanna",
+    "item_name": "Large buffalo milk",
+    "amount": 4,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Lady Lavanna",
+    "item_name": "Fermented buffalo cheese wheel",
+    "amount": 4,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Lady Lavanna",
+    "item_name": "Large century ostrich egg",
+    "amount": 4,
+    "quality": "Osmium"
+  },
+  {
+    "altar_name": "Guardian Altar",
+    "bundle_name": "Lady Lavanna",
+    "item_name": "Large ostrich mayonnaise",
+    "amount": 4,
+    "quality": "Osmium"
+  }
+]

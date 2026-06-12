@@ -30,6 +30,9 @@ app.use('/api/search', require('./routes/search'));
 app.use('/api/admin',  require('./routes/admin'));
 app.use('/api/plans',  require('./routes/plans'));
 app.use('/api/checklists', require('./routes/checklists'));
+app.use('/api/offerings', require('./routes/offerings'));
+app.use('/api/products', require('./routes/products'));
+app.use('/api/tools', require('./routes/tools'));
 
 // search_logs retention — prune entries older than 90 days on boot and daily,
 // so the table (and the admin views' COUNT(*) queries) don't grow unbounded.

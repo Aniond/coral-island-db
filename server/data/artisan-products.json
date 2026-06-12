@@ -1,0 +1,2594 @@
+[
+  {
+    "name": "Aged barley beer",
+    "sell_price": 780,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_Barley_Beer_Sprite.webp"
+  },
+  {
+    "name": "Aged beer",
+    "sell_price": 495,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_Beer_Sprite.webp"
+  },
+  {
+    "name": "Aged coffee",
+    "sell_price": 200,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_coffee_Sprite.webp"
+  },
+  {
+    "name": "Aged gesha coffee",
+    "sell_price": 1720,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_Gesha_Coffee_Sprite.webp"
+  },
+  {
+    "name": "Aged large gesha coffee",
+    "sell_price": 2860,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_Large_Gesha_Coffee_Sprite.webp"
+  },
+  {
+    "name": "Aged sake",
+    "sell_price": 1380,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Aged_Sake_Sprite.webp"
+  },
+  {
+    "name": "Almond flour",
+    "sell_price": 290,
+    "description": "Powder made from crushed almonds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Almond_Flour_Sprite.webp"
+  },
+  {
+    "name": "Almond oil",
+    "sell_price": 315,
+    "description": "A delicate cooking oil. Not suited to high heat.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Almond_Oil_Sprite.webp"
+  },
+  {
+    "name": "Amaranth flour",
+    "sell_price": 50,
+    "description": "Powder made from crushed seeds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Amaranth_Flour_Sprite.webp"
+  },
+  {
+    "name": "Amaranth juice",
+    "sell_price": 25,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Apple jam",
+    "sell_price": 220,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Apple juice",
+    "sell_price": 300,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Apple wine",
+    "sell_price": 1350,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Arame chips",
+    "sell_price": 30,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Artichoke juice",
+    "sell_price": 65,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Artichoke kimchi",
+    "sell_price": 300,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Avocado jam",
+    "sell_price": 105,
+    "description": "Green and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Green_Sprite.webp"
+  },
+  {
+    "name": "Avocado juice",
+    "sell_price": 130,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Avocado wine",
+    "sell_price": 585,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Bamboo shoot kimchi",
+    "sell_price": 350,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Banana jam",
+    "sell_price": 90,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Banana juice",
+    "sell_price": 110,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Banana wine",
+    "sell_price": 495,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Barley beer",
+    "sell_price": 260,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Barley_Beer_Sprite.webp"
+  },
+  {
+    "name": "Barley flour",
+    "sell_price": 235,
+    "description": "Powder made from crushed seeds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Barley_Flour_Sprite.webp"
+  },
+  {
+    "name": "Basil juice",
+    "sell_price": 85,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Beer",
+    "sell_price": 165,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Beer_Sprite.webp"
+  },
+  {
+    "name": "Beet juice",
+    "sell_price": 115,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Beet kimchi",
+    "sell_price": 475,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Bell pepper juice",
+    "sell_price": 105,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Bell pepper kimchi",
+    "sell_price": 425,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Black beauty eggplant kimchi",
+    "sell_price": 425,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Black oil",
+    "sell_price": 440,
+    "description": "A bottle of black oil made from inkhog's ink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_oil_Sprite.webp"
+  },
+  {
+    "name": "Black truffle oil",
+    "sell_price": 1365,
+    "description": "A bottle of black truffle oil. It has a distinctive smell.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_Truffle_Oil_Sprite.webp"
+  },
+  {
+    "name": "Black trumpet chips",
+    "sell_price": 90,
+    "description": "A dehydrated snack made from mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Blackberry jam",
+    "sell_price": 75,
+    "description": "Blue and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Blue_Sprite.webp"
+  },
+  {
+    "name": "Blackberry juice",
+    "sell_price": 90,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Blackberry wine",
+    "sell_price": 405,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Blue dahlia honey",
+    "sell_price": 240,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Blue dahlia mead",
+    "sell_price": 1080,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Blue dye",
+    "sell_price": 60,
+    "description": "A blue-colored substance.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Blue_Dye_Sprite.webp"
+  },
+  {
+    "name": "Bluebell blossom honey",
+    "sell_price": 405,
+    "description": "A big jar of syrupy sweetness with a color as blue as the sea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_honey_Sprite.webp"
+  },
+  {
+    "name": "Bluebell blossom mead",
+    "sell_price": 1825,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_mead_Sprite.webp"
+  },
+  {
+    "name": "Blueberry jam",
+    "sell_price": 75,
+    "description": "Blue and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Blue_Sprite.webp"
+  },
+  {
+    "name": "Blueberry juice",
+    "sell_price": 90,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Blueberry wine",
+    "sell_price": 405,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Bluecole juice",
+    "sell_price": 925,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Bluecole kimchi",
+    "sell_price": 3225,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Bok choy juice",
+    "sell_price": 275,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Bok choy kimchi",
+    "sell_price": 1025,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Brussel sprouts kimchi",
+    "sell_price": 300,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Buffalo butter",
+    "sell_price": 540,
+    "description": "A chunk of soft bufallo butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Buffalo_Butter_Sprite.webp"
+  },
+  {
+    "name": "Buffalo cheese",
+    "sell_price": 700,
+    "description": "Cheese made from buffalo's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Buffalo_Cheese_Sprite.webp"
+  },
+  {
+    "name": "Buffalo cheese wheel",
+    "sell_price": 1000,
+    "description": "A truckle of cheese made from buffalo's milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Buffalo_Cheese_Wheel_Sprite.webp"
+  },
+  {
+    "name": "Butter",
+    "sell_price": 135,
+    "description": "Butter made from churned milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Butter_Sprite.webp"
+  },
+  {
+    "name": "Cacao fruit juice",
+    "sell_price": 185,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Cacao fruit wine",
+    "sell_price": 835,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Cactus honey",
+    "sell_price": 1215,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Cactus mead",
+    "sell_price": 5470,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Cane nectar",
+    "sell_price": 50,
+    "description": "A naturally sweet drink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cane_nectar_Sprite.webp"
+  },
+  {
+    "name": "Canola honey",
+    "sell_price": 70,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Canola mead",
+    "sell_price": 315,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Canola oil",
+    "sell_price": 75,
+    "description": "A common cooking oil made from canola.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Canola_oil_Sprite.webp"
+  },
+  {
+    "name": "Cara mayonnaise",
+    "sell_price": 360,
+    "description": "Mayonnaise made from cara eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cara_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Carrot juice",
+    "sell_price": 170,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Carrot kimchi",
+    "sell_price": 650,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Cauliflower juice",
+    "sell_price": 385,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Cauliflower kimchi",
+    "sell_price": 1400,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Celery kimchi",
+    "sell_price": 225,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Century cara egg",
+    "sell_price": 810,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Century_cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Century duck egg",
+    "sell_price": 450,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Century_duck_egg_Sprite.webp"
+  },
+  {
+    "name": "Century egg",
+    "sell_price": 225,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Century_Egg_Sprite.webp"
+  },
+  {
+    "name": "Century ostrich egg",
+    "sell_price": 1260,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Century_ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Century quail egg",
+    "sell_price": 1110,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Century_quail_egg_Sprite.webp"
+  },
+  {
+    "name": "Chard juice",
+    "sell_price": 245,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Chard kimchi",
+    "sell_price": 900,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Cheese",
+    "sell_price": 160,
+    "description": "Cheese made from cow’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cheese_Sprite.webp"
+  },
+  {
+    "name": "Cheese wheel",
+    "sell_price": 260,
+    "description": "A truckle of cheese made from cow’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cheese_Wheel_Sprite.webp"
+  },
+  {
+    "name": "Cherry jam",
+    "sell_price": 130,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Chocolate powder",
+    "sell_price": 170,
+    "description": "Finely ground cocoa magic. Rich and earthy!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Chocolate_Powder_Sprite.webp"
+  },
+  {
+    "name": "Coconut de mer milk",
+    "sell_price": 330,
+    "description": "Rich and creamy, made from pressed coconut flesh.",
+    "image_url": "https://coral.guide/assets/live/items/icons/coconut_milk_Sprite.webp"
+  },
+  {
+    "name": "Coconut de mer oil",
+    "sell_price": 375,
+    "description": "Extracted from coconut meat. Great for cooking!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coconut_De_Mer_Oil_Sprite.webp"
+  },
+  {
+    "name": "Coconut de mer water",
+    "sell_price": 330,
+    "description": "A refreshing drink straight from a coconut. Restores hydration and soothes the soul.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coconut_De_Mer_Water_Sprite.webp"
+  },
+  {
+    "name": "Coconut de mer wine",
+    "sell_price": 1485,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Coconut milk",
+    "sell_price": 100,
+    "description": "Rich and creamy, made from pressed coconut flesh.",
+    "image_url": "https://coral.guide/assets/live/items/icons/coconut_milk_Sprite.webp"
+  },
+  {
+    "name": "Coconut oil",
+    "sell_price": 115,
+    "description": "Extracted from coconut meat. Great for cooking!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coconut_Oil_Sprite.webp"
+  },
+  {
+    "name": "Coconut water",
+    "sell_price": 100,
+    "description": "A refreshing drink straight from a coconut. Restores hydration and soothes the soul.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coconut_Water_Sprite.webp"
+  },
+  {
+    "name": "Coconut wine",
+    "sell_price": 450,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Coffee",
+    "sell_price": 100,
+    "description": "An instant energy boost.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coffee_Sprite.webp"
+  },
+  {
+    "name": "Coral cap chips",
+    "sell_price": 130,
+    "description": "A dehydrated snack made from mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Coral tall coconut milk",
+    "sell_price": 75,
+    "description": "Rich and creamy, made from pressed coconut flesh.",
+    "image_url": "https://coral.guide/assets/live/items/icons/coconut_milk_Sprite.webp"
+  },
+  {
+    "name": "Coral tall coconut oil",
+    "sell_price": 90,
+    "description": "Extracted from coconut meat. Great for cooking!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_Tall_Coconut_Oil_Sprite.webp"
+  },
+  {
+    "name": "Coral tall coconut water",
+    "sell_price": 75,
+    "description": "A refreshing drink straight from a coconut. Restores hydration and soothes the soul.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Coral_Tall_Coconut_Water_Sprite.webp"
+  },
+  {
+    "name": "Coral tall coconut wine",
+    "sell_price": 340,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Coral tall kaya jam",
+    "sell_price": 70,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Corn flour",
+    "sell_price": 50,
+    "description": "Powder made from crushed dried corn.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Corn_Flour_Sprite.webp"
+  },
+  {
+    "name": "Corn juice",
+    "sell_price": 55,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Corn kimchi",
+    "sell_price": 250,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Cosmo honey",
+    "sell_price": 40,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Cosmo mead",
+    "sell_price": 180,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Cotton cloth",
+    "sell_price": 230,
+    "description": "A bolt of woven fabric made of cotton.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Cotton_cloth_Sprite.webp"
+  },
+  {
+    "name": "Cranberry jam",
+    "sell_price": 40,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Cranberry juice",
+    "sell_price": 40,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Cranberry wine",
+    "sell_price": 180,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Cucumber juice",
+    "sell_price": 90,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Cucumber kimchi",
+    "sell_price": 375,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Daffodil honey",
+    "sell_price": 20,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Daffodil mead",
+    "sell_price": 90,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Daisy honey",
+    "sell_price": 120,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Daisy mead",
+    "sell_price": 540,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "De mer kaya jam",
+    "sell_price": 240,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Dragon fruit juice",
+    "sell_price": 150,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Dragonfruit jam",
+    "sell_price": 115,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Dragonfruit wine",
+    "sell_price": 675,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Dried amber pen shell",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried bay scallop",
+    "sell_price": 60,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried belon oyster",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried black sea urchin",
+    "sell_price": 50,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried blood clam",
+    "sell_price": 30,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried blue mussel",
+    "sell_price": 50,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried blue oyster",
+    "sell_price": 90,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried calico scallop",
+    "sell_price": 50,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried cherrystone clam",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried duck mussel",
+    "sell_price": 30,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried eastern oyster",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried geoduck",
+    "sell_price": 100,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried gooseneck barnacle",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried green lip mussel",
+    "sell_price": 60,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried green sea urchin",
+    "sell_price": 90,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried heart urchin",
+    "sell_price": 110,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried horse mussel",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried jackknife clam",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried king scallop",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried kumamoto oyster",
+    "sell_price": 70,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried mediterranean scallop",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried olympia oyster",
+    "sell_price": 110,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried pacific oyster",
+    "sell_price": 30,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried patagonian scallop",
+    "sell_price": 60,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried purple urchin",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried quahog",
+    "sell_price": 70,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried queen scallop",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried razor clam",
+    "sell_price": 60,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried red sea urchin",
+    "sell_price": 120,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried steamer clam",
+    "sell_price": 30,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Dried zebra mussel",
+    "sell_price": 40,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Duck mayonnaise",
+    "sell_price": 200,
+    "description": "Mayonnaise made from duck eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Duck_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Durian jam",
+    "sell_price": 250,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Durian juice",
+    "sell_price": 340,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Durian wine",
+    "sell_price": 1530,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Eggplant juice",
+    "sell_price": 80,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Eggplant kimchi",
+    "sell_price": 350,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Fairy rose honey",
+    "sell_price": 515,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Fairy rose mead",
+    "sell_price": 2320,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Fermented buffalo cheese",
+    "sell_price": 2100,
+    "description": "Very strong buffalo cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_buffalo_cheese_Sprite.webp"
+  },
+  {
+    "name": "Fermented buffalo cheese wheel",
+    "sell_price": 3000,
+    "description": "Very strong buffalo cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_buffalo_cheese_wheel_Sprite.webp"
+  },
+  {
+    "name": "Fermented cheese",
+    "sell_price": 480,
+    "description": "Very strong cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_Cheese_Sprite.webp"
+  },
+  {
+    "name": "Fermented cheese wheel",
+    "sell_price": 780,
+    "description": "Very strong cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_Cheese_Wheel_Sprite.webp"
+  },
+  {
+    "name": "Fermented goat cheese",
+    "sell_price": 1260,
+    "description": "Very strong goat cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_Goat_Cheese_Sprite.webp"
+  },
+  {
+    "name": "Fermented goat cheese wheel",
+    "sell_price": 2100,
+    "description": "Very strong goat cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_Goat_Cheese_Wheel_Sprite.webp"
+  },
+  {
+    "name": "Fermented mermoo cheese",
+    "sell_price": 1320,
+    "description": "Very strong mermoo cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_mermoo_cheese_Sprite.webp"
+  },
+  {
+    "name": "Fermented mermoo cheese wheel",
+    "sell_price": 2190,
+    "description": "Very strong mermoo cheese.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Fermented_mermoo_cheese_wheel_Sprite.webp"
+  },
+  {
+    "name": "Fig jam",
+    "sell_price": 85,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Gardenia honey",
+    "sell_price": 135,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Gardenia mead",
+    "sell_price": 610,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Garlic juice",
+    "sell_price": 240,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Garlic kimchi",
+    "sell_price": 900,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Ginger kimchi",
+    "sell_price": 425,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Ginseng kimchi",
+    "sell_price": 750,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Goat butter",
+    "sell_price": 330,
+    "description": "A chunk of soft goat butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Goat_Butter_Sprite.webp"
+  },
+  {
+    "name": "Goat cheese",
+    "sell_price": 420,
+    "description": "Crumbly, tangy cheese made from goat’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Goat_Cheese_Sprite.webp"
+  },
+  {
+    "name": "Goat cheese wheel",
+    "sell_price": 700,
+    "description": "A truckle of tangy cheese made from goat milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Goat_Cheese_Wheel_Sprite.webp"
+  },
+  {
+    "name": "Goat yogurt",
+    "sell_price": 630,
+    "description": "Plain fermented goat milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Goat_Yoghurt_Sprite.webp"
+  },
+  {
+    "name": "Goldglow jam",
+    "sell_price": 120,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_underwater_Sprite.webp"
+  },
+  {
+    "name": "Goldglow juice",
+    "sell_price": 155,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_fruit_juice_Sprite.webp"
+  },
+  {
+    "name": "Goldglow wine",
+    "sell_price": 700,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_purple_wine_Sprite.webp"
+  },
+  {
+    "name": "Gourmet salt",
+    "sell_price": 40,
+    "description": "A uniquely harvested and processed salt. Tastes fancy!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Gourmet_Salt_Sprite.webp"
+  },
+  {
+    "name": "Grape jam",
+    "sell_price": 125,
+    "description": "Blue and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Blue_Sprite.webp"
+  },
+  {
+    "name": "Grape juice",
+    "sell_price": 160,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Grape wine",
+    "sell_price": 720,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Green dye",
+    "sell_price": 65,
+    "description": "A green-colored substance.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_Dye.webp"
+  },
+  {
+    "name": "Green tea",
+    "sell_price": 135,
+    "description": "It’s hot!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Green_Tea_Sprite.webp"
+  },
+  {
+    "name": "Helixpur blossom honey",
+    "sell_price": 275,
+    "description": "A big jar of syrupy sweetness with a color as blue as the sea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_honey_Sprite.webp"
+  },
+  {
+    "name": "Helixpur blossom mead",
+    "sell_price": 1240,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_mead_Sprite.webp"
+  },
+  {
+    "name": "Hibiscus honey",
+    "sell_price": 50,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Hibiscus mead",
+    "sell_price": 225,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Hot pepper juice",
+    "sell_price": 80,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Iris honey",
+    "sell_price": 305,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Iris mead",
+    "sell_price": 1375,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Jackfruit jam",
+    "sell_price": 125,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Jackfruit juice",
+    "sell_price": 165,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Jackfruit wine",
+    "sell_price": 745,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Jepun honey",
+    "sell_price": 30,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Jepun mead",
+    "sell_price": 135,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Kale kimchi",
+    "sell_price": 350,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Kaya jam",
+    "sell_price": 85,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Kiracha sauce",
+    "sell_price": 70,
+    "description": "A spicy condiment.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kiracha_Sauce_Sprite.webp"
+  },
+  {
+    "name": "Kombu chips",
+    "sell_price": 70,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Kombucha",
+    "sell_price": 270,
+    "description": "Fermented tea leaves. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kombucha_Sprite.webp"
+  },
+  {
+    "name": "Labu juice",
+    "sell_price": 220,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Labu kimchi",
+    "sell_price": 825,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Large black oil",
+    "sell_price": 725,
+    "description": "A large bottle of black oil made from inkhog's ink.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_black_oil_Sprite.webp"
+  },
+  {
+    "name": "Large buffalo butter",
+    "sell_price": 765,
+    "description": "A big chunk of soft buffalo butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_buffalo_butter_Sprite.webp"
+  },
+  {
+    "name": "Large butter",
+    "sell_price": 210,
+    "description": "A big chunk of butter made from churned milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Butter_Sprite.webp"
+  },
+  {
+    "name": "Large cara mayonnaise",
+    "sell_price": 590,
+    "description": "A large jar of mayonnaise made from cara eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_cara_mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Large century cara egg",
+    "sell_price": 1335,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_century_cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Large century duck egg",
+    "sell_price": 750,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_century_duck_egg_Sprite.webp"
+  },
+  {
+    "name": "Large century egg",
+    "sell_price": 345,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Century_Egg_Sprite.webp"
+  },
+  {
+    "name": "Large century ostrich egg",
+    "sell_price": 1800,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_century_ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Large century quail egg",
+    "sell_price": 1785,
+    "description": "Preserved egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_century_quail_egg_Sprite.webp"
+  },
+  {
+    "name": "Large cotton cloth",
+    "sell_price": 140,
+    "description": "A large bolt of woven cotton fabric.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_cotton_cloth_Sprite.webp"
+  },
+  {
+    "name": "Large duck mayonnaise",
+    "sell_price": 330,
+    "description": "A large jar of mayonnaise made from duck eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Duck_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Large goat butter",
+    "sell_price": 540,
+    "description": "A big chunk of soft goat butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Goat_Butter_Sprite.webp"
+  },
+  {
+    "name": "Large goat yogurt",
+    "sell_price": 1050,
+    "description": "A large jar of plain fermented goat milk",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Goat_Yoghurt_Sprite.webp"
+  },
+  {
+    "name": "Large llama yarn",
+    "sell_price": 1945,
+    "description": "A large bundle of durable, lightweight llama yarn.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Llama_Yarn_Sprite.webp"
+  },
+  {
+    "name": "Large mayonnaise",
+    "sell_price": 150,
+    "description": "A large jar of mayonnaise.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Large mermoo butter",
+    "sell_price": 565,
+    "description": "A big chunk of soft mermoo butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_mermoo_butter_Sprite.webp"
+  },
+  {
+    "name": "Large ostrich mayonnaise",
+    "sell_price": 800,
+    "description": "A large jar of mayonnaise made from ostrich eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_ostrich_mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Large quail mayonnaise",
+    "sell_price": 790,
+    "description": "A large jar of mayonnaise made from quail eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Quail_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Large salted cara egg",
+    "sell_price": 445,
+    "description": "Large salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_salted_cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Large salted duck egg",
+    "sell_price": 250,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_salted_duck_egg_Sprite.webp"
+  },
+  {
+    "name": "Large salted egg",
+    "sell_price": 115,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Salted_Egg_Sprite.webp"
+  },
+  {
+    "name": "Large salted ostrich egg",
+    "sell_price": 600,
+    "description": "Large salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_salted_ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Large salted quail egg",
+    "sell_price": 595,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_salted_quail_egg_Sprite.webp"
+  },
+  {
+    "name": "Large wool cloth",
+    "sell_price": 625,
+    "description": "A large bolt of woven wool fabric.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Wool_Cloth_Sprite.webp"
+  },
+  {
+    "name": "Large yogurt",
+    "sell_price": 390,
+    "description": "A large jar of plain fermented milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Large_Yoghurt_Sprite.webp"
+  },
+  {
+    "name": "Larkspur honey",
+    "sell_price": 40,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Larkspur mead",
+    "sell_price": 180,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Lemon jam",
+    "sell_price": 105,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Lemon juice",
+    "sell_price": 135,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Lemon wine",
+    "sell_price": 610,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Lettuce juice",
+    "sell_price": 105,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Lettuce kimchi",
+    "sell_price": 425,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Lily honey",
+    "sell_price": 445,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Lily mead",
+    "sell_price": 2005,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Llama yarn",
+    "sell_price": 1165,
+    "description": "A durable, lightweight yarn made from llama wool.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Llama_Yarn_Sprite.webp"
+  },
+  {
+    "name": "Lotus honey",
+    "sell_price": 60,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Lotus mead",
+    "sell_price": 270,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Lychee jam",
+    "sell_price": 135,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Lychee juice",
+    "sell_price": 175,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Lychee wine",
+    "sell_price": 790,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Macapuno coconut milk",
+    "sell_price": 165,
+    "description": "Rich and creamy, made from pressed coconut flesh.",
+    "image_url": "https://coral.guide/assets/live/items/icons/coconut_milk_Sprite.webp"
+  },
+  {
+    "name": "Macapuno coconut oil",
+    "sell_price": 190,
+    "description": "Extracted from coconut meat. Great for cooking!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Macapuno_Coconut_Oil_Sprite.webp"
+  },
+  {
+    "name": "Macapuno coconut water",
+    "sell_price": 165,
+    "description": "A refreshing drink straight from a coconut. Restores hydration and soothes the soul.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Macapuno_Coconut_Water_Sprite.webp"
+  },
+  {
+    "name": "Macapuno coconut wine",
+    "sell_price": 745,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Macapuno kaya jam",
+    "sell_price": 130,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Mango jam",
+    "sell_price": 220,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Mango juice",
+    "sell_price": 300,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Mango wine",
+    "sell_price": 1350,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Mangosteen jam",
+    "sell_price": 105,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Maple syrup",
+    "sell_price": 200,
+    "description": "Very sweet and rich. The perfect companion for pancakes.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Maple_Syrup_Sprite.webp"
+  },
+  {
+    "name": "Marinethorn blossom honey",
+    "sell_price": 375,
+    "description": "A big jar of syrupy sweetness with a color as blue as the sea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_honey_Sprite.webp"
+  },
+  {
+    "name": "Marinethorn blossom mead",
+    "sell_price": 1690,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_mead_Sprite.webp"
+  },
+  {
+    "name": "Marinip juice",
+    "sell_price": 110,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Marinip kimchi",
+    "sell_price": 450,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Matsutake chips",
+    "sell_price": 160,
+    "description": "A dehydrated snack made from mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Mayonnaise",
+    "sell_price": 100,
+    "description": "A creamy white spread.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Melon jam",
+    "sell_price": 365,
+    "description": "Green and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Green_Sprite.webp"
+  },
+  {
+    "name": "Melon juice",
+    "sell_price": 515,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Melon wine",
+    "sell_price": 2320,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Mermoo butter",
+    "sell_price": 345,
+    "description": "A chunk of soft mermoo butter.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mermoo_Butter_Sprite.webp"
+  },
+  {
+    "name": "Mermoo cheese",
+    "sell_price": 440,
+    "description": "Cheese made from mermoo’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mermoo_Cheese_Sprite.webp"
+  },
+  {
+    "name": "Mermoo cheese wheel",
+    "sell_price": 730,
+    "description": "A truckle of cheese made from mermoo’s milk.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mermoo_cheese_wheel_Sprite.webp"
+  },
+  {
+    "name": "Morel chips",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Nutty sap",
+    "sell_price": 160,
+    "description": "Bugs find it irresistible.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Nutty_Sap_Sprite.webp"
+  },
+  {
+    "name": "Okra juice",
+    "sell_price": 130,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Okra kimchi",
+    "sell_price": 525,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Olive jam",
+    "sell_price": 185,
+    "description": "Green and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Green_Sprite.webp"
+  },
+  {
+    "name": "Olive oil",
+    "sell_price": 250,
+    "description": "A gourmet cooking oil.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Olive_Oil_Sprite.webp"
+  },
+  {
+    "name": "Orange jam",
+    "sell_price": 220,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Orange juice",
+    "sell_price": 300,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Orange wine",
+    "sell_price": 1350,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Orchid honey",
+    "sell_price": 390,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Orchid mead",
+    "sell_price": 1755,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Ostrich mayonnaise",
+    "sell_price": 560,
+    "description": "Mayonnaise made from ostrich eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Ostrich_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Pansy honey",
+    "sell_price": 30,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Pansy mead",
+    "sell_price": 135,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Papaya jam",
+    "sell_price": 115,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Papaya juice",
+    "sell_price": 150,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Papaya wine",
+    "sell_price": 675,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Pea juice",
+    "sell_price": 130,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Peach jam",
+    "sell_price": 245,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Peach juice",
+    "sell_price": 335,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Peach wine",
+    "sell_price": 1510,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Pear jam",
+    "sell_price": 115,
+    "description": "Green and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Green_Sprite.webp"
+  },
+  {
+    "name": "Pear juice",
+    "sell_price": 150,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Pear wine",
+    "sell_price": 675,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Peas kimchi",
+    "sell_price": 525,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Peony honey",
+    "sell_price": 125,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Peony mead",
+    "sell_price": 565,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Petalia honey",
+    "sell_price": 135,
+    "description": "A big jar of syrupy sweetness with a color as blue as the sea.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_honey_Sprite.webp"
+  },
+  {
+    "name": "Petalia mead",
+    "sell_price": 610,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_mead_Sprite.webp"
+  },
+  {
+    "name": "Pickled artichokes",
+    "sell_price": 60,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled bamboo shoot",
+    "sell_price": 70,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled beets",
+    "sell_price": 95,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled bell peppers",
+    "sell_price": 85,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled black beauty eggplant",
+    "sell_price": 85,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled bluecole",
+    "sell_price": 645,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled bok choy",
+    "sell_price": 205,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled brussel sprouts",
+    "sell_price": 60,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled carrots",
+    "sell_price": 130,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled cauliflower",
+    "sell_price": 280,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled celery",
+    "sell_price": 45,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled chard",
+    "sell_price": 180,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled corn",
+    "sell_price": 50,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled cucumber",
+    "sell_price": 75,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled eggplant",
+    "sell_price": 70,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled garlic",
+    "sell_price": 180,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled ginger",
+    "sell_price": 85,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled ginseng",
+    "sell_price": 150,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled kale",
+    "sell_price": 60,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled labu",
+    "sell_price": 165,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_blue_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled lettuce",
+    "sell_price": 85,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled marinip",
+    "sell_price": 90,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_pink_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled okra",
+    "sell_price": 105,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled peas",
+    "sell_price": 105,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled pink coralcap",
+    "sell_price": 115,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_pink_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled potatoes",
+    "sell_price": 130,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled pumpkin",
+    "sell_price": 190,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled radishes",
+    "sell_price": 195,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled red cabbage",
+    "sell_price": 175,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled red reefbud",
+    "sell_price": 75,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_red_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled shallot",
+    "sell_price": 60,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled spring sealeaf",
+    "sell_price": 225,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_green_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled sweet potato",
+    "sell_price": 60,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled taro root",
+    "sell_price": 50,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled turnip",
+    "sell_price": 75,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled twinshade sealeaf",
+    "sell_price": 250,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_purple_pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled wasabi",
+    "sell_price": 100,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pickled watercress",
+    "sell_price": 90,
+    "description": "Preserved for a longer shelf life.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Pickles_Sprite.webp"
+  },
+  {
+    "name": "Pineapple jam",
+    "sell_price": 315,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Pineapple juice",
+    "sell_price": 440,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Pineapple wine",
+    "sell_price": 1980,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Pink coralcap juice",
+    "sell_price": 145,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Pink coralcap kimchi",
+    "sell_price": 575,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Plum jam",
+    "sell_price": 115,
+    "description": "Blue and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Blue_Sprite.webp"
+  },
+  {
+    "name": "Plum juice",
+    "sell_price": 150,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Plum wine",
+    "sell_price": 675,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Poppy honey",
+    "sell_price": 245,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Poppy mead",
+    "sell_price": 1105,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Potato juice",
+    "sell_price": 165,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Potato kimchi",
+    "sell_price": 650,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Pumpkin juice",
+    "sell_price": 255,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Pumpkin kimchi",
+    "sell_price": 950,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Pumpkin wine",
+    "sell_price": 520,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Purple dye",
+    "sell_price": 60,
+    "description": "A purple-colored substance.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Purple_Dye_Sprite.webp"
+  },
+  {
+    "name": "Quail mayonnaise",
+    "sell_price": 490,
+    "description": "Mayonnaise made from quail eggs.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Quail_Mayonnaise_Sprite.webp"
+  },
+  {
+    "name": "Radish juice",
+    "sell_price": 260,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Radish kimchi",
+    "sell_price": 975,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Rafflesia black honey",
+    "sell_price": 3000,
+    "description": "True nectar of nature. Looks rotten but tastes decadent.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_Honey_Sprite.webp"
+  },
+  {
+    "name": "Rambutan jam",
+    "sell_price": 125,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Rambutan juice",
+    "sell_price": 160,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Rambutan wine",
+    "sell_price": 720,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Red cabbage juice",
+    "sell_price": 235,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Red cabbage kimchi",
+    "sell_price": 875,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Red dye",
+    "sell_price": 75,
+    "description": "A red-colored substance.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Red_Dye_Sprite.webp"
+  },
+  {
+    "name": "Red reefbud juice",
+    "sell_price": 90,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Red reefbud kimchi",
+    "sell_price": 375,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Resin",
+    "sell_price": 145,
+    "description": "Can be used for farm crafting. Do not consume!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Resin_Sprite.webp"
+  },
+  {
+    "name": "Rice flour",
+    "sell_price": 90,
+    "description": "Powder made from crushed seeds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Rice_Flour_Sprite.webp"
+  },
+  {
+    "name": "Rice vinegar",
+    "sell_price": 115,
+    "description": "A sweet, delicate vinegar made from fermented rice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Rice_Vinegar_Sprite.webp"
+  },
+  {
+    "name": "Rose hip jam",
+    "sell_price": 55,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Rose honey",
+    "sell_price": 155,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Rose mead",
+    "sell_price": 700,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Sake",
+    "sell_price": 460,
+    "description": "Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Sake_Sprite.webp"
+  },
+  {
+    "name": "Salted cara egg",
+    "sell_price": 270,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Salted_cara_egg_Sprite.webp"
+  },
+  {
+    "name": "Salted duck egg",
+    "sell_price": 150,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Salted_duck_egg_Sprite.webp"
+  },
+  {
+    "name": "Salted egg",
+    "sell_price": 75,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Salted_Egg_Sprite.webp"
+  },
+  {
+    "name": "Salted ostrich egg",
+    "sell_price": 420,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Salted_ostrich_egg_Sprite.webp"
+  },
+  {
+    "name": "Salted quail egg",
+    "sell_price": 370,
+    "description": "Salt-cured egg.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Salted_quail_egg_Sprite.webp"
+  },
+  {
+    "name": "Sea grapes chips",
+    "sell_price": 100,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Sea lettuce chips",
+    "sell_price": 60,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Sea mushroom chips",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Sea spud jam",
+    "sell_price": 245,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_underwater_Sprite.webp"
+  },
+  {
+    "name": "Sea spud wine",
+    "sell_price": 1530,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_purple_wine_Sprite.webp"
+  },
+  {
+    "name": "Seaweed chips",
+    "sell_price": 4,
+    "description": "A dehydrated snack made from seafood.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Shallot kimchi",
+    "sell_price": 300,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Shiitake chips",
+    "sell_price": 80,
+    "description": "A dehydrated snack made from mushroom.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Seafood_jerky_Sprite.webp"
+  },
+  {
+    "name": "Snake fruit jam",
+    "sell_price": 115,
+    "description": "Blue and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Blue_Sprite.webp"
+  },
+  {
+    "name": "Snake fruit juice",
+    "sell_price": 145,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Snake fruit wine",
+    "sell_price": 655,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Snowdrop honey",
+    "sell_price": 375,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Snowdrop mead",
+    "sell_price": 1690,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Soka jam",
+    "sell_price": 95,
+    "description": "Purple and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_purple_underwater_Sprite.webp"
+  },
+  {
+    "name": "Soka juice",
+    "sell_price": 115,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_fruit_juice_Sprite.webp"
+  },
+  {
+    "name": "Soka wine",
+    "sell_price": 520,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_purple_wine_Sprite.webp"
+  },
+  {
+    "name": "Soybean flour",
+    "sell_price": 40,
+    "description": "Powder made from crushed seeds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Soybean_Flour_Sprite.webp"
+  },
+  {
+    "name": "Spring sealeaf juice",
+    "sell_price": 310,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Spring sealeaf kimchi",
+    "sell_price": 1125,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Sproutfruit jam",
+    "sell_price": 140,
+    "description": "Purple and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_purple_underwater_Sprite.webp"
+  },
+  {
+    "name": "Sproutfruit juice",
+    "sell_price": 185,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_fruit_juice_Sprite.webp"
+  },
+  {
+    "name": "Sproutfruit wine",
+    "sell_price": 835,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_purple_wine_Sprite.webp"
+  },
+  {
+    "name": "Star fruit jam",
+    "sell_price": 175,
+    "description": "Yellow and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Yellow_Sprite.webp"
+  },
+  {
+    "name": "Star fruit juice",
+    "sell_price": 240,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Starfruit wine",
+    "sell_price": 1080,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Strawberry jam",
+    "sell_price": 170,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Strawberry juice",
+    "sell_price": 225,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Strawberry wine",
+    "sell_price": 1015,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Sunflower honey",
+    "sell_price": 210,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Sunflower mead",
+    "sell_price": 945,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Sweet potato juice",
+    "sell_price": 65,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Sweet potato kimchi",
+    "sell_price": 300,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Sweet potato wine",
+    "sell_price": 295,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Syrup",
+    "sell_price": 45,
+    "description": "Sweet and sticky.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Syrup_Sprite.webp"
+  },
+  {
+    "name": "Taro root juice",
+    "sell_price": 55,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Taro root kimchi",
+    "sell_price": 250,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Taro root wine",
+    "sell_price": 110,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Tea berry jam",
+    "sell_price": 60,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Tempeh",
+    "sell_price": 55,
+    "description": "Made from fermented soybeans. Rich in protein.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Tempeh_Sprite.webp"
+  },
+  {
+    "name": "Titan arum black honey",
+    "sell_price": 3000,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Black_Honey_Sprite.webp"
+  },
+  {
+    "name": "Tofu",
+    "sell_price": 40,
+    "description": "Silky and soft. It has a subtle taste.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Tofu_Sprite.webp"
+  },
+  {
+    "name": "Tomato jam",
+    "sell_price": 65,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Tomato juice",
+    "sell_price": 75,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Tomato wine",
+    "sell_price": 340,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Tulip honey",
+    "sell_price": 20,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Tulip mead",
+    "sell_price": 90,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Turnip juice",
+    "sell_price": 90,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Turnip kimchi",
+    "sell_price": 375,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Twinshade sealeaf juice",
+    "sell_price": 345,
+    "description": "A bottle of healthy vegetable juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_vegetable_juice_Sprite.webp"
+  },
+  {
+    "name": "Twinshade sealeaf kimchi",
+    "sell_price": 1250,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Underwater_kimchi_Sprite.webp"
+  },
+  {
+    "name": "Violet honey",
+    "sell_price": 20,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "Violet mead",
+    "sell_price": 90,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "Wasabi kimchi",
+    "sell_price": 500,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Watercress kimchi",
+    "sell_price": 450,
+    "description": "It’s sour and zesty. Yum!",
+    "image_url": "https://coral.guide/assets/live/items/icons/Kimchi_Sprite.webp"
+  },
+  {
+    "name": "Watermelon jam",
+    "sell_price": 175,
+    "description": "Red and gooey.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Jam_Red_Sprite.webp"
+  },
+  {
+    "name": "Watermelon juice",
+    "sell_price": 230,
+    "description": "A bottle of healthy fruit juice.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Juice_Sprite.webp"
+  },
+  {
+    "name": "Watermelon wine",
+    "sell_price": 1035,
+    "description": "It‘s earthy on the nose. Or maybe smoky? Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wine_Sprite.webp"
+  },
+  {
+    "name": "Wheat flour",
+    "sell_price": 65,
+    "description": "Powder made from crushed seeds.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wheat_flour_Sprite.webp"
+  },
+  {
+    "name": "White hibiscus honey",
+    "sell_price": 80,
+    "description": "A big jar of syrupy golden sweetness, straight from the beehive.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Honey_Sprite.webp"
+  },
+  {
+    "name": "White hibiscus mead",
+    "sell_price": 360,
+    "description": "Sweet and strong. Drink in moderation.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Mead_Sprite.webp"
+  },
+  {
+    "name": "White truffle oil",
+    "sell_price": 2135,
+    "description": "A bottle of white truffle oil. It has a distinctive smell.",
+    "image_url": "https://coral.guide/assets/live/items/icons/White_truffle_oil_Sprite.webp"
+  },
+  {
+    "name": "Wool cloth",
+    "sell_price": 375,
+    "description": "A bolt of woven fabric made out of wool.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Wool_Cloth_Sprite.webp"
+  },
+  {
+    "name": "Yellow dye",
+    "sell_price": 90,
+    "description": "A yellow-colored substance.",
+    "image_url": "https://coral.guide/assets/live/items/icons/Yellow_Dye_Sprite.webp"
+  }
+]
