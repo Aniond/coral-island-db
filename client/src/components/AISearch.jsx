@@ -146,7 +146,7 @@ function ChatBubble({ msg, query, isTyping }) {
             <Icon name="sparkles" size={13} color="white" />
           </div>
         )}
-        <div style={{ maxWidth: isUser ? '78%' : '90%', display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div style={{ maxWidth: isUser ? '78%' : '90%', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
           <div style={{
             padding: '9px 13px',
             borderRadius: isUser ? '14px 14px 4px 14px' : '4px 14px 14px 14px',
@@ -154,6 +154,7 @@ function ChatBubble({ msg, query, isTyping }) {
             color: isUser ? '#7c2d12' : THEME.textDark,
             fontSize: 12.5, lineHeight: 1.65,
             border: `1px solid ${isUser ? 'var(--accent-border, #fed7aa)' : THEME.primaryLight}`,
+            overflowX: 'auto',
           }}>
             {isUser
               ? msg.content
