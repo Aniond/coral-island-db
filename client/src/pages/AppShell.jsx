@@ -12,6 +12,7 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import CommandPalette from '../components/CommandPalette.jsx';
 
 const CropsPage = React.lazy(() => import('./CropsPage.jsx'));
+const ItineraryPage = React.lazy(() => import('./ItineraryPage.jsx'));
 const CavesPage = React.lazy(() => import('./CavesPage.jsx'));
 const ForagingPage = React.lazy(() => import('./ForagingPage.jsx'));
 const CollectionsPage = React.lazy(() => import('./CollectionsPage.jsx'));
@@ -24,7 +25,7 @@ const OfferingsPage = React.lazy(() => import('./OfferingsPage.jsx'));
 const ProductsPage = React.lazy(() => import('./ProductsPage.jsx'));
 const ToolsPage = React.lazy(() => import('./ToolsPage.jsx'));
 
-const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage, offerings: OfferingsPage, products: ProductsPage, tools: ToolsPage };
+const PAGES = { home: HomePage, itinerary: ItineraryPage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage, offerings: OfferingsPage, products: ProductsPage, tools: ToolsPage };
 
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('home');

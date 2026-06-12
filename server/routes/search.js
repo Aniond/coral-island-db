@@ -3,6 +3,15 @@ const router = express.Router();
 const pool = require('../db');
 const supabase = require('../lib/supabase');
 const { getSearchLimits } = require('../lib/settings');
+const rateLimit = require('express-rate-limit');
+
+const searchRateLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+  message: { error: 'Too many requests. Please wait a minute before asking another question.' },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 const { GoogleGenAI } = require('@google/genai');
 
@@ -40,7 +49,10 @@ const SYSTEM_PROMPT =
   '\n' +
   'When the user asks which food boosts a skill or stat (e.g. "what food increases Fishing"), list every matching dish ' +
   'in a markdown table: Dish | Buff | Utensil | Key ingredients. Note that proficiency buffs map to skills ' +
-  '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.';
+  '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.\n' +
+  '\n' +
+  'IMPORTANT: You have access to tools to modify the database. If the user explicitly states they donated, completed, ' +
+  'or caught an item for a bundle, call `mark_offering_complete`. If they ask to be reminded of something, call `add_custom_task`.';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
@@ -207,10 +219,11 @@ router.get('/history', async (req, res) => {
   }
 });
 
-// POST /api/search  { query }
+// POST /api/search  { query, gameState }
 // Streams the AI answer back as plain text. Requires a valid auth token.
-router.post('/', async (req, res) => {
+router.post('/', searchRateLimiter, async (req, res) => {
   const query = req.body && req.body.query;
+  const gameState = req.body && req.body.gameState;
   if (!query || typeof query !== 'string' || !query.trim()) {
     return res.status(400).json({ error: 'Missing "query" in request body' });
   }
@@ -294,11 +307,40 @@ router.post('/', async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
 
+    let dynamicPrompt = SYSTEM_PROMPT;
+    if (gameState) {
+      dynamicPrompt += `\n\nCRITICAL CONTEXT: The user's current in-game state is Season: ${gameState.season}, Time: ${gameState.time}, Weather: ${gameState.weather}. You MUST heavily weigh this state in your answer. Only recommend activities, fish, bugs, or shops that are available in this exact season, time, and weather condition.`;
+    }
+
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents: `Game database context:\n\n${context}\n\nQuestion: ${query.trim()}`,
       config: {
-        systemInstruction: SYSTEM_PROMPT,
+        systemInstruction: dynamicPrompt,
+        tools: [
+          {
+            functionDeclarations: [
+              {
+                name: "mark_offering_complete",
+                description: "Mark a Lake Temple Goddess Offering item as completed/donated. Use this when the user says they caught, donated, or completed an item that belongs to an offering.",
+                parameters: {
+                  type: "OBJECT",
+                  properties: { itemName: { type: "STRING", description: "The precise name of the item, e.g. Wasabi" } },
+                  required: ["itemName"]
+                }
+              },
+              {
+                name: "add_custom_task",
+                description: "Add a task to the user's custom daily checklist. Use this when the user asks to be reminded to do something.",
+                parameters: {
+                  type: "OBJECT",
+                  properties: { taskName: { type: "STRING", description: "The task to add, e.g. Buy potato seeds" } },
+                  required: ["taskName"]
+                }
+              }
+            ]
+          }
+        ]
       }
     });
 
@@ -330,9 +372,49 @@ router.post('/', async (req, res) => {
     let fullResponse = '';
     for await (const chunk of stream) {
       if (abort.signal.aborted) break;
-      if (chunk.text) {
-        fullResponse += chunk.text;
-        res.write(chunk.text);
+
+      // Intercept and execute function calls mid-stream
+      if (chunk.functionCalls && chunk.functionCalls.length > 0) {
+        for (const call of chunk.functionCalls) {
+          if (call.name === 'mark_offering_complete') {
+            const itemName = call.args.itemName;
+            await pool.query(
+              'INSERT INTO user_offerings (user_id, item_name) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+              [userId, itemName]
+            );
+            const msg = `\n\n✅ **Action Taken:** Marked *${itemName}* as donated to the Lake Temple!`;
+            fullResponse += msg;
+            res.write(msg);
+          } else if (call.name === 'add_custom_task') {
+            const taskName = call.args.taskName;
+            const { rows } = await pool.query('SELECT tasks FROM user_checklists WHERE user_id = $1', [userId]);
+            let tasks = rows.length > 0 ? rows[0].tasks : [];
+            if (typeof tasks === 'string') {
+              try { tasks = JSON.parse(tasks); } catch(e) { tasks = []; }
+            }
+            if (!Array.isArray(tasks)) {
+              tasks = [];
+            }
+            tasks.push({ id: Date.now().toString(), text: taskName, completed: false });
+            await pool.query(
+              'INSERT INTO user_checklists (user_id, tasks) VALUES ($1, $2) ON CONFLICT (user_id) DO UPDATE SET tasks = EXCLUDED.tasks',
+              [userId, JSON.stringify(tasks)]
+            );
+            const msg = `\n\n✅ **Action Taken:** Added *"${taskName}"* to your tasks!`;
+            fullResponse += msg;
+            res.write(msg);
+          }
+        }
+      }
+
+      // Forward text content to the client (ignoring missing-text warnings from SDK)
+      try {
+        if (chunk.text) {
+          fullResponse += chunk.text;
+          res.write(chunk.text);
+        }
+      } catch (e) {
+        // SDK throws or warns if you read .text when only a functionCall is present
       }
     }
     res.end();
@@ -360,7 +442,8 @@ router.post('/', async (req, res) => {
       } else if (isBilling || status === 401 || status === 403) {
         res.status(503).json({ error: 'The AI guide is temporarily unavailable. Please try again later.' });
       } else {
-        res.status(500).json({ error: 'AI search failed. Please try again.' });
+        console.error("AI SEARCH ERROR:", err);
+        res.status(500).json({ error: 'AI search failed. ' + (err.message || 'Unknown error') });
       }
     } else {
       res.end();

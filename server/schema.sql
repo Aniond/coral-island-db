@@ -165,3 +165,10 @@ CREATE TABLE ai_plans (
   content TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+DROP TABLE IF EXISTS user_offerings CASCADE;
+CREATE TABLE user_offerings (
+  user_id UUID NOT NULL,
+  item_name VARCHAR(100) NOT NULL,
+  PRIMARY KEY (user_id, item_name)
+);

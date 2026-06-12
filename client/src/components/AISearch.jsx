@@ -237,6 +237,9 @@ export default function AISearch({ isOpen, onToggle, initialQuery }) {
   const [input,    setInput]    = React.useState('');
   const [typing,   setTyping]   = React.useState(false);
   const scrollRef = React.useRef(null);
+  const [season,   setSeason]   = React.useState('Spring');
+  const [time,     setTime]     = React.useState('Morning');
+  const [weather,  setWeather]  = React.useState('Sunny');
 
   const [historyLoaded, setHistoryLoaded] = React.useState(false);
 
@@ -298,7 +301,8 @@ export default function AISearch({ isOpen, onToggle, initialQuery }) {
 
     let started = false;
     try {
-      await streamSearch(t, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      const gameState = { season, time, weather };
+      await streamSearch(t, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
@@ -402,6 +406,43 @@ export default function AISearch({ isOpen, onToggle, initialQuery }) {
           <button onClick={onToggle} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex' }}>
             <Icon name="x" size={16} color="rgba(255,255,255,0.8)" />
           </button>
+        </div>
+
+        {/* Game State Picker */}
+        <div style={{
+          padding: '8px 12px',
+          background: THEME.primaryDark || '#0b5a54',
+          display: 'flex', gap: 8, alignItems: 'center',
+          flexShrink: 0, overflowX: 'auto', borderBottom: `1px solid ${THEME.primaryLight}`,
+        }}>
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <Icon name="calendar" size={13} color="rgba(255,255,255,0.8)" />
+            <select value={season} onChange={e => setSeason(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+              <option value="Spring">Spring</option>
+              <option value="Summer">Summer</option>
+              <option value="Fall">Fall</option>
+              <option value="Winter">Winter</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <Icon name="clock" size={13} color="rgba(255,255,255,0.8)" />
+            <select value={time} onChange={e => setTime(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+              <option value="Night">Night</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <Icon name="sun" size={13} color="rgba(255,255,255,0.8)" />
+            <select value={weather} onChange={e => setWeather(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+              <option value="Sunny">Sunny</option>
+              <option value="Raining">Raining</option>
+              <option value="Snowing">Snowing</option>
+              <option value="Stormy">Stormy</option>
+              <option value="Windy">Windy</option>
+            </select>
+          </div>
         </div>
 
         {/* Messages */}

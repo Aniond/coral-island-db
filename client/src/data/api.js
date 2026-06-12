@@ -173,14 +173,14 @@ export async function fetchGlobalSearchIndex() {
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.
 // A 401 (expired token) triggers one session refresh + retry before failing.
-export async function streamSearch(query, onChunk, token) {
+export async function streamSearch(query, gameState, onChunk, token) {
   const request = (tok) => {
     const headers = { 'Content-Type': 'application/json' };
     if (tok) headers['Authorization'] = `Bearer ${tok}`;
     return fetch(`${API_BASE}/search`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, gameState }),
     });
   };
   let res = await request(token);
@@ -305,5 +305,41 @@ export async function saveChecklist(tasks, token) {
     if (fresh) res = await request(fresh);
   }
   if (!res.ok) throw new Error(`Failed to save checklist (${res.status})`);
+  return res.json();
+}
+
+// ── Daily Itinerary ─────────────────────────────────────────────────────────
+export async function fetchItinerary(gameState, token) {
+  if (!token) return null;
+  const request = (tok) => {
+    const headers = { 'Authorization': `Bearer ${tok}` };
+    const query = new URLSearchParams(gameState).toString();
+    return fetch(`${API_BASE}/itinerary?${query}`, { headers });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to fetch itinerary (${res.status})`);
+  return res.json();
+}
+
+export async function markOfferingComplete(itemName, token) {
+  if (!token) return null;
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${tok}` };
+    return fetch(`${API_BASE}/itinerary/offerings`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ itemName }),
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) throw new Error(`Failed to mark offering complete (${res.status})`);
   return res.json();
 }
