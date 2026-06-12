@@ -69,6 +69,9 @@ function CropCard({ crop, density }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5 }}>
           <Icon name="coin" size={13} color="#b45309" />
           <span style={{ fontWeight: 700, color: '#92400e' }}>{crop.sellPrice}g</span>
+          {crop.seedPrice != null && (
+            <span style={{ color: THEME.textMuted, fontWeight: 500, marginLeft: 4 }}>(Cost: {crop.seedPrice}g)</span>
+          )}
         </div>
       </div>
     </div>
@@ -342,7 +345,9 @@ export default function CropsPage({ density }) {
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Type</th>
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Rank</th>
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Grow Time</th>
-                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Sell Price</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Seed Cost</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Sell (Base)</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Profit (Base)</th>
               </tr>
             </thead>
             <tbody>
@@ -356,7 +361,11 @@ export default function CropsPage({ density }) {
                     {crop.growTime != null ? `${crop.growTime}d` : '—'}
                     {crop.regrows && <span style={{ color: '#15803d', fontSize: 12, marginLeft: 6 }}>↩ {crop.regrowthDays}d</span>}
                   </td>
-                  <td style={{ padding: '12px 16px', fontWeight: 700, color: '#92400e' }}>{crop.sellPrice}g</td>
+                  <td style={{ padding: '12px 16px', color: THEME.textMid }}>{crop.seedPrice ? `${crop.seedPrice}g` : '—'}</td>
+                  <td style={{ padding: '12px 16px', fontWeight: 600, color: '#92400e' }}>{crop.sellPrice}g</td>
+                  <td style={{ padding: '12px 16px', fontWeight: 700, color: '#16a34a' }}>
+                    {crop.seedPrice ? `+${crop.sellPrice - crop.seedPrice}g` : '—'}
+                  </td>
                 </tr>
               ))}
             </tbody>

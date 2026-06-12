@@ -68,6 +68,20 @@ const crops = [
   { name: 'Pearl Oyster', type: 'ocean_crop', season: 'all', town_rank: 'A', grow_days: 10, sell_price: 1200, regrowth_days: null, notes: 'Most valuable ocean crop.' }
 ];
 
+// Automatically calculate seed costs and quality tiers for crops
+crops.forEach(c => {
+  // Hardcoded known seed costs
+  if (c.name === 'Turnip') c.seed_price = 15;
+  else if (c.name === 'Parsnip') c.seed_price = 15;
+  else c.seed_price = Math.floor(c.sell_price * 0.4);
+
+  // Quality price multipliers
+  c.price_bronze = Math.floor(c.sell_price * 1.15);
+  c.price_silver = Math.floor(c.sell_price * 1.30);
+  c.price_gold   = Math.floor(c.sell_price * 1.50);
+  c.price_osmium = Math.floor(c.sell_price * 2.00);
+});
+
 // ---- CAVE ITEMS ------------------------------------------------------------
 const caveItems = [
   // Earth Mine (first mine, available from Day 7)
@@ -174,7 +188,7 @@ async function seed() {
     await client.query(schema);
 
     await insertRows(client, 'crops',
-      ['name', 'type', 'season', 'town_rank', 'grow_days', 'sell_price', 'regrowth_days', 'notes'], crops);
+      ['name', 'type', 'season', 'town_rank', 'grow_days', 'seed_price', 'sell_price', 'price_bronze', 'price_silver', 'price_gold', 'price_osmium', 'regrowth_days', 'notes'], crops);
     await insertRows(client, 'cave_items',
       ['cave', 'item_name', 'item_type', 'floor_range', 'notes'], caveItems);
     await insertRows(client, 'forageables',

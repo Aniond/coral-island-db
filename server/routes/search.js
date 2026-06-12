@@ -53,7 +53,7 @@ async function buildContext() {
     }
   };
   const [crops, caves, forageables, npcs, collectibles, crafting, cooking] = await Promise.all([
-    q('SELECT name, type, season, town_rank, grow_days, sell_price, regrowth_days, notes FROM crops ORDER BY id'),
+    q('SELECT name, type, season, town_rank, grow_days, seed_price, sell_price, price_bronze, price_silver, price_gold, price_osmium, regrowth_days, notes FROM crops ORDER BY id'),
     q('SELECT cave, item_name, item_type, floor_range, notes FROM cave_items ORDER BY id'),
     q('SELECT name, season, location, area, notes, sell_price FROM forageables ORDER BY id'),
     q('SELECT name, role, location, schedule, loved_gifts, liked_gifts, quest_summary, birthday FROM npcs ORDER BY id'),
@@ -64,7 +64,8 @@ async function buildContext() {
 
   const cropLines = crops.rows.map(c =>
     `- ${c.name} (${c.type}, ${c.season}, rank ${c.town_rank}): ` +
-    `${c.grow_days != null ? c.grow_days + 'd grow' : 'no grow time'}, sells ${c.sell_price}g` +
+    `${c.grow_days != null ? c.grow_days + 'd grow' : 'no grow time'}, ` +
+    `seed cost ${c.seed_price}g, sells ${c.sell_price}g (Base) / ${c.price_bronze}g (Bronze) / ${c.price_silver}g (Silver) / ${c.price_gold}g (Gold) / ${c.price_osmium}g (Osmium)` +
     `${c.regrowth_days != null ? `, regrows every ${c.regrowth_days}d` : ''}` +
     `${c.notes ? `. ${c.notes}` : ''}`);
 

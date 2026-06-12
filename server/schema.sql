@@ -9,7 +9,12 @@ CREATE TABLE crops (
   season VARCHAR(100),      -- 'spring', 'summer', 'fall', 'winter', 'all', or combos like 'summer/fall'
   town_rank VARCHAR(5),     -- 'F', 'E', 'D', 'C', 'B', 'A'
   grow_days INTEGER,
-  sell_price INTEGER,
+  seed_price INTEGER,
+  sell_price INTEGER,       -- Base quality price
+  price_bronze INTEGER,     -- Base * 1.15
+  price_silver INTEGER,     -- Base * 1.30
+  price_gold INTEGER,       -- Base * 1.50
+  price_osmium INTEGER,     -- Base * 2.00
   regrowth_days INTEGER,    -- null if one-time harvest
   notes TEXT
 );

@@ -26,11 +26,16 @@ function mapCrop(r) {
   return {
     id: r.id,
     name: r.name,
-    type: r.type,                       // 'seed' | 'fruit_plant' | 'fruit_tree' | 'ocean_crop'
-    season: r.season,                   // may be a combo like 'summer/fall' or 'all'
-    rank: r.town_rank,                  // 'F'..'A'
-    growTime: r.grow_days,              // may be null (fruit plants/trees)
+    type: r.type,
+    season: r.season,
+    rank: r.town_rank,
+    growTime: r.grow_days,
+    seedPrice: r.seed_price,
     sellPrice: r.sell_price,
+    priceBronze: r.price_bronze,
+    priceSilver: r.price_silver,
+    priceGold: r.price_gold,
+    priceOsmium: r.price_osmium,
     regrows: r.regrowth_days != null,
     regrowthDays: r.regrowth_days,
     notes: r.notes,
