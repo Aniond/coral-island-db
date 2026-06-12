@@ -75,6 +75,100 @@ function CropCard({ crop, density }) {
   );
 }
 
+// ── Crop ROI Calculator ──────────────────────────────────────────────────────
+function CropCalculator({ crops, isOpen, onClose }) {
+  const [calcSeason, setCalcSeason] = React.useState('spring');
+  const [daysLeft, setDaysLeft] = React.useState(28);
+
+  if (!isOpen) return null;
+
+  // Filter crops by season and calculate ROI
+  const calculated = crops
+    .filter(c => c.season === 'all' || String(c.season).includes(calcSeason))
+    .filter(c => c.growTime != null && c.sellPrice != null)
+    .map(c => {
+      let harvests = 0;
+      let totalRevenue = 0;
+      if (daysLeft >= c.growTime) {
+        harvests = 1;
+        if (c.regrows && c.regrowthDays) {
+          const remaining = daysLeft - c.growTime;
+          harvests += Math.floor(remaining / c.regrowthDays);
+        }
+        totalRevenue = harvests * c.sellPrice;
+      }
+      return { ...c, harvests, totalRevenue };
+    })
+    .filter(c => c.harvests > 0)
+    .sort((a, b) => b.totalRevenue - a.totalRevenue)
+    .slice(0, 3);
+
+  return (
+    <div style={{
+      background: 'white', borderRadius: 16, padding: 24, marginBottom: 24,
+      border: `1px solid ${THEME.primaryLight}`, boxShadow: THEME.shadowHover,
+      position: 'relative'
+    }}>
+      <button onClick={onClose} style={{
+        position: 'absolute', top: 16, right: 16, background: 'transparent', border: 'none',
+        color: THEME.textMuted, cursor: 'pointer'
+      }}>
+        <Icon name="x" size={20} />
+      </button>
+      
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+        <div style={{ width: 40, height: 40, borderRadius: 10, background: THEME.primaryXLight, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name="coin" size={20} color={THEME.primary} />
+        </div>
+        <div>
+          <h2 style={{ margin: 0, fontSize: 18, color: THEME.textDark, fontFamily: "'Playfair Display', serif" }}>Crop Revenue Calculator</h2>
+          <div style={{ fontSize: 13, color: THEME.textMuted }}>Calculate max gross revenue based on remaining days.</div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
+        <div>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: THEME.textMid, marginBottom: 6 }}>Current Season</label>
+          <FilterSelect label="" options={['spring', 'summer', 'fall', 'winter']} value={calcSeason} onChange={setCalcSeason} displayFn={s => s.charAt(0).toUpperCase() + s.slice(1)} />
+        </div>
+        <div>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: THEME.textMid, marginBottom: 6 }}>Days Left</label>
+          <input 
+            type="number" min="1" max="28" value={daysLeft} 
+            onChange={e => setDaysLeft(parseInt(e.target.value) || 0)}
+            style={{
+              padding: '6px 12px', border: `1.5px solid ${THEME.cardBorder}`, borderRadius: 8,
+              fontSize: 14, outline: 'none', width: 100, fontFamily: "'Inter', sans-serif"
+            }}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 style={{ fontSize: 13, fontWeight: 700, color: THEME.textDark, marginBottom: 12 }}>Top 3 Most Lucrative Crops</h3>
+        {calculated.length === 0 ? (
+          <div style={{ fontSize: 13, color: THEME.textMuted, padding: '10px 0' }}>Not enough days left to grow any crops.</div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {calculated.map((c, idx) => (
+              <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: THEME.bg, borderRadius: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: THEME.textMid, width: 16 }}>#{idx + 1}</div>
+                  <div style={{ fontWeight: 600, color: THEME.textDark, fontSize: 14 }}>{c.name}</div>
+                  <div style={{ fontSize: 12, color: THEME.textMuted }}>{c.harvests} {c.harvests === 1 ? 'harvest' : 'harvests'}</div>
+                </div>
+                <div style={{ fontWeight: 700, color: '#92400e', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {c.totalRevenue}g <Icon name="coin" size={14} color="#b45309" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function CropsPage({ density }) {
   const [crops,   setCrops]   = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -84,6 +178,7 @@ export default function CropsPage({ density }) {
   const [type,   setType]   = React.useState('');
   const [rank,   setRank]   = React.useState('');
   const [search, setSearch] = React.useState('');
+  const [calcOpen, setCalcOpen] = React.useState(false);
 
   React.useEffect(() => {
     let alive = true;
@@ -114,17 +209,35 @@ export default function CropsPage({ density }) {
   return (
     <div style={{ padding: density === 'compact' ? '20px 24px 80px' : '32px 32px 80px', maxWidth: 1280 }}>
       {/* Header */}
-      <div style={{ marginBottom: 22 }}>
-        <h1 style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: 26, fontWeight: 700, color: THEME.textDark, margin: '0 0 5px',
-        }}>
-          Crops &amp; Plants
-        </h1>
-        <p style={{ fontSize: 13.5, color: THEME.textMid, margin: 0 }}>
-          {crops.length} crops across all seasons · Filtered: <strong>{filtered.length}</strong>
-        </p>
+      <div style={{ marginBottom: 22, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <h1 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: 26, fontWeight: 700, color: THEME.textDark, margin: '0 0 5px',
+          }}>
+            Crops &amp; Plants
+          </h1>
+          <p style={{ fontSize: 13.5, color: THEME.textMid, margin: 0 }}>
+            {crops.length} crops across all seasons · Filtered: <strong>{filtered.length}</strong>
+          </p>
+        </div>
+        <button 
+          onClick={() => setCalcOpen(!calcOpen)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
+            background: calcOpen ? THEME.primaryLight : THEME.primary, 
+            color: calcOpen ? THEME.primaryDark : 'white',
+            fontWeight: 600, fontSize: 14, fontFamily: "'Inter', sans-serif",
+            transition: 'background 0.2s'
+          }}
+        >
+          <Icon name="coin" size={16} color="currentColor" />
+          Calculator
+        </button>
       </div>
+
+      <CropCalculator crops={crops} isOpen={calcOpen} onClose={() => setCalcOpen(false)} />
 
       {/* Filter bar */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 22 }}>

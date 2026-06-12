@@ -22,10 +22,12 @@ const PAGES = { home: HomePage, crops: CropsPage, caves: CavesPage, foraging: Fo
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('home');
   const [chatOpen,   setChatOpen]   = React.useState(false);
+  const [chatQuery,  setChatQuery]  = React.useState('');
 
-  function handleNavigate(page) {
+  function handleNavigate(page, query) {
     if (page === 'guide') {
-      setChatOpen(prev => !prev);
+      setChatOpen(true); // always ensure it opens
+      if (query) setChatQuery(query);
     } else {
       setActivePage(page);
       // don't auto-close chat when navigating pages
@@ -58,7 +60,7 @@ export default function AppShell() {
         <CurrentPage density={density} onNavigate={handleNavigate} />
       </main>
 
-      <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} />
+      <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} initialQuery={chatQuery} />
     </div>
   );
 }

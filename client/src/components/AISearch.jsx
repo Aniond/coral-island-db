@@ -227,7 +227,7 @@ function TypingBubble() {
   );
 }
 
-export default function AISearch({ isOpen, onToggle }) {
+export default function AISearch({ isOpen, onToggle, initialQuery }) {
   const { session } = useAuth();
   const isMobile = useIsMobile();
   const [messages, setMessages] = React.useState([]);
@@ -240,6 +240,16 @@ export default function AISearch({ isOpen, onToggle }) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, typing]);
+
+  React.useEffect(() => {
+    if (initialQuery && isOpen) {
+      // Check if this query was already asked to avoid infinite loops
+      const alreadyAsked = messages.some(m => m.role === 'user' && m.content === initialQuery);
+      if (!alreadyAsked) {
+        send(initialQuery);
+      }
+    }
+  }, [initialQuery, isOpen]);
 
   async function send(text) {
     const t = text.trim();

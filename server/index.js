@@ -29,6 +29,7 @@ app.use('/api/npcs', require('./routes/npcs'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/admin',  require('./routes/admin'));
 app.use('/api/plans',  require('./routes/plans'));
+app.use('/api/checklists', require('./routes/checklists'));
 
 // search_logs retention — prune entries older than 90 days on boot and daily,
 // so the table (and the admin views' COUNT(*) queries) don't grow unbounded.
@@ -53,8 +54,12 @@ pool.query(`
     content TEXT NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW()
   );
-`).then(() => console.log('Checked ai_plans table.'))
-  .catch(err => console.error('Failed to create ai_plans table:', err.message));
+  CREATE TABLE IF NOT EXISTS user_checklists (
+    user_id UUID PRIMARY KEY,
+    tasks JSONB DEFAULT '[]'::jsonb
+  );
+`).then(() => console.log('Checked ai_plans and user_checklists tables.'))
+  .catch(err => console.error('Failed to create tables:', err.message));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

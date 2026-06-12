@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
-import { fetchPlans } from '../data/api.js';
+import { fetchPlans, getChecklist, saveChecklist } from '../data/api.js';
 import { SkeletonLoader } from '../components/ui.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -61,33 +61,81 @@ export default function HomePage({ onNavigate }) {
           console.error(err);
           setLoading(false);
         });
+      
+      getChecklist(session.access_token)
+        .then(data => {
+          if (data.tasks && data.tasks.length > 0) {
+            setChecklist(data.tasks);
+          }
+        })
+        .catch(err => console.error("Failed to load checklist", err));
     } else {
       setLoading(false);
     }
   }, [session]);
+
+  const [checklist, setChecklist] = useState([
+    { id: 1, text: "Water crops", done: false },
+    { id: 2, text: "Check Traveling Merchant", done: false },
+    { id: 3, text: "Gift townies", done: false },
+    { id: 4, text: "Visit Blacksmith", done: false },
+    { id: 5, text: "Check Daily Quests", done: false },
+  ]);
+
+  const toggleTask = async (taskId) => {
+    const newTasks = checklist.map(t => t.id === taskId ? { ...t, done: !t.done } : t);
+    setChecklist(newTasks);
+    if (session?.access_token) {
+      saveChecklist(newTasks, session.access_token).catch(e => console.error("Failed to save checklist", e));
+    }
+  };
+
+  const resetChecklist = async () => {
+    const newTasks = checklist.map(t => ({ ...t, done: false }));
+    setChecklist(newTasks);
+    if (session?.access_token) {
+      saveChecklist(newTasks, session.access_token).catch(e => console.error("Failed to save checklist", e));
+    }
+  };
 
   const userName = profile?.username || 'Farmer';
 
   return (
     <div style={{ padding: '40px 48px', maxWidth: 1000, margin: '0 auto', fontFamily: "'Inter', sans-serif" }}>
       {/* Welcome Header */}
-      <div style={{ marginBottom: 40, display: 'flex', alignItems: 'center', gap: 24 }}>
-        <div style={{ 
-          width: 80, height: 80, borderRadius: 20, 
-          background: 'linear-gradient(135deg, #0d9488 0%, var(--accent, #f97316) 100%)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 8px 24px rgba(13, 148, 136, 0.2)'
-        }}>
-          <Icon name="leaf" size={40} color="white" />
+      <div style={{ marginBottom: 40, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+          <div style={{ 
+            width: 80, height: 80, borderRadius: 20, 
+            background: 'linear-gradient(135deg, #0d9488 0%, var(--accent, #f97316) 100%)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 8px 24px rgba(13, 148, 136, 0.2)'
+          }}>
+            <Icon name="leaf" size={40} color="white" />
+          </div>
+          <div>
+            <h1 style={{ fontSize: 36, fontWeight: 700, color: THEME.textDark, margin: '0 0 8px 0', fontFamily: "'Playfair Display', serif" }}>
+              Welcome back, {userName}!
+            </h1>
+            <p style={{ margin: 0, fontSize: 16, color: THEME.textMuted }}>
+              Your Coral Island dashboard is ready. What would you like to explore today?
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 style={{ fontSize: 36, fontWeight: 700, color: THEME.textDark, margin: '0 0 8px 0', fontFamily: "'Playfair Display', serif" }}>
-            Welcome back, {userName}!
-          </h1>
-          <p style={{ margin: 0, fontSize: 16, color: THEME.textMuted }}>
-            Your Coral Island dashboard is ready. What would you like to explore today?
-          </p>
-        </div>
+        <button 
+          onClick={() => onNavigate && onNavigate('guide', 'I am playing Coral Island. Give me a detailed, optimized daily itinerary of what I should do today. Assume I am in the Spring season, but you can ask me to specify if needed.')}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 10,
+            background: THEME.primary, color: 'white', padding: '12px 24px',
+            borderRadius: 12, border: 'none', cursor: 'pointer',
+            fontSize: 16, fontWeight: 600, boxShadow: '0 4px 12px rgba(15,118,110,0.2)',
+            transition: 'transform 0.2s, box-shadow 0.2s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = THEME.shadowHover; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(15,118,110,0.2)'; }}
+        >
+          <span>✨</span> Plan My Day
+        </button>
       </div>
 
       {/* Quick Links Section */}
@@ -133,7 +181,51 @@ export default function HomePage({ onNavigate }) {
         ))}
       </div>
 
-      {/* Saved Results Box */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 24, alignItems: 'flex-start' }}>
+        
+        {/* Daily Checklist */}
+        <div style={{ 
+          background: 'white', borderRadius: 24, padding: 32, 
+          border: `1px solid ${THEME.cardBorder}`,
+          boxShadow: '0 12px 32px rgba(0,0,0,0.05)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: THEME.textDark, margin: 0, fontFamily: "'Playfair Display', serif" }}>
+              Daily Checklist
+            </h2>
+            <button onClick={resetChecklist} style={{
+              background: THEME.primaryXLight, border: 'none', color: THEME.primary,
+              padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer'
+            }}>Reset</button>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {checklist.map(task => (
+              <label key={task.id} style={{ 
+                display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer',
+                padding: '12px 16px', borderRadius: 12, background: task.done ? THEME.primaryXLight : '#fafaf9',
+                border: `1px solid ${task.done ? THEME.primaryLight : THEME.cardBorder}`,
+                transition: 'all 0.2s'
+              }}>
+                <input 
+                  type="checkbox" 
+                  checked={task.done} 
+                  onChange={() => toggleTask(task.id)}
+                  style={{ width: 18, height: 18, accentColor: THEME.primary, cursor: 'pointer' }}
+                />
+                <span style={{ 
+                  fontSize: 15, fontWeight: task.done ? 500 : 600, 
+                  color: task.done ? THEME.primary : THEME.textDark,
+                  textDecoration: task.done ? 'line-through' : 'none'
+                }}>
+                  {task.text}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Saved Results Box */}
       <div style={{ 
         background: 'white', borderRadius: 24, padding: 32, 
         border: `1px solid ${THEME.cardBorder}`,
@@ -226,6 +318,7 @@ export default function HomePage({ onNavigate }) {
             })}
           </div>
         )}
+      </div>
       </div>
     </div>
   );
