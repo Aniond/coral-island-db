@@ -99,7 +99,21 @@ export default function HomePage({ onNavigate }) {
   const resetChecklist = async () => {
     const newTasks = checklist.map(t => ({ ...t, done: false }));
     setChecklist(newTasks);
-    if (toast) toast.info('Checklist reset');
+    if (toast) toast.info('Checklist unchecked');
+    if (session?.access_token) {
+      saveChecklist(newTasks, session.access_token).catch(e => {
+        console.error("Failed to save checklist", e);
+        if (toast) toast.error('Failed to save checklist to database');
+      });
+    }
+  };
+
+  const deleteTask = async (taskId, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newTasks = checklist.filter(t => t.id !== taskId);
+    setChecklist(newTasks);
+    if (toast) toast.success('Task removed');
     if (session?.access_token) {
       saveChecklist(newTasks, session.access_token).catch(e => {
         console.error("Failed to save checklist", e);
@@ -215,7 +229,7 @@ export default function HomePage({ onNavigate }) {
                 display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer',
                 padding: '12px 16px', borderRadius: 12, background: task.done ? THEME.primaryXLight : '#fafaf9',
                 border: `1px solid ${task.done ? THEME.primaryLight : THEME.cardBorder}`,
-                transition: 'all 0.2s'
+                transition: 'all 0.2s', position: 'relative'
               }}>
                 <input 
                   type="checkbox" 
@@ -226,10 +240,24 @@ export default function HomePage({ onNavigate }) {
                 <span style={{ 
                   fontSize: 15, fontWeight: task.done ? 500 : 600, 
                   color: task.done ? THEME.primary : THEME.textDark,
-                  textDecoration: task.done ? 'line-through' : 'none'
+                  textDecoration: task.done ? 'line-through' : 'none',
+                  flex: 1
                 }}>
                   {task.text}
                 </span>
+                <button 
+                  onClick={(e) => deleteTask(task.id, e)}
+                  title="Remove task"
+                  style={{
+                    background: 'transparent', border: 'none', color: '#ef4444', 
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    padding: 4, borderRadius: 6, opacity: 0.6, transition: 'opacity 0.2s'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+                  onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}
+                >
+                  <Icon name="trash-2" size={16} />
+                </button>
               </label>
             ))}
           </div>
