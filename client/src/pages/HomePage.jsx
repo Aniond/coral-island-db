@@ -51,6 +51,15 @@ export default function HomePage({ onNavigate }) {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedPlanId, setExpandedPlanId] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth <= 768;
 
   useEffect(() => {
     if (session?.access_token) {
@@ -205,7 +214,7 @@ export default function HomePage({ onNavigate }) {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 24, alignItems: 'flex-start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr', gap: 24, alignItems: 'flex-start' }}>
         
         {/* Daily Checklist */}
         <div style={{ 
@@ -251,12 +260,12 @@ export default function HomePage({ onNavigate }) {
                   style={{
                     background: 'transparent', border: 'none', color: '#ef4444', 
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    padding: 4, borderRadius: 6, opacity: 0.6, transition: 'opacity 0.2s'
+                    padding: 8, borderRadius: 6, opacity: 0.8, transition: 'opacity 0.2s', marginLeft: 'auto'
                   }}
                   onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                  onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}
+                  onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
                 >
-                  <Icon name="trash" size={16} />
+                  <Icon name="trash" size={18} />
                 </button>
               </label>
             ))}

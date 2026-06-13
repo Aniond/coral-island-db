@@ -65,17 +65,24 @@ export default function PlansPage() {
     }
   }, [session]);
 
-  function exportMarkdown() {
+  function exportText() {
     if (!selectedPlan) return;
-    const blob = new Blob([selectedPlan.content], { type: 'text/markdown' });
+    const blob = new Blob([selectedPlan.content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `plan-${selectedPlan.id}.md`;
+    a.download = `plan-${selectedPlan.id}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }
+
+  function copyToClipboard() {
+    if (!selectedPlan) return;
+    navigator.clipboard.writeText(selectedPlan.content)
+      .then(() => alert('Copied to clipboard!'))
+      .catch(err => console.error('Failed to copy', err));
   }
 
   async function handleDelete() {
@@ -171,7 +178,20 @@ export default function PlansPage() {
                   <Icon name="trash" size={16} color="#ef4444" />
                 </button>
                 <button
-                  onClick={exportMarkdown}
+                  onClick={copyToClipboard}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    background: 'transparent', color: THEME.primary, border: `1px solid ${THEME.primaryLight}`, borderRadius: 8,
+                    padding: '9px 12px', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                    transition: 'all 0.15s'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = THEME.primaryXLight; e.currentTarget.style.borderColor = THEME.primary; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = THEME.primaryLight; }}
+                >
+                  <Icon name="scroll" size={16} color={THEME.primary} /> Copy
+                </button>
+                <button
+                  onClick={exportText}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 8,
                     background: THEME.primary, color: 'white', border: 'none', borderRadius: 8,
@@ -181,7 +201,7 @@ export default function PlansPage() {
                   onMouseEnter={e => e.currentTarget.style.background = THEME.dark}
                   onMouseLeave={e => e.currentTarget.style.background = THEME.primary}
                 >
-                  <Icon name="download" size={16} color="white" /> Export MD
+                  <Icon name="download" size={16} color="white" /> Export TXT
                 </button>
               </div>
             </div>
