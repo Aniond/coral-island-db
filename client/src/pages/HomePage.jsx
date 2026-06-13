@@ -95,8 +95,10 @@ export default function HomePage({ onNavigate }) {
   ]);
 
   const toggleTask = async (taskId) => {
-    const newTasks = checklist.map(t => t.id === taskId ? { ...t, done: !t.done } : t);
+    // Treat "checking" a task as completing/removing it
+    const newTasks = checklist.filter(t => t.id !== taskId);
     setChecklist(newTasks);
+    if (toast) toast.success('Task completed and removed');
     if (session?.access_token) {
       saveChecklist(newTasks, session.access_token).catch(e => {
         console.error("Failed to save checklist", e);
@@ -117,19 +119,6 @@ export default function HomePage({ onNavigate }) {
     }
   };
 
-  const deleteTask = async (taskId, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const newTasks = checklist.filter(t => t.id !== taskId);
-    setChecklist(newTasks);
-    if (toast) toast.success('Task removed');
-    if (session?.access_token) {
-      saveChecklist(newTasks, session.access_token).catch(e => {
-        console.error("Failed to save checklist", e);
-        if (toast) toast.error('Failed to save checklist to database');
-      });
-    }
-  };
 
   const userName = profile?.username || 'Farmer';
 
@@ -254,20 +243,6 @@ export default function HomePage({ onNavigate }) {
                 }}>
                   {task.text}
                 </span>
-                <button 
-                  onClick={(e) => deleteTask(task.id, e)}
-                  title="Remove task"
-                  style={{
-                    background: 'transparent', border: 'none', color: '#ef4444', 
-                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    padding: 8, borderRadius: 6, opacity: 0.8, transition: 'opacity 0.2s', marginLeft: 'auto',
-                    flexShrink: 0
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                  onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
-                >
-                  <Icon name="trash" size={18} />
-                </button>
               </label>
             ))}
           </div>
