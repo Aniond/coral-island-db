@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchGlobalSearchIndex } from '../data/api.js';
 import Icon from './Icon.jsx';
 import { THEME } from '../lib/theme.js';
+import Fuse from 'fuse.js';
 
 let globalCache = null;
 
@@ -52,13 +53,14 @@ export default function CommandPalette() {
     if (!query.trim()) {
       setResults(globalCache);
     } else {
-      const q = query.toLowerCase();
-      const filtered = globalCache.filter(item => 
-        item.name.toLowerCase().includes(q) || 
-        item.type.toLowerCase().includes(q) ||
-        item.subtitle.toLowerCase().includes(q)
-      );
-      setResults(filtered.slice(0, 50));
+      const fuse = new Fuse(globalCache, {
+        keys: ['name', 'type', 'subtitle'],
+        threshold: 0.3, // 0.0 is perfect match, 1.0 is match anything
+        distance: 100,
+        ignoreLocation: true // matches anywhere in the string
+      });
+      const filtered = fuse.search(query).map(result => result.item);
+      setResults(filtered.slice(0, 50)); // cap at 50 to keep UI snappy
     }
     setSelectedIndex(0);
   }, [query]);
