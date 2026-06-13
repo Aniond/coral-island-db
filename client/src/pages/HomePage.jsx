@@ -134,7 +134,7 @@ export default function HomePage({ onNavigate }) {
   const userName = profile?.username || 'Farmer';
 
   return (
-    <div style={{ padding: '40px 48px', maxWidth: 1000, margin: '0 auto', fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ padding: isMobile ? '24px 16px' : '40px 48px', maxWidth: 1000, margin: '0 auto', fontFamily: "'Inter', sans-serif" }}>
       {/* Welcome Header */}
       <div style={{ marginBottom: 40, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
@@ -218,7 +218,7 @@ export default function HomePage({ onNavigate }) {
         
         {/* Daily Checklist */}
         <div style={{ 
-          background: 'white', borderRadius: 24, padding: 32, 
+          background: 'white', borderRadius: 24, padding: isMobile ? 20 : 32, 
           border: `1px solid ${THEME.cardBorder}`,
           boxShadow: '0 12px 32px rgba(0,0,0,0.05)'
         }}>
@@ -260,7 +260,8 @@ export default function HomePage({ onNavigate }) {
                   style={{
                     background: 'transparent', border: 'none', color: '#ef4444', 
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    padding: 8, borderRadius: 6, opacity: 0.8, transition: 'opacity 0.2s', marginLeft: 'auto'
+                    padding: 8, borderRadius: 6, opacity: 0.8, transition: 'opacity 0.2s', marginLeft: 'auto',
+                    flexShrink: 0
                   }}
                   onMouseEnter={e => e.currentTarget.style.opacity = '1'}
                   onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
