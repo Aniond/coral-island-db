@@ -256,7 +256,7 @@ export default function HomePage({ onNavigate }) {
                   onMouseEnter={e => e.currentTarget.style.opacity = '1'}
                   onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}
                 >
-                  <Icon name="trash-2" size={16} />
+                  <Icon name="trash" size={16} />
                 </button>
               </label>
             ))}
