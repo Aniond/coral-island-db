@@ -218,3 +218,18 @@ export function FilterSelect({ label, options, value, onChange, displayFn }) {
     </div>
   );
 }
+
+// ── Price Badge ──────────────────────────────────────────────────────────────
+export function PriceBadge({ price, prefix = '' }) {
+  if (price == null) return null;
+  return (
+    <div style={{
+      display: 'inline-flex', alignItems: 'center', gap: 6,
+      background: '#fffbeb', color: '#d97706', border: '1px solid #fde68a',
+      padding: '4px 8px', borderRadius: 6, fontSize: 13, fontWeight: 600
+    }}>
+      <Icon name="coin" size={14} />
+      {prefix}{price}g
+    </div>
+  );
+}
