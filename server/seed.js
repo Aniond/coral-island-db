@@ -8,6 +8,7 @@
  * Requires DATABASE_URL in .env to point at a reachable PostgreSQL instance.
  */
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const pool = require('./db');
