@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 const supabase = require('../lib/supabase');
+const { requireAuth } = require('../middleware/requireAuth');
 const { getSearchLimits } = require('../lib/settings');
 const rateLimit = require('express-rate-limit');
 
@@ -261,18 +262,8 @@ router.get('/index', async (req, res) => {
 
 // GET /api/search/history
 // Returns the user's past searches and AI responses.
-router.get('/history', async (req, res) => {
-  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
-  if (!token) return res.status(401).json({ error: 'Unauthorised' });
-
-  let user;
-  try {
-    const { data, error } = await supabase.auth.getUser(token);
-    if (error || !data.user) return res.status(401).json({ error: 'Invalid token' });
-    user = data.user;
-  } catch (err) {
-    return res.status(500).json({ error: 'Auth service unavailable' });
-  }
+router.get('/history', requireAuth, async (req, res) => {
+  const user = req.user;
 
   try {
     const { rows } = await pool.query(
@@ -288,35 +279,17 @@ router.get('/history', async (req, res) => {
 
 // POST /api/search  { query, gameState }
 // Streams the AI answer back as plain text. Requires a valid auth token.
-router.post('/', searchRateLimiter, async (req, res) => {
-  const query = req.body && req.body.query;
-  const gameState = req.body && req.body.gameState;
-  if (!query || typeof query !== 'string' || !query.trim()) {
-    return res.status(400).json({ error: 'Missing "query" in request body' });
+router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
+  const { query, gameState, activeTab } = req.body;
+  if (!query) {
+    return res.status(400).json({ error: 'Query is required' });
   }
-  if (query.trim().length > MAX_QUERY_CHARS) {
-    return res.status(400).json({ error: `Question is too long — keep it under ${MAX_QUERY_CHARS} characters.` });
-  }
+
   if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
   }
 
-  // Require auth — AI features are locked behind registered accounts.
-  const token = (req.headers.authorization || '').replace(/^Bearer\s+/, '');
-  if (!token) {
-    return res.status(401).json({ error: 'Sign in to use AI search' });
-  }
-  let user;
-  try {
-    const { data, error: authErr } = await supabase.auth.getUser(token);
-    if (authErr || !data.user) {
-      return res.status(401).json({ error: 'Invalid or expired session' });
-    }
-    user = data.user;
-  } catch (err) {
-    console.error('POST /api/search auth check failed:', err.message);
-    return res.status(500).json({ error: 'Auth service unavailable' });
-  }
+  const user = req.user;
   const userId = user.id;
 
   // Abort the Anthropic stream if the caller disconnects mid-answer so we stop
