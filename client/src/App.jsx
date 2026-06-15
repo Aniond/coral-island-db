@@ -15,12 +15,12 @@ export default function App() {
       <ToastProvider>
         <Suspense fallback={<div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>}>
           <Routes>
-            <Route path="/"        element={<Navigate to="/login" replace />} />
+            <Route path="/"        element={<Navigate to="/app" replace />} />
             <Route path="/login"   element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/app"     element={<ProtectedRoute><AppShell /></ProtectedRoute>} />
+            <Route path="/app"     element={<AppShell />} />
             <Route path="/admin"   element={<ProtectedRoute requireAdmin><AdminPage /></ProtectedRoute>} />
-            <Route path="*"        element={<Navigate to="/login" replace />} />
+            <Route path="*"        element={<Navigate to="/app" replace />} />
           </Routes>
         </Suspense>
       </ToastProvider>

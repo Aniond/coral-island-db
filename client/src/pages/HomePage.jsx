@@ -480,7 +480,6 @@ export default function HomePage() {
             <Icon name="send" size={15} color="white" />
           </button>
         </div>
-      </div>
     </div>
   );
 }
