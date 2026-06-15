@@ -355,9 +355,17 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 - If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.
 - Tool execution is independent of the game database context. NEVER decline a task simply because it is not found in the context.`;
 
+    const historyParams = (req.body.history || []).map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }]
+    }));
+
     const stream = await ai.models.generateContentStream({
       model: MODEL,
-      contents: `User Request: ${query.trim()}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}`,
+      contents: [
+        ...historyParams,
+        { role: 'user', parts: [{ text: `User Request: ${query.trim()}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
+      ],
       config: {
         systemInstruction: dynamicPrompt,
         tools: [

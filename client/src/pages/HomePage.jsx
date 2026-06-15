@@ -306,8 +306,9 @@ export default function HomePage() {
 
     let started = false;
     try {
+      const history = messages.map(m => ({ role: m.role, content: m.content }));
       const gameState = { season, time, weather };
-      await streamSearch(t, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      await streamSearch(t, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
