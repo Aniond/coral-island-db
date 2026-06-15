@@ -51,6 +51,8 @@ const SYSTEM_PROMPT =
   'When the user asks which food boosts a skill or stat (e.g. "what food increases Fishing"), list every matching dish ' +
   'in a markdown table: Dish | Buff | Utensil | Key ingredients. Note that proficiency buffs map to skills ' +
   '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.\n' +
+  'TOWN RANKS:\n' +
+  'Valid Town Ranks in Coral Island are F, E, D, C, B, A, and S. If the user provides an invalid rank (like a number), politely correct them and assume they meant Rank F unless context suggests otherwise.\n' +
   'FARM LAYOUTS:\n' +
   'When the user asks for a farm layout, crop grid, or spatial design (e.g., "Build me an 11x11 grid"), you MUST output the layout ' +
   'in a special markdown code block exactly like this:\n' +
