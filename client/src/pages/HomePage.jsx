@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Icon from './Icon.jsx';
+import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
 import { streamSearch, savePlan, fetchSearchHistory } from '../data/api.js';
