@@ -50,9 +50,24 @@ const SYSTEM_PROMPT =
   'When the user asks which food boosts a skill or stat (e.g. "what food increases Fishing"), list every matching dish ' +
   'in a markdown table: Dish | Buff | Utensil | Key ingredients. Note that proficiency buffs map to skills ' +
   '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.\n' +
-  '\n' +
-  'IMPORTANT: You have access to tools to modify the database. If the user explicitly states they donated, completed, ' +
-  'or caught an item for a bundle, call `mark_offering_complete`. If they ask to be reminded of something, call `add_custom_task`.';
+  'FARM LAYOUTS:\n' +
+  'When the user asks for a farm layout, crop grid, or spatial design (e.g., "Build me an 11x11 grid"), you MUST output the layout ' +
+  'in a special markdown code block exactly like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "farm_layout",\n' +
+  '  "width": 11,\n' +
+  '  "height": 11,\n' +
+  '  "grid": [\n' +
+  '    ["crop_generic", "crop_generic", "crop_generic"],\n' +
+  '    ["crop_generic", "sprinkler_2", "crop_generic"],\n' +
+  '    ["crop_generic", "crop_generic", "crop_generic"]\n' +
+  '  ]\n' +
+  '}\n' +
+  '```\n' +
+  'Use valid item IDs for equipment/paths: "dirt", "sprinkler_1", "sprinkler_2", "sprinkler_3", "scarecrow_1", "scarecrow_2", "path_stone".\n' +
+  'For crops, you can use ANY crop name formatted as `crop_name` (e.g. "crop_blueberry", "crop_radish", "crop_melon").\n' +
+  'NEVER draw ASCII or text-based grids (like C C P C). Only use the JSON block. You can add normal text to explain your layout before or after the JSON block.';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
@@ -359,7 +374,7 @@ router.post('/', searchRateLimiter, async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
 
-    let dynamicPrompt = "You are a helpful assistant for Coral Island.";
+    let dynamicPrompt = SYSTEM_PROMPT;
     dynamicPrompt += `\n\nCRITICAL TOOL INSTRUCTIONS:
 - If the user asks to set a reminder, add a task, or do something related to a checklist, YOU MUST use the 'add_custom_task' tool.
 - If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.

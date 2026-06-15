@@ -1,44 +1,24 @@
-// ── App Shell ────────────────────────────────────────────────────────────────
-// The main database app: sidebar + active page + floating AI guide.
-// Adapted from the handoff's app.jsx (Tweaks panel omitted per README note #4;
-// density fixed to 'comfortable', --accent/--radius defaults live in index.css).
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/Sidebar.jsx';
-import AISearch from '../components/AISearch.jsx';
 import { THEME } from '../lib/theme.js';
 import { useIsMobile } from '../lib/useIsMobile.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import CommandPalette from '../components/CommandPalette.jsx';
 
-const CropsPage = React.lazy(() => import('./CropsPage.jsx'));
 const ItineraryPage = React.lazy(() => import('./ItineraryPage.jsx'));
-const CavesPage = React.lazy(() => import('./CavesPage.jsx'));
-const ForagingPage = React.lazy(() => import('./ForagingPage.jsx'));
-const CollectionsPage = React.lazy(() => import('./CollectionsPage.jsx'));
-const RecipesPage = React.lazy(() => import('./RecipesPage.jsx'));
-const NPCPage = React.lazy(() => import('./NPCPage.jsx'));
 const RoadmapPage = React.lazy(() => import('./RoadmapPage.jsx'));
 const PlansPage = React.lazy(() => import('./PlansPage.jsx'));
 const HomePage = React.lazy(() => import('./HomePage.jsx'));
-const OfferingsPage = React.lazy(() => import('./OfferingsPage.jsx'));
-const ProductsPage = React.lazy(() => import('./ProductsPage.jsx'));
-const ToolsPage = React.lazy(() => import('./ToolsPage.jsx'));
+const FarmPlannerPage = React.lazy(() => import('./FarmPlannerPage.jsx'));
 
-const PAGES = { home: HomePage, itinerary: ItineraryPage, crops: CropsPage, caves: CavesPage, foraging: ForagingPage, collections: CollectionsPage, recipes: RecipesPage, npcs: NPCPage, roadmap: RoadmapPage, plans: PlansPage, offerings: OfferingsPage, products: ProductsPage, tools: ToolsPage };
+const PAGES = { home: HomePage, itinerary: ItineraryPage, roadmap: RoadmapPage, plans: PlansPage, planner: FarmPlannerPage };
 
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('home');
-  const [chatOpen,   setChatOpen]   = React.useState(false);
-  const [chatQuery,  setChatQuery]  = React.useState('');
 
   function handleNavigate(page, query) {
-    if (page === 'guide') {
-      setChatOpen(true); // always ensure it opens
-      if (query) setChatQuery(query);
-    } else {
-      setActivePage(page);
-    }
+    setActivePage(page);
   }
 
   const CurrentPage = PAGES[activePage] || HomePage;
@@ -57,7 +37,7 @@ export default function AppShell() {
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
-        aiChatOpen={chatOpen}
+        aiChatOpen={activePage === 'home'}
       />
 
       {/* Page content */}
@@ -70,8 +50,6 @@ export default function AppShell() {
           <CurrentPage density={density} onNavigate={handleNavigate} />
         </Suspense>
       </main>
-
-      <AISearch isOpen={chatOpen} onToggle={() => setChatOpen(p => !p)} initialQuery={chatQuery} />
     </div>
   );
 }

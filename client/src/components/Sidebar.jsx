@@ -5,20 +5,11 @@ import AuthButton from './AuthButton.jsx';
 import MobileTopBar from './MobileTopBar.jsx';
 
 const NAV_ITEMS = [
-  { id: 'home',        label: 'Home',           shortLabel: 'Home',    icon: 'home'     },
-  { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
+  { id: 'home',        label: 'AI Guide',       shortLabel: 'AI',      icon: 'sparkles' },
   { id: 'itinerary',   label: 'Daily Itinerary',shortLabel: 'Daily',   icon: 'clipboard'},
-  { id: 'crops',       label: 'Crops & Plants', shortLabel: 'Crops',   icon: 'leaf'     },
-  { id: 'caves',       label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
-  { id: 'foraging',    label: 'Foraging',       shortLabel: 'Forage',  icon: 'sprout'   },
-  { id: 'collections', label: 'Collections',    shortLabel: 'Collect', icon: 'scroll'   },
-  { id: 'recipes',     label: 'Recipes',        shortLabel: 'Recipes', icon: 'cookingPot' },
-  { id: 'npcs',        label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
-  { id: 'offerings',   label: 'Offerings',      shortLabel: 'Offer',   icon: 'heart'    },
-  { id: 'products',    label: 'Products',       shortLabel: 'Product', icon: 'flower'   },
-  { id: 'tools',       label: 'Tools & Upgrade',shortLabel: 'Tools',   icon: 'axe'      },
-  { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
   { id: 'plans',       label: 'Saved Plans',    shortLabel: 'Plans',   icon: 'bookmark' },
+  { id: 'planner',     label: 'Farm Planner',   shortLabel: 'Planner', icon: 'leaf'     },
+  { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
 ];
 
 function NavButton({ item, isActive, onClick }) {

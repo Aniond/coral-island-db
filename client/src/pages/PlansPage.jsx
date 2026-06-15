@@ -6,6 +6,7 @@ import { THEME } from '../lib/theme.js';
 import { fetchPlans, deletePlan } from '../data/api.js';
 import { SkeletonLoader } from '../components/ui.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
+import FarmPlanner from '../components/FarmPlanner.jsx';
 
 function makeMdComponents(large = false) {
   const base = large ? 15 : 12.5;
@@ -25,9 +26,21 @@ function makeMdComponents(large = false) {
     ul: ({ children }) => <ul style={{ paddingLeft: 20, margin: '4px 0 10px', display: 'flex', flexDirection: 'column', gap: 3 }}>{children}</ul>,
     ol: ({ children }) => <ol style={{ paddingLeft: 20, margin: '4px 0 10px', display: 'flex', flexDirection: 'column', gap: 3 }}>{children}</ol>,
     li: ({ children }) => <li style={{ fontSize: base, lineHeight: 1.65 }}>{children}</li>,
-    code: ({ inline, children }) => inline
-      ? <code style={{ background: 'rgba(15,118,110,0.08)', padding: '1px 5px', borderRadius: 4, fontSize: base - 1, fontFamily: 'monospace' }}>{children}</code>
-      : <pre style={{ background: 'rgba(15,118,110,0.06)', padding: '10px 12px', borderRadius: 8, fontSize: base - 1, overflowX: 'auto', margin: '8px 0' }}><code>{children}</code></pre>,
+    code: ({ node, inline, className, children, ...props }) => {
+      const match = /language-(\w+)/.exec(className || '');
+      if (!inline && match && match[1] === 'json') {
+        const text = String(children).replace(/\n$/, '');
+        try {
+          const data = JSON.parse(text);
+          if (data.type === 'farm_layout') {
+            return <FarmPlanner layoutData={data} />;
+          }
+        } catch (e) {}
+      }
+      return inline
+        ? <code style={{ background: 'rgba(15,118,110,0.08)', padding: '1px 5px', borderRadius: 4, fontSize: base - 1, fontFamily: 'monospace' }}>{children}</code>
+        : <pre style={{ background: 'rgba(15,118,110,0.06)', padding: '10px 12px', borderRadius: 8, fontSize: base - 1, overflowX: 'auto', margin: '8px 0' }}><code>{children}</code></pre>;
+    },
     table: ({ children }) => (
       <div style={{ overflowX: 'auto', margin: '10px 0', borderRadius: 8, border: `1px solid ${THEME.primaryLight}`, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', fontSize: large ? 13.5 : 12 }}>{children}</table>
