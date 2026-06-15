@@ -27,6 +27,15 @@ async function main() {
 
   const cropsMap = new Map();
 
+  const mapTownRank = (tags, defaultRank) => {
+    if (!tags) return defaultRank;
+    const t = tags.find(tag => tag.startsWith('item.townrank.'));
+    if (!t) return defaultRank;
+    const level = parseInt(t.replace('item.townrank.', ''), 10);
+    const ranks = ['F', 'E', 'D', 'C', 'B', 'A'];
+    return ranks[level] || defaultRank;
+  };
+
   // Parse regular crops
   cropsData.forEach(c => {
     if (!c.item || !c.pickupableItem) return;
@@ -38,7 +47,7 @@ async function main() {
       name: en[cropItem.displayName] || cropItem.displayName,
       type: 'seed',
       season: (c.growableSeason || []).join('/'),
-      town_rank: seedItem.tags ? (seedItem.tags.find(t => t.startsWith('item.townrank.'))?.replace('item.townrank.', '') || 'F').toUpperCase() : 'F',
+      town_rank: mapTownRank(cropItem.tags, 'F'),
       grow_days: c.growTime,
       seed_price: seedItem.price || Math.floor((cropItem.sellPrice || 0) * 0.4),
       sell_price: cropItem.sellPrice,
@@ -58,7 +67,7 @@ async function main() {
       name: en[cropItem.displayName] || cropItem.displayName,
       type: 'fruit_plant',
       season: (c.growableSeason || []).join('/'),
-      town_rank: seedItem.tags ? (seedItem.tags.find(t => t.startsWith('item.townrank.'))?.replace('item.townrank.', '') || 'E').toUpperCase() : 'E',
+      town_rank: mapTownRank(cropItem.tags, 'E'),
       grow_days: null,
       seed_price: seedItem.price || Math.floor((cropItem.sellPrice || 0) * 0.4),
       sell_price: cropItem.sellPrice,
@@ -78,7 +87,7 @@ async function main() {
       name: en[cropItem.displayName] || cropItem.displayName,
       type: 'fruit_tree',
       season: (c.growableSeason || []).join('/'),
-      town_rank: seedItem.tags ? (seedItem.tags.find(t => t.startsWith('item.townrank.'))?.replace('item.townrank.', '') || 'C').toUpperCase() : 'C',
+      town_rank: mapTownRank(cropItem.tags, 'C'),
       grow_days: null,
       seed_price: seedItem.price || Math.floor((cropItem.sellPrice || 0) * 0.4),
       sell_price: cropItem.sellPrice,
