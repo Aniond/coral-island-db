@@ -161,7 +161,7 @@ export default function HomePage({ onNavigate }) {
       </div>
 
       {/* Quick Links Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 40 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: 16, marginBottom: 40 }}>
         {[
           { id: 'crops', label: 'Crops & Plants', icon: 'leaf', desc: 'View seasonal crops' },
           { id: 'caves', label: 'Caves & Mining', icon: 'pickaxe', desc: 'Explore the mines' },

@@ -172,3 +172,9 @@ CREATE TABLE user_offerings (
   item_name VARCHAR(100) NOT NULL,
   PRIMARY KEY (user_id, item_name)
 );
+
+DROP TABLE IF EXISTS user_checklists CASCADE;
+CREATE TABLE user_checklists (
+  user_id UUID PRIMARY KEY,
+  tasks JSONB DEFAULT '[]'::jsonb
+);

@@ -217,7 +217,7 @@ export default function ForagingPage({ density }) {
       ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 210px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(item => <ForagingCard key={item.id} item={item} density={density} />)}

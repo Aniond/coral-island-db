@@ -62,7 +62,7 @@ export default function AppShell() {
 
       {/* Page content */}
       <main key={activePage} style={{
-        flex: 1, height: '100vh', overflowY: 'auto',
+        flex: 1, height: '100vh', overflowY: 'auto', overflowX: 'hidden',
         background: THEME.bg,
         animation: 'ciPageIn 0.18s ease',
       }}>

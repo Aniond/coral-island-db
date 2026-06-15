@@ -212,7 +212,7 @@ export default function CavesPage({ density }) {
       ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 210px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(item => <CaveCard key={item.id} item={item} density={density} />)}

@@ -58,7 +58,15 @@ const SYSTEM_PROMPT =
 // Each table is fetched independently: a missing or failing table (e.g. a newly
 // added one that hasn't been seeded into this DB yet) degrades that one section
 // to empty rather than taking down the entire AI search.
+let cachedAIContext = null;
+let cachedAIContextTime = 0;
+
 async function buildContext() {
+  const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+  if (cachedAIContext && (Date.now() - cachedAIContextTime < CACHE_TTL)) {
+    return cachedAIContext;
+  }
+
   const q = async (sql) => {
     try {
       return await pool.query(sql);
@@ -185,12 +193,56 @@ async function buildContext() {
     throw new Error('database context is empty — DB is unreachable or unseeded');
   }
 
-  return sections.map(([heading, lines]) => `${heading}\n${lines.join('\n')}`).join('\n\n');
+  const result = sections.map(([heading, lines]) => `${heading}\n${lines.join('\n')}`).join('\n\n');
+  cachedAIContext = result;
+  cachedAIContextTime = Date.now();
+  return result;
 }
 
 // Hard cap on question length — everything past this is either an accident or
 // an attempt to burn API credits; real questions fit comfortably under it.
 const MAX_QUERY_CHARS = 500;
+
+// GET /api/search/index
+// Returns a cached global search array for the Command Palette.
+let cachedGlobalIndex = null;
+let cachedGlobalIndexTime = 0;
+
+router.get('/index', async (req, res) => {
+  try {
+    const CACHE_TTL = 60 * 60 * 1000;
+    if (cachedGlobalIndex && (Date.now() - cachedGlobalIndexTime < CACHE_TTL)) {
+      return res.json(cachedGlobalIndex);
+    }
+    
+    const [crops, caves, forageables, npcs, collectibles, cooking, crafting] = await Promise.all([
+      pool.query('SELECT id, name, type, season FROM crops'),
+      pool.query('SELECT id, item_name as name, item_type as type, cave FROM cave_items'),
+      pool.query('SELECT id, name, season, location FROM forageables'),
+      pool.query('SELECT id, name, role FROM npcs'),
+      pool.query('SELECT id, name, category FROM collectibles'),
+      pool.query('SELECT id, name, utensil FROM cooking_recipes'),
+      pool.query('SELECT id, name, category FROM crafting_recipes')
+    ]);
+
+    const index = [];
+    crops.rows.forEach(c => index.push({ id: `crop-${c.id}`, type: 'Crop', name: c.name, subtitle: `${c.season} • ${c.type}`, route: '/app/crops' }));
+    caves.rows.forEach(c => index.push({ id: `cave-${c.id}`, type: 'Cave Item', name: c.name, subtitle: `${c.type} • ${c.cave} mine`, route: '/app/caves' }));
+    forageables.rows.forEach(c => index.push({ id: `forage-${c.id}`, type: 'Forageable', name: c.name, subtitle: `${c.season} • ${c.location}`, route: '/app/foraging' }));
+    npcs.rows.forEach(c => index.push({ id: `npc-${c.id}`, type: 'NPC', name: c.name, subtitle: c.role || 'Villager', route: '/app/npcs' }));
+    collectibles.rows.forEach(c => index.push({ id: `coll-${c.id}`, type: 'Collectible', name: c.name, subtitle: c.category, route: '/app/collections' }));
+    cooking.rows.forEach(c => index.push({ id: `cook-${c.id}`, type: 'Cooking', name: c.name, subtitle: `Utensil: ${c.utensil}`, route: '/app/recipes' }));
+    crafting.rows.forEach(c => index.push({ id: `craft-${c.id}`, type: 'Crafting', name: c.name, subtitle: `Category: ${c.category}`, route: '/app/recipes' }));
+
+    const sortedIndex = index.sort((a, b) => a.name.localeCompare(b.name));
+    cachedGlobalIndex = sortedIndex;
+    cachedGlobalIndexTime = Date.now();
+    res.json(sortedIndex);
+  } catch (err) {
+    console.error('GET /api/search/index failed:', err.message);
+    res.status(500).json({ error: 'Failed to build index' });
+  }
+});
 
 // GET /api/search/history
 // Returns the user's past searches and AI responses.

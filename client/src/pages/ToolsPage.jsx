@@ -159,7 +159,7 @@ export default function ToolsPage({ density }) {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 210px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map((item, i) => <ToolCard key={`${item.name}-${i}`} item={item} density={density} />)}

@@ -205,7 +205,7 @@ function StatsTab({ token }) {
 
   return (
     <div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 210px), 1fr))', gap: 16 }}>
         <StatCard icon="users"  label="Total Users"    value={stats?.totalUsers}   sub="registered accounts"     color={C.primary} />
         <StatCard icon="shield" label="Admins"         value={stats?.totalAdmins}  sub="with admin role"         color="#7c3aed" />
         <StatCard icon="search" label="Total Searches" value={stats?.totalSearches} sub="all time"               color={C.accent} />

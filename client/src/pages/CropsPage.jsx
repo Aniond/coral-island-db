@@ -5,7 +5,7 @@ import { THEME } from '../lib/theme.js';
 import { SeasonPill, RankBadge, TypeBadge, FilterSelect, EmptyState, SkeletonLoader, typeLabel } from '../components/ui.jsx';
 import { fetchCrops } from '../data/api.js';
 
-function CropCard({ crop, density }) {
+function CropCard({ crop, density, isCalculating }) {
   const [hov, setHov] = React.useState(false);
   const pad = density === 'compact' ? 14 : 18;
   return (
@@ -61,112 +61,23 @@ function CropCard({ crop, density }) {
       <div style={{ height: 1, background: THEME.primaryXLight }} />
 
       {/* Row 3: stats */}
-      <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: THEME.textMid, fontSize: 12.5 }}>
           <Icon name="clock" size={13} color={THEME.textMid} />
           <span>{crop.growTime != null ? `${crop.growTime}d` : '—'}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12.5 }}>
           <Icon name="coin" size={13} color="#b45309" />
-          <span style={{ fontWeight: 700, color: '#92400e' }}>{crop.sellPrice}g</span>
-          {crop.seedPrice != null && (
+          <span style={{ fontWeight: 700, color: '#92400e' }}>
+            {isCalculating ? `${crop.profit}g profit` : `${crop.sellPrice}g`}
+          </span>
+          {!isCalculating && crop.seedPrice != null && (
             <span style={{ color: THEME.textMuted, fontWeight: 500, marginLeft: 4 }}>(Cost: {crop.seedPrice}g)</span>
           )}
+          {isCalculating && (
+            <span style={{ color: THEME.textMuted, fontWeight: 500, marginLeft: 4 }}>({crop.harvests} {crop.harvests === 1 ? 'harvest' : 'harvests'})</span>
+          )}
         </div>
-      </div>
-    </div>
-  );
-}
-
-// ── Crop ROI Calculator ──────────────────────────────────────────────────────
-function CropCalculator({ crops, isOpen, onClose }) {
-  const [calcSeason, setCalcSeason] = React.useState('spring');
-  const [daysLeft, setDaysLeft] = React.useState(28);
-
-  if (!isOpen) return null;
-
-  // Filter crops by season and calculate ROI
-  const calculated = crops
-    .filter(c => c.season === 'all' || String(c.season).includes(calcSeason))
-    .filter(c => c.growTime != null && c.sellPrice != null)
-    .map(c => {
-      let harvests = 0;
-      let totalRevenue = 0;
-      if (daysLeft >= c.growTime) {
-        harvests = 1;
-        if (c.regrows && c.regrowthDays) {
-          const remaining = daysLeft - c.growTime;
-          harvests += Math.floor(remaining / c.regrowthDays);
-        }
-        totalRevenue = harvests * c.sellPrice;
-      }
-      return { ...c, harvests, totalRevenue };
-    })
-    .filter(c => c.harvests > 0)
-    .sort((a, b) => b.totalRevenue - a.totalRevenue)
-    .slice(0, 3);
-
-  return (
-    <div style={{
-      background: 'white', borderRadius: 16, padding: 24, marginBottom: 24,
-      border: `1px solid ${THEME.primaryLight}`, boxShadow: THEME.shadowHover,
-      position: 'relative'
-    }}>
-      <button onClick={onClose} style={{
-        position: 'absolute', top: 16, right: 16, background: 'transparent', border: 'none',
-        color: THEME.textMuted, cursor: 'pointer'
-      }}>
-        <Icon name="x" size={20} />
-      </button>
-      
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-        <div style={{ width: 40, height: 40, borderRadius: 10, background: THEME.primaryXLight, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Icon name="coin" size={20} color={THEME.primary} />
-        </div>
-        <div>
-          <h2 style={{ margin: 0, fontSize: 18, color: THEME.textDark, fontFamily: "'Playfair Display', serif" }}>Crop Revenue Calculator</h2>
-          <div style={{ fontSize: 13, color: THEME.textMuted }}>Calculate max gross revenue based on remaining days.</div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-        <div>
-          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: THEME.textMid, marginBottom: 6 }}>Current Season</label>
-          <FilterSelect label="" options={['spring', 'summer', 'fall', 'winter']} value={calcSeason} onChange={setCalcSeason} displayFn={s => s.charAt(0).toUpperCase() + s.slice(1)} />
-        </div>
-        <div>
-          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: THEME.textMid, marginBottom: 6 }}>Days Left</label>
-          <input 
-            type="number" min="1" max="28" value={daysLeft} 
-            onChange={e => setDaysLeft(parseInt(e.target.value) || 0)}
-            style={{
-              padding: '6px 12px', border: `1.5px solid ${THEME.cardBorder}`, borderRadius: 8,
-              fontSize: 14, outline: 'none', width: 100, fontFamily: "'Inter', sans-serif"
-            }}
-          />
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ fontSize: 13, fontWeight: 700, color: THEME.textDark, marginBottom: 12 }}>Top 3 Most Lucrative Crops</h3>
-        {calculated.length === 0 ? (
-          <div style={{ fontSize: 13, color: THEME.textMuted, padding: '10px 0' }}>Not enough days left to grow any crops.</div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {calculated.map((c, idx) => (
-              <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: THEME.bg, borderRadius: 8 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: THEME.textMid, width: 16 }}>#{idx + 1}</div>
-                  <div style={{ fontWeight: 600, color: THEME.textDark, fontSize: 14 }}>{c.name}</div>
-                  <div style={{ fontSize: 12, color: THEME.textMuted }}>{c.harvests} {c.harvests === 1 ? 'harvest' : 'harvests'}</div>
-                </div>
-                <div style={{ fontWeight: 700, color: '#92400e', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {c.totalRevenue}g <Icon name="coin" size={14} color="#b45309" />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
@@ -181,7 +92,7 @@ export default function CropsPage({ density }) {
   const [type,   setType]   = React.useState('');
   const [rank,   setRank]   = React.useState('');
   const [search, setSearch] = React.useState('');
-  const [calcOpen, setCalcOpen] = React.useState(false);
+  const [daysLeft, setDaysLeft] = React.useState('');
   const [viewMode, setViewMode] = React.useState('grid');
 
   React.useEffect(() => {
@@ -208,7 +119,33 @@ export default function CropsPage({ density }) {
     return true;
   });
 
-  const hasFilter = season || type || rank || search;
+  const isCalculating = parseInt(daysLeft) > 0;
+  
+  const calculated = filtered.map(c => {
+    let harvests = 0;
+    let totalRevenue = 0;
+    let profit = 0;
+    if (isCalculating && c.growTime != null && c.sellPrice != null) {
+      const dl = parseInt(daysLeft) || 0;
+      if (dl >= c.growTime) {
+        harvests = 1;
+        if (c.regrows && c.regrowthDays) {
+          harvests += Math.floor((dl - c.growTime) / c.regrowthDays);
+        }
+        totalRevenue = harvests * c.sellPrice;
+        const totalCost = c.seedPrice || 0;
+        profit = totalRevenue - totalCost;
+      }
+    }
+    return { ...c, harvests, totalRevenue, profit };
+  });
+
+  let displayCrops = isCalculating ? calculated.filter(c => c.harvests > 0) : calculated;
+  if (isCalculating) {
+    displayCrops.sort((a, b) => b.profit - a.profit);
+  }
+
+  const hasFilter = season || type || rank || search || daysLeft;
 
   return (
     <div style={{ padding: density === 'compact' ? '20px 24px 80px' : '32px 32px 80px', maxWidth: 1280 }}>
@@ -222,26 +159,10 @@ export default function CropsPage({ density }) {
             Crops &amp; Plants
           </h1>
           <p style={{ fontSize: 13.5, color: THEME.textMid, margin: 0 }}>
-            {crops.length} crops across all seasons · Filtered: <strong>{filtered.length}</strong>
+            {crops.length} crops across all seasons · Filtered: <strong>{displayCrops.length}</strong>
           </p>
         </div>
-        <button 
-          onClick={() => setCalcOpen(!calcOpen)}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 8,
-            padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer',
-            background: calcOpen ? THEME.primaryLight : THEME.primary, 
-            color: calcOpen ? THEME.primaryDark : 'white',
-            fontWeight: 600, fontSize: 14, fontFamily: "'Inter', sans-serif",
-            transition: 'background 0.2s'
-          }}
-        >
-          <Icon name="coin" size={16} color="currentColor" />
-          Calculator
-        </button>
       </div>
-
-      <CropCalculator crops={crops} isOpen={calcOpen} onClose={() => setCalcOpen(false)} />
 
       {/* Filter bar */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 22 }}>
@@ -267,9 +188,25 @@ export default function CropsPage({ density }) {
         <FilterSelect label="Type"   options={types}   value={type}   onChange={setType}   displayFn={typeLabel} />
         <FilterSelect label="Rank"   options={ranks}   value={rank}   onChange={setRank}   />
 
+        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+          <input
+            type="number" min="1" max="28"
+            value={daysLeft}
+            onChange={e => setDaysLeft(e.target.value)}
+            placeholder="Days left..."
+            style={{
+              padding: '7px 12px',
+              border: `1.5px solid ${daysLeft ? '#b45309' : THEME.cardBorder}`,
+              borderRadius: 8, fontSize: 13, outline: 'none',
+              fontFamily: "'Inter', sans-serif", color: THEME.textDark,
+              background: daysLeft ? '#fffbeb' : 'white', width: 110,
+            }}
+          />
+        </div>
+
         {hasFilter && (
           <button
-            onClick={() => { setSeason(''); setType(''); setRank(''); setSearch(''); }}
+            onClick={() => { setSeason(''); setType(''); setRank(''); setSearch(''); setDaysLeft(''); }}
             style={{
               display: 'flex', alignItems: 'center', gap: 5,
               padding: '7px 12px', borderRadius: 8,
@@ -322,15 +259,15 @@ export default function CropsPage({ density }) {
         <SkeletonLoader count={6} height={60} />
       ) : error ? (
         <EmptyState message="Couldn't load crops" sub={error} />
-      ) : filtered.length === 0 ? (
-        <EmptyState message="No crops match these filters" sub="Try a different season, type, or rank" />
+      ) : displayCrops.length === 0 ? (
+        <EmptyState message="No crops match these filters" sub={isCalculating ? "Not enough days left to grow any of the filtered crops." : "Try a different season, type, or rank"} />
       ) : viewMode === 'grid' ? (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
-          {filtered.map(crop => <CropCard key={crop.id} crop={crop} density={density} />)}
+          {displayCrops.map(crop => <CropCard key={crop.id} crop={crop} density={density} isCalculating={isCalculating} />)}
         </div>
       ) : (
         <div style={{
@@ -347,11 +284,12 @@ export default function CropsPage({ density }) {
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Grow Time</th>
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Seed Cost</th>
                 <th style={{ padding: '12px 16px', fontWeight: 600 }}>Sell (Base)</th>
-                <th style={{ padding: '12px 16px', fontWeight: 600 }}>Profit (Base)</th>
+                <th style={{ padding: '12px 16px', fontWeight: 600 }}>{isCalculating ? 'Total Profit' : 'Profit (Base)'}</th>
+                {isCalculating && <th style={{ padding: '12px 16px', fontWeight: 600 }}>Harvests</th>}
               </tr>
             </thead>
             <tbody>
-              {filtered.map((crop, i) => (
+              {displayCrops.map((crop, i) => (
                 <tr key={crop.id} style={{ borderBottom: `1px solid ${THEME.cardBorder}`, background: i % 2 === 0 ? 'white' : THEME.bg }}>
                   <td style={{ padding: '12px 16px', fontWeight: 600, color: THEME.textDark }}>{crop.name}</td>
                   <td style={{ padding: '12px 16px' }}><SeasonPill season={crop.season} /></td>
@@ -364,8 +302,9 @@ export default function CropsPage({ density }) {
                   <td style={{ padding: '12px 16px', color: THEME.textMid }}>{crop.seedPrice ? `${crop.seedPrice}g` : '—'}</td>
                   <td style={{ padding: '12px 16px', fontWeight: 600, color: '#92400e' }}>{crop.sellPrice}g</td>
                   <td style={{ padding: '12px 16px', fontWeight: 700, color: '#16a34a' }}>
-                    {crop.seedPrice ? `+${crop.sellPrice - crop.seedPrice}g` : '—'}
+                    {isCalculating ? `+${crop.profit}g` : (crop.seedPrice ? `+${crop.sellPrice - crop.seedPrice}g` : '—')}
                   </td>
+                  {isCalculating && <td style={{ padding: '12px 16px', color: THEME.textMid }}>{crop.harvests}</td>}
                 </tr>
               ))}
             </tbody>

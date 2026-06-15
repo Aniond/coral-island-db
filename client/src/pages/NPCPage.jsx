@@ -267,7 +267,7 @@ export default function NPCPage({ density }) {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 190px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
           alignItems: 'start',
         }}>

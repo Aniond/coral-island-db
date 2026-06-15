@@ -6,6 +6,7 @@ import MobileTopBar from './MobileTopBar.jsx';
 
 const NAV_ITEMS = [
   { id: 'home',        label: 'Home',           shortLabel: 'Home',    icon: 'home'     },
+  { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
   { id: 'itinerary',   label: 'Daily Itinerary',shortLabel: 'Daily',   icon: 'clipboard'},
   { id: 'crops',       label: 'Crops & Plants', shortLabel: 'Crops',   icon: 'leaf'     },
   { id: 'caves',       label: 'Caves & Mining', shortLabel: 'Caves',   icon: 'pickaxe'  },
@@ -13,11 +14,10 @@ const NAV_ITEMS = [
   { id: 'collections', label: 'Collections',    shortLabel: 'Collect', icon: 'scroll'   },
   { id: 'recipes',     label: 'Recipes',        shortLabel: 'Recipes', icon: 'cookingPot' },
   { id: 'npcs',        label: 'NPCs & Quests',  shortLabel: 'NPCs',    icon: 'users'    },
-  { id: 'offerings',   label: 'Offerings',      shortLabel: 'Offer',   icon: 'sparkles' },
+  { id: 'offerings',   label: 'Offerings',      shortLabel: 'Offer',   icon: 'heart'    },
   { id: 'products',    label: 'Products',       shortLabel: 'Product', icon: 'flower'   },
   { id: 'tools',       label: 'Tools & Upgrade',shortLabel: 'Tools',   icon: 'axe'      },
   { id: 'roadmap',     label: 'Roadmap',        shortLabel: 'Roadmap', icon: 'route'    },
-  { id: 'guide',       label: 'AI Guide',       shortLabel: 'Guide',   icon: 'sparkles' },
   { id: 'plans',       label: 'Saved Plans',    shortLabel: 'Plans',   icon: 'bookmark' },
 ];
 
@@ -135,6 +135,9 @@ export default function Sidebar({ activePage, onNavigate, aiChatOpen }) {
         zIndex: 200,
         padding: '6px 0 env(safe-area-inset-bottom, 6px)',
         flexDirection: 'row',
+        overflowX: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        whiteSpace: 'nowrap',
       }}>
         {NAV_ITEMS.map(item => {
           const isActive = activePage === item.id || (item.id === 'guide' && aiChatOpen);
@@ -143,8 +146,9 @@ export default function Sidebar({ activePage, onNavigate, aiChatOpen }) {
               key={item.id}
               onClick={() => onNavigate(item.id)}
               style={{
-                flex: 1, display: 'flex', flexDirection: 'column',
+                flex: '0 0 auto', display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: 3,
+                minWidth: 64,
                 padding: '6px 4px',
                 background: 'transparent', border: 'none',
                 color: isActive ? 'var(--accent, #f97316)' : '#99f6e4',

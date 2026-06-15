@@ -148,26 +148,7 @@ export async function fetchArtisanProducts() { return await getJson('/products/a
 export async function fetchTools()           { return await getJson('/tools'); }
 
 export async function fetchGlobalSearchIndex() {
-  const [crops, caves, forageables, npcs, collectibles, cooking, crafting] = await Promise.all([
-    fetchCrops().catch(() => []),
-    fetchCaves().catch(() => []),
-    fetchForageables().catch(() => []),
-    fetchNpcs().catch(() => []),
-    fetchCollectibles().catch(() => []),
-    fetchCookingRecipes().catch(() => []),
-    fetchCraftingRecipes().catch(() => [])
-  ]);
-
-  const index = [];
-  crops.forEach(c => index.push({ id: `crop-${c.id}`, type: 'Crop', name: c.name, subtitle: `${c.season} • ${c.type}`, route: '/app/crops' }));
-  caves.forEach(c => index.push({ id: `cave-${c.id}`, type: 'Cave Item', name: c.name, subtitle: `${c.type} • ${c.mine} mine`, route: '/app/caves' }));
-  forageables.forEach(c => index.push({ id: `forage-${c.id}`, type: 'Forageable', name: c.name, subtitle: `${c.season} • ${c.location}`, route: '/app/foraging' }));
-  npcs.forEach(c => index.push({ id: `npc-${c.id}`, type: 'NPC', name: c.name, subtitle: c.role || 'Villager', route: '/app/npcs' }));
-  collectibles.forEach(c => index.push({ id: `coll-${c.id}`, type: 'Collectible', name: c.name, subtitle: c.category, route: '/app/collections' }));
-  cooking.forEach(c => index.push({ id: `cook-${c.id}`, type: 'Cooking', name: c.name, subtitle: `Utensil: ${c.utensil}`, route: '/app/recipes' }));
-  crafting.forEach(c => index.push({ id: `craft-${c.id}`, type: 'Crafting', name: c.name, subtitle: `Category: ${c.category}`, route: '/app/recipes' }));
-
-  return index.sort((a, b) => a.name.localeCompare(b.name));
+  return await getJson('/search/index');
 }
 
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
@@ -210,7 +191,7 @@ export async function fetchPlans(token) {
   const request = (tok) => {
     const headers = { 'Content-Type': 'application/json' };
     if (tok) headers['Authorization'] = `Bearer ${tok}`;
-    return fetch(`${API_BASE}/plans`, { headers });
+    return fetch(`${API_BASE}/plans`, { headers, cache: 'no-store' });
   };
   let res = await request(token);
   if (res.status === 401 && token) {

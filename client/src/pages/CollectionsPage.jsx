@@ -210,7 +210,7 @@ export default function CollectionsPage({ density }) {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 230px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(it => <CollectibleCard key={it.id} item={it} emoji={activeCat?.emoji} />)}

@@ -146,7 +146,7 @@ export default function ProductsPage({ density }) {
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 210px), 1fr))',
           gap: density === 'compact' ? 12 : 16,
         }}>
           {filtered.map(item => <ProductCard key={`${item.product_category}-${item.name}`} item={item} type={item.product_category} density={density} />)}

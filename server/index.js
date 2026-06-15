@@ -49,21 +49,7 @@ async function pruneSearchLogs() {
 pruneSearchLogs();
 setInterval(pruneSearchLogs, 24 * 60 * 60 * 1000).unref();
 
-// Auto-create ai_plans table if it doesn't exist (migration)
-pool.query(`
-  CREATE TABLE IF NOT EXISTS ai_plans (
-    id SERIAL PRIMARY KEY,
-    user_id UUID NOT NULL,
-    query TEXT NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-  );
-  CREATE TABLE IF NOT EXISTS user_checklists (
-    user_id UUID PRIMARY KEY,
-    tasks JSONB DEFAULT '[]'::jsonb
-  );
-`).then(() => console.log('Checked ai_plans and user_checklists tables.'))
-  .catch(err => console.error('Failed to create tables:', err.message));
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
