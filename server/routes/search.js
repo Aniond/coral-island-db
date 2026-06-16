@@ -90,7 +90,7 @@ const SYSTEM_PROMPT =
   '  "netProfit": 300\n' +
   '}\n' +
   '```\n' +
-  'You can add normal text before or after this JSON block to explain your math.';
+  'You can add normal text before or after this JSON block to explain your math. If the user asks to factor in fertilizer, assume Fertilizer I costs 20g, Fertilizer II costs 40g, and Fertilizer III costs 60g, and add this to the seedCost/totalCost calculation.';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
