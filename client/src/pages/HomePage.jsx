@@ -13,6 +13,8 @@ import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
 import FarmPlanner from '../components/FarmPlanner.jsx';
 import ProfitCalculator from '../components/ProfitCalculator.jsx';
+import BundleWizard from '../components/BundleWizard.jsx';
+import CollectionsVisualizer from '../components/CollectionsVisualizer.jsx';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
 
@@ -45,6 +47,12 @@ function makeMdComponents(large = false) {
           }
           if (data.type === 'profit_calculator') {
             return <ProfitCalculator data={data} />;
+          }
+          if (data.type === 'bundle_wizard') {
+            return <BundleWizard data={data} />;
+          }
+          if (data.type === 'collections_visualizer') {
+            return <CollectionsVisualizer data={data} />;
           }
         } catch (e) {}
       }

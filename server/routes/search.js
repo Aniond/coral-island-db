@@ -90,7 +90,33 @@ const SYSTEM_PROMPT =
   '  "netProfit": 300\n' +
   '}\n' +
   '```\n' +
-  'You can add normal text before or after this JSON block to explain your math. If the user asks to factor in fertilizer, assume Fertilizer I costs 20g, Fertilizer II costs 40g, and Fertilizer III costs 60g, and add this to the seedCost/totalCost calculation.';
+  'You can add normal text before or after this JSON block to explain your math. If the user asks to factor in fertilizer, assume Fertilizer I costs 20g, Fertilizer II costs 40g, and Fertilizer III costs 60g, and add this to the seedCost/totalCost calculation.\n' +
+  'BUNDLE WIZARD:\n' +
+  'If the user asks for their progress on an Altar or Bundle (e.g., "What do I need for the Rare Altar?"), you MUST output a JSON block like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "bundle_wizard",\n' +
+  '  "altar": "Advanced Altar",\n' +
+  '  "bundle": "Rare Crop",\n' +
+  '  "items": [\n' +
+  '    {"name": "Osmium Cotton", "season": "Winter", "location": "Farm", "completed": false}\n' +
+  '  ]\n' +
+  '}\n' +
+  '```\n' +
+  'Cross-reference the items in the bundle with the [COMPLETED OFFERINGS] list to set "completed": true or false.\n' +
+  'COLLECTIONS VISUALIZER:\n' +
+  'If the user asks what bugs, fish, or ocean critters they are missing for the museum (e.g., "What bugs am I missing in Summer?"), you MUST output a JSON block like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "collections_visualizer",\n' +
+  '  "category": "Bug",\n' +
+  '  "season": "Summer",\n' +
+  '  "items": [\n' +
+  '    {"name": "Atlas Moth", "completed": false}\n' +
+  '  ]\n' +
+  '}\n' +
+  '```\n' +
+  'Filter the items by the user\'s criteria. Cross-reference with [COMPLETED OFFERINGS] to set "completed": true or false. Include ONLY items that are relevant (e.g. only bugs found in Summer).';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
@@ -385,11 +411,25 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       stateString = `\n[CURRENT GAME STATE: ${gameState.season} Day ${gameState.day || 1}, Time: ${gameState.time}, Weather: ${gameState.weather}, Town Rank: ${gameState.rank || 'F'}]\n`;
     }
 
+    let donatedString = '';
+    if (userId) {
+      try {
+        const { rows } = await pool.query('SELECT items FROM user_offerings WHERE user_id = $1', [userId]);
+        let items = rows.length > 0 ? rows[0].items : [];
+        if (typeof items === 'string') {
+          try { items = JSON.parse(items); } catch(e) { items = []; }
+        }
+        if (Array.isArray(items) && items.length > 0) {
+          donatedString = `\n[COMPLETED OFFERINGS: ${items.join(', ')}]\n`;
+        }
+      } catch(e) {}
+    }
+
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents: [
         ...historyParams,
-        { role: 'user', parts: [{ text: `User Request: ${query.trim()}${stateString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
+        { role: 'user', parts: [{ text: `User Request: ${query.trim()}${stateString}${donatedString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
       ],
       config: {
         systemInstruction: dynamicPrompt,
