@@ -12,6 +12,7 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
 import FarmPlanner from '../components/FarmPlanner.jsx';
+import ProfitCalculator from '../components/ProfitCalculator.jsx';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
 
@@ -41,6 +42,9 @@ function makeMdComponents(large = false) {
           const data = JSON.parse(text);
           if (data.type === 'farm_layout') {
             return <FarmPlanner layoutData={data} />;
+          }
+          if (data.type === 'profit_calculator') {
+            return <ProfitCalculator data={data} />;
           }
         } catch (e) {}
       }
@@ -251,8 +255,10 @@ export default function HomePage() {
   const [typing,   setTyping]   = React.useState(false);
   const scrollRef = React.useRef(null);
   const [season,   setSeason]   = React.useState('Spring');
+  const [day,      setDay]      = React.useState('1');
   const [time,     setTime]     = React.useState('Morning');
   const [weather,  setWeather]  = React.useState('Sunny');
+  const [rank,     setRank]     = React.useState('F');
 
   const [historyLoaded, setHistoryLoaded] = React.useState(false);
 
@@ -307,7 +313,7 @@ export default function HomePage() {
     let started = false;
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }));
-      const gameState = { season, time, weather };
+      const gameState = { season, day, time, weather, rank };
       await streamSearch(t, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
@@ -375,6 +381,11 @@ export default function HomePage() {
               <option value="Fall">Fall</option>
               <option value="Winter">Winter</option>
             </select>
+            <select value={day} onChange={e => setDay(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif", marginLeft: 4 }}>
+              {Array.from({ length: 28 }, (_, i) => i + 1).map(d => (
+                <option key={d} value={d}>Day {d}</option>
+              ))}
+            </select>
           </div>
           <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
             <Icon name="clock" size={13} color="rgba(255,255,255,0.8)" />
@@ -393,6 +404,18 @@ export default function HomePage() {
               <option value="Snowing">Snowing</option>
               <option value="Stormy">Stormy</option>
               <option value="Windy">Windy</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <Icon name="map" size={13} color="rgba(255,255,255,0.8)" />
+            <select value={rank} onChange={e => setRank(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+              <option value="F">Rank F</option>
+              <option value="E">Rank E</option>
+              <option value="D">Rank D</option>
+              <option value="C">Rank C</option>
+              <option value="B">Rank B</option>
+              <option value="A">Rank A</option>
+              <option value="S">Rank S</option>
             </select>
           </div>
         </div>

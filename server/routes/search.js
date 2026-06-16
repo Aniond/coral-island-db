@@ -70,7 +70,27 @@ const SYSTEM_PROMPT =
   '```\n' +
   'Use valid item IDs for equipment/paths: "dirt", "sprinkler_1", "sprinkler_2", "sprinkler_3", "scarecrow_1", "scarecrow_2", "path_stone".\n' +
   'For crops, you can use ANY crop name formatted as `crop_name` (e.g. "crop_blueberry", "crop_radish", "crop_melon").\n' +
-  'NEVER draw ASCII or text-based grids (like C C P C). Only use the JSON block. You can add normal text to explain your layout before or after the JSON block.';
+  'NEVER draw ASCII or text-based grids (like C C P C). Only use the JSON block. You can add normal text to explain your layout before or after the JSON block.\n' +
+  'GIFT COACH:\n' +
+  'If the user asks who to gift or talk to (e.g., "I have 500g and it is Night, who should I gift?"), act as a Gift Coach. Cross-reference the [CURRENT GAME STATE] time/season with NPC schedules in the database to determine who is currently available, and suggest their easiest loved/liked gifts.\n' +
+  'DAILY PLANNER / GAME SYNCING:\n' +
+  'If the user asks "What should I do today?" or similar, act as a Daily Planner. Look at the [CURRENT GAME STATE]. Suggest 3-5 highly specific activities for that exact day/season (e.g., crops that need planting before season ends, birthdays today, limited-time bugs/fish to catch, or bundles to finish).\n' +
+  'PROFIT CALCULATORS:\n' +
+  'If the user asks to calculate crop profits, ROI, or math for a specific crop/setup, you MUST output the math in a special markdown code block exactly like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "profit_calculator",\n' +
+  '  "crop": "Radish",\n' +
+  '  "seedCost": 60,\n' +
+  '  "sellPriceBase": 90,\n' +
+  '  "growDays": 6,\n' +
+  '  "amount": 10,\n' +
+  '  "totalCost": 600,\n' +
+  '  "totalRevenue": 900,\n' +
+  '  "netProfit": 300\n' +
+  '}\n' +
+  '```\n' +
+  'You can add normal text before or after this JSON block to explain your math.';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
@@ -359,12 +379,17 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }]
     }));
+    
+    let stateString = '';
+    if (gameState) {
+      stateString = `\n[CURRENT GAME STATE: ${gameState.season} Day ${gameState.day || 1}, Time: ${gameState.time}, Weather: ${gameState.weather}, Town Rank: ${gameState.rank || 'F'}]\n`;
+    }
 
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents: [
         ...historyParams,
-        { role: 'user', parts: [{ text: `User Request: ${query.trim()}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
+        { role: 'user', parts: [{ text: `User Request: ${query.trim()}${stateString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
       ],
       config: {
         systemInstruction: dynamicPrompt,
