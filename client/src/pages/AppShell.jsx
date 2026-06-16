@@ -28,7 +28,7 @@ export default function AppShell() {
 
   return (
     <div style={{
-      display: 'flex', height: '100vh', overflow: 'hidden',
+      display: 'flex', height: '100dvh', overflow: 'hidden',
       background: THEME.bg,
       fontFamily: "'Inter', sans-serif",
     }}>
@@ -42,7 +42,7 @@ export default function AppShell() {
 
       {/* Page content */}
       <main key={activePage} style={{
-        flex: 1, height: '100vh', overflowY: 'auto', overflowX: 'hidden',
+        flex: 1, height: '100%', overflowY: 'auto', overflowX: 'hidden',
         background: THEME.bg,
         animation: 'ciPageIn 0.18s ease',
       }}>
