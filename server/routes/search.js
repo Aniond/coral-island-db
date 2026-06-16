@@ -328,7 +328,7 @@ router.get('/history', requireAuth, async (req, res) => {
 // POST /api/search  { query, gameState }
 // Streams the AI answer back as plain text. Requires a valid auth token.
 router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
-  const { query, gameState, activeTab } = req.body;
+  const { query, image, gameState, activeTab } = req.body;
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
   }
@@ -397,6 +397,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 
     let dynamicPrompt = SYSTEM_PROMPT;
     dynamicPrompt += `\n\nCRITICAL TOOL INSTRUCTIONS:
+- IMAGE PROCESSING: If the user uploads an image/screenshot, use your vision capabilities to identify the game items shown. If the user asks you to process them or mark them, automatically use the 'mark_offering_complete' tool for every single identified item.
 - If the user asks to set a reminder, add a task, or do something related to a checklist, YOU MUST use the 'add_custom_task' tool.
 - If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.
 - Tool execution is independent of the game database context. NEVER decline a task simply because it is not found in the context.`;
@@ -425,11 +426,29 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       } catch(e) {}
     }
 
+    const userParts = [{ text: `User Request: ${query.trim()}${stateString}${donatedString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }];
+    
+    if (image) {
+      try {
+        const matches = image.match(/^data:(image\/[a-zA-Z0-9+]+);base64,(.*)$/);
+        if (matches && matches.length === 3) {
+          userParts.unshift({
+            inlineData: {
+              mimeType: matches[1],
+              data: matches[2]
+            }
+          });
+        }
+      } catch(e) {
+        console.error('Failed to parse image data', e);
+      }
+    }
+
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents: [
         ...historyParams,
-        { role: 'user', parts: [{ text: `User Request: ${query.trim()}${stateString}${donatedString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }] }
+        { role: 'user', parts: userParts }
       ],
       config: {
         systemInstruction: dynamicPrompt,

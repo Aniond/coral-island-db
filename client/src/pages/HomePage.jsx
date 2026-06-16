@@ -268,6 +268,9 @@ export default function HomePage() {
   const [weather,  setWeather]  = React.useState('Sunny');
   const [rank,     setRank]     = React.useState('F');
 
+  const [selectedImage, setSelectedImage] = React.useState(null);
+  const fileInputRef = React.useRef(null);
+
   const [historyLoaded, setHistoryLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -307,6 +310,8 @@ export default function HomePage() {
     const aiId = userId + 1;
     setMessages(prev => [...prev, { role: 'user', content: t, id: userId, query: t }]);
     setInput('');
+    const currentImage = selectedImage;
+    setSelectedImage(null);
     setTyping(true);
 
     // The assistant bubble is created inside the state updater on first chunk,
@@ -322,7 +327,7 @@ export default function HomePage() {
     try {
       const history = messages.map(m => ({ role: m.role, content: m.content }));
       const gameState = { season, day, time, weather, rank };
-      await streamSearch(t, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      await streamSearch(t, currentImage, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
@@ -477,6 +482,24 @@ export default function HomePage() {
           )}
         </div>
 
+        {/* Image Preview */}
+        {selectedImage && (
+          <div style={{
+            padding: '8px 12px', background: '#fafaf9', borderTop: `1px solid ${THEME.primaryLight}`,
+            display: 'flex', alignItems: 'center', gap: 12
+          }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: 4, background: '#e2e8f0',
+              backgroundImage: `url(${selectedImage})`, backgroundSize: 'cover', backgroundPosition: 'center',
+              border: `1px solid ${THEME.primaryLight}`
+            }} />
+            <div style={{ flex: 1, fontSize: 11, color: THEME.textMuted }}>Image attached</div>
+            <button onClick={() => setSelectedImage(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
+              <Icon name="x" size={14} color={THEME.textMuted} />
+            </button>
+          </div>
+        )}
+        
         {/* Input */}
         <div style={{
           padding: '10px 12px',
@@ -484,6 +507,35 @@ export default function HomePage() {
           display: 'flex', gap: 8, alignItems: 'center',
           background: '#fafaf9', flexShrink: 0,
         }}>
+          <input 
+            type="file" 
+            accept="image/*" 
+            ref={fileInputRef} 
+            style={{ display: 'none' }}
+            onChange={e => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => setSelectedImage(reader.result);
+                reader.readAsDataURL(file);
+              }
+              e.target.value = null;
+            }}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            title="Attach a screenshot"
+            style={{
+              width: 36, height: 36, borderRadius: 8, flexShrink: 0,
+              background: selectedImage ? THEME.primaryLight : 'white',
+              border: `1.5px solid ${selectedImage ? THEME.primary : THEME.cardBorder}`,
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.15s', color: selectedImage ? THEME.primaryDark : THEME.textMuted
+            }}
+          >
+            <Icon name="camera" size={18} />
+          </button>
+
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
