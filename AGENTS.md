@@ -5,10 +5,10 @@ Game-companion web app for *Coral Island*. Monorepo: `client/` (React + Vite →
 
 ## Skills — use them
 
-- **`coral-island-db`** (`.claude/skills/coral-island-db/SKILL.md`) — architecture map,
+- **`coral-island-db`** (`.agents/skills/coral-island-db/SKILL.md`) — architecture map,
   route/file/schema/env-var reference, fix patterns, and verification checklists.
   Read it before any non-trivial change to client or server.
-- **`coral-island-db-theme`** (`.claude/skills/coral-island-db-theme/SKILL.md`) — design
+- **`coral-island-db-theme`** (`.agents/skills/coral-island-db-theme/SKILL.md`) — design
   tokens and 11 themes for styling any artifact. Default to the Coral Island theme.
 
 ## Hard rules
@@ -35,4 +35,4 @@ cd server && node migrate.js  # run pending migrations
 
 Frontend on Vercel (`VITE_*` vars are baked at build time — redeploy after changing them).
 Backend + Postgres on Railway (`railway run` to use prod env locally). Detailed gotchas
-live in the `coral-island-db` skill and Claude's memory directory.
+live in the `coral-island-db` skill and Codex's memory directory.

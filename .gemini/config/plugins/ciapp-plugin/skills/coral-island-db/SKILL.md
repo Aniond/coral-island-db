@@ -6,7 +6,7 @@ description: >
   whenever the user is working on coral-island-db, mentions any of its routes, components,
   schema tables, seed data, deploy config, or asks about fixing, adding, or debugging
   anything in CIAPP. Also triggers for: Express route errors, Vite env var issues,
-  Railway deploy problems, Supabase auth failures, Anthropic AI search issues, or
+  Railway deploy problems, Supabase auth failures, Gemini AI search issues, or
   any task involving crops/caves/foraging/NPCs/collectibles/cooking/crafting data.
   Always apply this skill when the user says "coral island", "CIAPP", or references
   the client/server monorepo structure.
@@ -38,7 +38,7 @@ CIAPP/
 | `crafting.js` | `GET /api/crafting` | |
 | `cooking.js` | `GET /api/cooking` | |
 | `npcs.js` | `GET /api/npcs` | |
-| `search.js` | `POST /api/search` | Streams Anthropic response; requires Bearer token |
+| `search.js` | `POST /api/search` | Streams Gemini response; requires Bearer token |
 | `admin.js` | `GET|PATCH /api/admin/*` | `requireAdmin` middleware; manages users, limits, logs |
 
 ### Frontend key files (`client/src/`)
@@ -59,7 +59,7 @@ CIAPP/
 | Var | Where | Purpose |
 |-----|-------|---------|
 | `DATABASE_URL` | Railway | PostgreSQL connection |
-| `ANTHROPIC_API_KEY` | Railway | AI search |
+| `GEMINI_API_KEY` | Railway | AI search |
 | `SUPABASE_URL` | Railway | Auth verification |
 | `SUPABASE_SERVICE_ROLE_KEY` | Railway | Admin auth operations |
 | `PORT` | Railway (auto) | Express listen port (fallback 3001) |
@@ -120,7 +120,7 @@ Diagnosis order:
 - Add both vars to Railway Variables tab
 
 ### AI search not streaming
-- `ANTHROPIC_API_KEY` missing on Railway → 500 from `/api/search`
+- `GEMINI_API_KEY` missing on Railway → 500 from `/api/search`
 - Token expired → `client/src/lib/authToken.js` handles one refresh+retry on 401
 - Daily limit hit → 429 with human-readable message from `server/lib/settings.js`
 

@@ -118,17 +118,95 @@ const SYSTEM_PROMPT =
   '```\n' +
   'Filter the items by the user\'s criteria. Cross-reference with [COMPLETED OFFERINGS] to set "completed": true or false. Include ONLY items that are relevant (e.g. only bugs found in Summer).';
 
-// Pull the whole database and render it as compact text for the model.
-// Each table is fetched independently: a missing or failing table (e.g. a newly
-// added one that hasn't been seeded into this DB yet) degrades that one section
-// to empty rather than taking down the entire AI search.
-let cachedAIContext = null;
-let cachedAIContextTime = 0;
+// Pull the database once, then build a query-focused context for each request.
+// Sending the whole DB on every prompt was accurate but wasteful: local seed data
+// is ~70k tokens before user history. This keeps the cache, but only sends the
+// sections and rows that are likely to matter for the current question.
+let cachedAISections = null;
+let cachedAISectionsTime = 0;
 
-async function buildContext() {
-  const CACHE_TTL = 60 * 60 * 1000; // 1 hour
-  if (cachedAIContext && (Date.now() - cachedAIContextTime < CACHE_TTL)) {
-    return cachedAIContext;
+const AI_CONTEXT_TTL_MS = 60 * 60 * 1000;
+const MAX_CONTEXT_CHARS = 85000;
+const MAX_HISTORY_MESSAGES = 6;
+const MAX_HISTORY_CHARS = 1800;
+const MAX_IMAGE_CHARS = 4 * 1024 * 1024;
+const STOPWORDS = new Set([
+  'about', 'after', 'again', 'also', 'and', 'any', 'are', 'ask', 'best', 'can',
+  'coral', 'day', 'does', 'for', 'from', 'get', 'give', 'guide', 'have', 'how',
+  'into', 'island', 'item', 'items', 'make', 'me', 'need', 'please', 'show',
+  'tell', 'that', 'the', 'their', 'them', 'this', 'what', 'when', 'where',
+  'which', 'with', 'you', 'your',
+]);
+
+function normalizeText(value) {
+  return String(value || '').toLowerCase();
+}
+
+function extractTerms(query) {
+  return normalizeText(query)
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .split(/\s+/)
+    .map(t => t.replace(/^-+|-+$/g, ''))
+    .filter(t => t.length >= 3 && !STOPWORDS.has(t))
+    .map(t => (t.length > 4 && t.endsWith('s') ? t.slice(0, -1) : t));
+}
+
+function hasAny(text, words) {
+  return words.some(word => text.includes(word));
+}
+
+function classifySections(query, activeTab, hasImage) {
+  const text = normalizeText(`${query} ${activeTab || ''}`);
+  const keys = new Set();
+  const foodIntent = hasAny(text, ['cook', 'cooking', 'food', 'dish', 'utensil', 'buff', 'energy', 'health']);
+
+  if (hasImage) keys.add('goddess_offerings').add('collectibles').add('forageables');
+  if (hasAny(text, ['crop', 'farm', 'seed', 'plant', 'profit', 'grow', 'regrow', 'harvest', 'layout'])) keys.add('crops');
+  if (hasAny(text, ['mine', 'cave', 'ore', 'gem', 'geode', 'floor', 'mining'])) keys.add('cave_items').add('tools');
+  if (hasAny(text, ['forage', 'scavenge', 'found', 'find', 'location', 'where'])) keys.add('forageables');
+  if (hasAny(text, ['npc', 'gift', 'love', 'liked', 'birthday', 'schedule', 'talk', 'friend'])) keys.add('npcs');
+  if (!foodIntent && hasAny(text, ['fish', 'bug', 'insect', 'critter', 'museum', 'collect', 'fossil', 'artifact', 'catch'])) keys.add('collectibles');
+  if (foodIntent) keys.add('cooking_recipes');
+  if (hasAny(text, ['craft', 'crafting', 'recipe', 'build', 'make', 'ingredient', 'furnace'])) keys.add('crafting_recipes');
+  if (hasAny(text, ['offering', 'bundle', 'altar', 'goddess', 'fairy', 'temple', 'donate'])) keys.add('goddess_offerings');
+  if (hasAny(text, ['animal', 'ranch', 'milk', 'egg', 'wool', 'coop', 'barn'])) keys.add('animal_products');
+  if (hasAny(text, ['artisan', 'keg', 'jar', 'mason', 'cheese', 'mayonnaise', 'honey', 'wine'])) keys.add('artisan_products');
+  if (hasAny(text, ['tool', 'upgrade', 'axe', 'pickaxe', 'hoe', 'scythe', 'pole', 'net'])) keys.add('tools');
+  if (hasAny(text, ['today', 'daily', 'plan', 'itinerary', 'morning', 'afternoon', 'evening', 'night'])) {
+    keys.add('crops').add('forageables').add('collectibles').add('npcs').add('goddess_offerings');
+  }
+
+  return keys;
+}
+
+function scoreLine(line, terms) {
+  const text = normalizeText(line);
+  let score = 0;
+  for (const term of terms) {
+    if (text.includes(term)) score += term.length > 5 ? 3 : 2;
+  }
+  return score;
+}
+
+function renderSection(section, terms, forceFull) {
+  if (forceFull && section.text.length <= 60000) return section.text;
+
+  const scored = section.lines
+    .map((line, index) => ({ line, index, score: scoreLine(line, terms) }))
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, forceFull ? 80 : 30)
+    .sort((a, b) => a.index - b.index)
+    .map(item => item.line);
+
+  if (scored.length > 0) return `${section.heading}\n${scored.join('\n')}`;
+  if (forceFull) return `${section.heading}\n${section.lines.slice(0, 35).join('\n')}`;
+  return '';
+}
+
+async function buildContextSections() {
+  if (cachedAISections && (Date.now() - cachedAISectionsTime < AI_CONTEXT_TTL_MS)) {
+    return cachedAISections;
   }
 
   const q = async (sql) => {
@@ -241,25 +319,55 @@ async function buildContext() {
   // If every section is empty the DB is unreachable or completely unseeded —
   // surface that instead of asking the model to answer with no context.
   const sections = [
-    ['# CROPS', cropLines],
-    ['# CAVE ITEMS', caveLines],
-    ['# FORAGEABLES', forageLines],
-    ['# COLLECTIBLES (fish, insects, sea critters, fossils, artifacts, gems)', collectibleLines],
-    ['# CRAFTING RECIPES', craftingLines],
-    ['# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)', cookingLines],
-    ['# NPCS', npcLines],
-    ['# GODDESS OFFERINGS (bundles)', offeringLines],
-    ['# ANIMAL PRODUCTS', animalLines],
-    ['# ARTISAN PRODUCTS', artisanLines],
-    ['# TOOLS AND EQUIPMENT UPGRADES', toolLines],
+    { key: 'crops', heading: '# CROPS', lines: cropLines },
+    { key: 'cave_items', heading: '# CAVE ITEMS', lines: caveLines },
+    { key: 'forageables', heading: '# FORAGEABLES', lines: forageLines },
+    { key: 'collectibles', heading: '# COLLECTIBLES (fish, insects, sea critters, fossils, artifacts, gems)', lines: collectibleLines },
+    { key: 'crafting_recipes', heading: '# CRAFTING RECIPES', lines: craftingLines },
+    { key: 'cooking_recipes', heading: '# COOKING RECIPES (food buffs: skill/stat bonuses, HP & energy restore)', lines: cookingLines },
+    { key: 'npcs', heading: '# NPCS', lines: npcLines },
+    { key: 'goddess_offerings', heading: '# GODDESS OFFERINGS (bundles)', lines: offeringLines },
+    { key: 'animal_products', heading: '# ANIMAL PRODUCTS', lines: animalLines },
+    { key: 'artisan_products', heading: '# ARTISAN PRODUCTS', lines: artisanLines },
+    { key: 'tools', heading: '# TOOLS AND EQUIPMENT UPGRADES', lines: toolLines },
   ];
-  if (sections.every(([, lines]) => lines.length === 0)) {
+  if (sections.every(section => section.lines.length === 0)) {
     throw new Error('database context is empty — DB is unreachable or unseeded');
   }
 
-  const result = sections.map(([heading, lines]) => `${heading}\n${lines.join('\n')}`).join('\n\n');
-  cachedAIContext = result;
-  cachedAIContextTime = Date.now();
+  cachedAISections = sections.map(section => ({
+    ...section,
+    text: `${section.heading}\n${section.lines.join('\n')}`,
+  }));
+  cachedAISectionsTime = Date.now();
+  return cachedAISections;
+}
+
+async function buildRelevantContext(query, { activeTab, hasImage } = {}) {
+  const sections = await buildContextSections();
+  const terms = extractTerms(query);
+  const forcedKeys = classifySections(query, activeTab, hasImage);
+
+  let chunks = sections
+    .map(section => renderSection(section, terms, forcedKeys.has(section.key)))
+    .filter(Boolean);
+
+  if (chunks.length === 0) {
+    chunks = sections
+      .map(section => renderSection(section, terms, true))
+      .filter(Boolean)
+      .slice(0, 4);
+  }
+
+  let result = chunks.join('\n\n');
+  if (result.length > MAX_CONTEXT_CHARS) {
+    const compactChunks = sections
+      .map(section => renderSection(section, terms, forcedKeys.has(section.key)))
+      .filter(Boolean);
+    result = compactChunks.join('\n\n').slice(0, MAX_CONTEXT_CHARS);
+    result += '\n\n[Context trimmed to the most relevant database rows.]';
+  }
+
   return result;
 }
 
@@ -346,6 +454,9 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   if (trimmedQuery.length > MAX_QUERY_CHARS) {
     return res.status(400).json({ error: `Query is too long. Please keep it under ${MAX_QUERY_CHARS} characters.` });
   }
+  if (image && String(image).length > MAX_IMAGE_CHARS) {
+    return res.status(400).json({ error: 'Attached image is too large. Please upload a smaller screenshot.' });
+  }
 
   if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
@@ -403,7 +514,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       }
     }
 
-    const context = await buildContext();
+    const context = await buildRelevantContext(trimmedQuery, { activeTab, hasImage: Boolean(image) });
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
@@ -416,9 +527,11 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 - If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.
 - Tool execution is independent of the game database context. NEVER decline a task simply because it is not found in the context.`;
 
-    const historyParams = (req.body.history || []).map(m => ({
+    const historyParams = (req.body.history || [])
+      .slice(-MAX_HISTORY_MESSAGES)
+      .map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
+      parts: [{ text: String(m.content || '').slice(0, MAX_HISTORY_CHARS) }]
     }));
     
     let stateString = '';
@@ -440,7 +553,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       } catch(e) {}
     }
 
-    const userParts = [{ text: `User Request: ${query.trim()}${stateString}${donatedString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }];
+    const userParts = [{ text: `User Request: ${trimmedQuery}${stateString}${donatedString}\n\n---\nFocused Game Database Context (use only if relevant to the request):\n${context}` }];
     
     if (image) {
       try {
@@ -499,7 +612,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     try {
       const { rows } = await pool.query(
         'INSERT INTO search_logs (user_id, user_email, query, created_at) VALUES ($1, $2, $3, NOW()) RETURNING id',
-        [userId, user.email || null, query.trim()]
+        [userId, user.email || null, trimmedQuery]
       );
       logId = rows[0].id;
     } catch (e) {
@@ -507,7 +620,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
         try {
           const { rows } = await pool.query(
             'INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW()) RETURNING id',
-            [userId, query.trim()]
+            [userId, trimmedQuery]
           );
           logId = rows[0].id;
         } catch (e2) {
@@ -593,7 +706,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       console.log('Model returned empty response. Retrying without context...');
       const fallbackStream = await ai.models.generateContentStream({
         model: MODEL,
-        contents: `User Request: ${query.trim()}`,
+        contents: `User Request: ${trimmedQuery}`,
         config: {
           systemInstruction: dynamicPrompt,
           tools: [{

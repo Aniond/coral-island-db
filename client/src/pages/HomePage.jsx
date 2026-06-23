@@ -74,6 +74,14 @@ function makeMdComponents(large = false) {
 
 const MD_COMPONENTS       = makeMdComponents(false);
 const MD_COMPONENTS_LARGE = makeMdComponents(true);
+const MAX_HISTORY_MESSAGES = 6;
+const MAX_HISTORY_CHARS = 1800;
+
+function compactHistory(messages) {
+  return messages
+    .slice(-MAX_HISTORY_MESSAGES)
+    .map(m => ({ role: m.role, content: String(m.content || '').slice(0, MAX_HISTORY_CHARS) }));
+}
 
 function ExpandModal({ content, query, onClose }) {
   const closeRef = React.useRef(null);
@@ -327,7 +335,7 @@ export default function HomePage({ initialQuery }) {
 
     let started = false;
     try {
-      const history = messages.map(m => ({ role: m.role, content: m.content }));
+      const history = compactHistory(messages);
       const gameState = { season, day, time, weather, rank };
       await streamSearch(t, currentImage, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
