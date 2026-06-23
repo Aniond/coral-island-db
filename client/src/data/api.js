@@ -154,7 +154,7 @@ export async function fetchGlobalSearchIndex() {
 // POST /api/search — streams plain-text chunks; calls onChunk(text) as they arrive.
 // token: optional Supabase access_token — included as Bearer for server-side logging.
 // A 401 (expired token) triggers one session refresh + retry before failing.
-export async function streamSearch(query, image, history, gameState, onChunk, token) {
+export async function streamSearch(query, image, history, gameState, onChunk, token, options = {}) {
   const request = (tok) => {
     const headers = { 'Content-Type': 'application/json' };
     if (tok) headers['Authorization'] = `Bearer ${tok}`;
@@ -162,6 +162,7 @@ export async function streamSearch(query, image, history, gameState, onChunk, to
       method: 'POST',
       headers,
       body: JSON.stringify({ query, image, history, gameState }),
+      signal: options.signal,
     });
   };
   let res = await request(token);

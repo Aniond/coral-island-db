@@ -260,4 +260,63 @@ router.get('/search-logs', requireAdmin, async (req, res) => {
   }
 });
 
+// GET /api/admin/ai-metrics?limit=50
+// Recent AI-processing metrics plus lightweight rollups.
+router.get('/ai-metrics', requireAdmin, async (req, res) => {
+  const toInt = (v, def) => {
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : def;
+  };
+  const limit = Math.min(200, Math.max(1, toInt(req.query.limit, 50)));
+
+  try {
+    const [recentRes, summaryRes, sourceRes] = await Promise.all([
+      pool.query(
+        `SELECT id, search_log_id, user_id, source, model, status, query_chars,
+                history_messages, history_chars, context_chars, retrieved_docs,
+                response_chars, duration_ms, cache_hit, used_tool_call, aborted,
+                error, created_at
+         FROM ai_request_metrics
+         ORDER BY created_at DESC
+         LIMIT $1`,
+        [limit],
+      ),
+      pool.query(
+        `SELECT
+           COUNT(*)::int AS total,
+           COUNT(*) FILTER (WHERE source = 'ai')::int AS ai_calls,
+           COUNT(*) FILTER (WHERE source = 'direct')::int AS direct_answers,
+           COUNT(*) FILTER (WHERE source = 'cache')::int AS cache_hits,
+           COUNT(*) FILTER (WHERE aborted)::int AS aborted,
+           ROUND(AVG(duration_ms))::int AS avg_duration_ms,
+           ROUND(AVG(context_chars))::int AS avg_context_chars,
+           ROUND(AVG(retrieved_docs))::int AS avg_retrieved_docs
+         FROM ai_request_metrics
+         WHERE created_at >= NOW() - INTERVAL '24 hours'`,
+      ),
+      pool.query(
+        `SELECT source, COUNT(*)::int AS count,
+                ROUND(AVG(duration_ms))::int AS avg_duration_ms,
+                ROUND(AVG(context_chars))::int AS avg_context_chars
+         FROM ai_request_metrics
+         WHERE created_at >= NOW() - INTERVAL '24 hours'
+         GROUP BY source
+         ORDER BY count DESC`,
+      ),
+    ]);
+
+    res.json({
+      summary24h: summaryRes.rows[0],
+      bySource24h: sourceRes.rows,
+      recent: recentRes.rows,
+    });
+  } catch (err) {
+    console.error('GET /api/admin/ai-metrics failed:', err.message);
+    if (err.code === '42P01') {
+      return res.status(503).json({ error: 'AI metrics table not found — run node migrate.js first.' });
+    }
+    res.status(500).json({ error: 'Failed to load AI metrics' });
+  }
+});
+
 module.exports = router;

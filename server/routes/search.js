@@ -278,6 +278,51 @@ async function logSearch(user, query, response, source = 'ai') {
   }
 }
 
+async function logRequestMetric({
+  searchLogId = null,
+  userId = null,
+  source,
+  model = null,
+  status,
+  queryChars = 0,
+  historyMessages = 0,
+  historyChars = 0,
+  contextChars = 0,
+  retrievedDocs = 0,
+  responseChars = 0,
+  durationMs = 0,
+  cacheHit = false,
+  usedToolCall = false,
+  aborted = false,
+  error = null,
+}) {
+  try {
+    await pool.query(
+      `INSERT INTO ai_request_metrics (
+        search_log_id, user_id, source, model, status, query_chars,
+        history_messages, history_chars, context_chars, retrieved_docs,
+        response_chars, duration_ms, cache_hit, used_tool_call, aborted, error
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
+      [
+        searchLogId, userId, source, model, status, queryChars,
+        historyMessages, historyChars, contextChars, retrievedDocs,
+        responseChars, durationMs, cacheHit, usedToolCall, aborted,
+        error ? String(error).slice(0, 500) : null,
+      ]
+    );
+  } catch (e) {
+    if (e.code !== '42P01') console.error('ai_request_metrics insert failed:', e.message);
+  }
+}
+
+function getHistoryStats(history) {
+  const items = Array.isArray(history) ? history.slice(-MAX_HISTORY_MESSAGES) : [];
+  return {
+    historyMessages: items.length,
+    historyChars: items.reduce((sum, item) => sum + String(item.content || '').slice(0, MAX_HISTORY_CHARS).length, 0),
+  };
+}
+
 async function countAiSearchesToday(userId = null) {
   const withSource = userId
     ? ["SELECT COUNT(*) FROM search_logs WHERE source = 'ai' AND user_id = $1 AND created_at >= CURRENT_DATE", [userId]]
@@ -801,7 +846,7 @@ async function buildRelevantContext(query, { activeTab, hasImage } = {}) {
     result += '\n\n[Context trimmed to the most relevant database rows.]';
   }
 
-  return result;
+  return { text: result, retrievedDocs: retrievedDocs.length };
 }
 
 async function getDonatedString(userId) {
@@ -894,11 +939,13 @@ router.get('/history', requireAuth, async (req, res) => {
 // POST /api/search  { query, gameState }
 // Streams the AI answer back as plain text. Requires a valid auth token.
 router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
+  const startedAt = Date.now();
   const { query, image, gameState, activeTab } = req.body;
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
   }
   const trimmedQuery = query.trim();
+  const historyStats = getHistoryStats(req.body.history);
   if (trimmedQuery.length > MAX_QUERY_CHARS) {
     return res.status(400).json({ error: `Query is too long. Please keep it under ${MAX_QUERY_CHARS} characters.` });
   }
@@ -913,7 +960,17 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   if (directAnswer) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
-    await logSearch(user, trimmedQuery, directAnswer, 'direct');
+    const logId = await logSearch(user, trimmedQuery, directAnswer, 'direct');
+    await logRequestMetric({
+      searchLogId: logId,
+      userId,
+      source: 'direct',
+      status: 'completed',
+      queryChars: trimmedQuery.length,
+      ...historyStats,
+      responseChars: directAnswer.length,
+      durationMs: Date.now() - startedAt,
+    });
     return res.send(directAnswer);
   }
 
@@ -923,11 +980,32 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   if (cachedAnswer) {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
-    await logSearch(user, trimmedQuery, cachedAnswer, 'cache');
+    const logId = await logSearch(user, trimmedQuery, cachedAnswer, 'cache');
+    await logRequestMetric({
+      searchLogId: logId,
+      userId,
+      source: 'cache',
+      status: 'completed',
+      queryChars: trimmedQuery.length,
+      ...historyStats,
+      responseChars: cachedAnswer.length,
+      durationMs: Date.now() - startedAt,
+      cacheHit: true,
+    });
     return res.send(cachedAnswer);
   }
 
   if (!process.env.GEMINI_API_KEY) {
+    await logRequestMetric({
+      userId,
+      source: 'ai',
+      model: MODEL,
+      status: 'error',
+      queryChars: trimmedQuery.length,
+      ...historyStats,
+      durationMs: Date.now() - startedAt,
+      error: 'GEMINI_API_KEY is not configured',
+    });
     return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
   }
 
@@ -974,7 +1052,8 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       }
     }
 
-    const context = await buildRelevantContext(trimmedQuery, { activeTab, hasImage: Boolean(image) });
+    const contextResult = await buildRelevantContext(trimmedQuery, { activeTab, hasImage: Boolean(image) });
+    const context = contextResult.text;
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
@@ -1170,10 +1249,35 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     if (cacheKey && fullResponse && !usedToolCall) {
       setCachedAnswer(cacheKey, fullResponse);
     }
+    await logRequestMetric({
+      searchLogId: logId,
+      userId,
+      source: 'ai',
+      model: MODEL,
+      status: abort.signal.aborted ? 'aborted' : 'completed',
+      queryChars: trimmedQuery.length,
+      ...historyStats,
+      contextChars: context.length,
+      retrievedDocs: contextResult.retrievedDocs,
+      responseChars: fullResponse.length,
+      durationMs: Date.now() - startedAt,
+      usedToolCall,
+      aborted: abort.signal.aborted,
+    });
   } catch (err) {
     // Caller hung up and we cancelled the stream — not a failure, just stop.
     if (abort.signal.aborted) {
       console.log('POST /api/search: client disconnected, stream aborted');
+      await logRequestMetric({
+        userId,
+        source: 'ai',
+        model: MODEL,
+        status: 'aborted',
+        queryChars: trimmedQuery.length,
+        ...historyStats,
+        durationMs: Date.now() - startedAt,
+        aborted: true,
+      });
       return res.end();
     }
     console.error('POST /api/search failed:', err.message);
@@ -1194,6 +1298,16 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     } else {
       res.end();
     }
+    await logRequestMetric({
+      userId,
+      source: 'ai',
+      model: MODEL,
+      status: 'error',
+      queryChars: trimmedQuery.length,
+      ...historyStats,
+      durationMs: Date.now() - startedAt,
+      error: err.message || 'Unknown error',
+    });
   }
 });
 
