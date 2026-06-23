@@ -1,7 +1,7 @@
 # CIAPP — Coral Island Database
 
 Game-companion web app for *Coral Island*. Monorepo: `client/` (React + Vite → Vercel),
-`server/` (Express + PostgreSQL → Railway), Supabase auth, Anthropic-powered AI search.
+`server/` (Express + PostgreSQL → Railway), Supabase auth, Gemini-powered AI search.
 
 ## Skills — use them
 
@@ -13,7 +13,7 @@ Game-companion web app for *Coral Island*. Monorepo: `client/` (React + Vite →
 
 ## Hard rules
 
-- **Never call the Anthropic API / AI search "to test" without flagging the cost first** —
+- **Never call the Gemini API / AI search "to test" without flagging the cost first** —
   it spends real credits. "AI search failed" in prod usually means the account is out of
   credits, not a bug.
 - Use exact color tokens from `client/src/lib/theme.js` — no new hex values in the client.

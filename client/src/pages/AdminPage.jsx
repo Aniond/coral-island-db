@@ -137,7 +137,7 @@ function LimitsPanel({ token, stats, reload }) {
         <div>
           <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>AI Search Testing Limits</div>
           <div style={{ fontSize: 12.5, color: '#9ca3af', marginTop: 2 }}>
-            Guards against unexpectedly burning Anthropic credits. Flip off when you need unrestricted testing.
+            Guards against unexpectedly burning Gemini credits. Flip off when you need unrestricted testing.
           </div>
         </div>
         <Toggle on={enabled} busy={busy} onChange={(next) => { setEnabled(next); patch({ limitsEnabled: next }, next ? 'Limits enabled' : 'Limits disabled'); }} />

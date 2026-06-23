@@ -340,7 +340,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   const user = req.user;
   const userId = user.id;
 
-  // Abort the Anthropic stream if the caller disconnects mid-answer so we stop
+  // Abort the Gemini stream if the caller disconnects mid-answer so we stop
   // paying for tokens nobody will read. ServerResponse 'close' also fires after
   // a normal finish, hence the writableFinished guard.
   const abort = new AbortController();
@@ -350,7 +350,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 
   try {
     // ── Testing limits ────────────────────────────────────────────────────────
-    // A master toggle + two caps guard against unexpectedly burning Anthropic
+    // A master toggle + two caps guard against unexpectedly burning Gemini
     // credits: a GLOBAL daily cap (total across everyone) and a per-user daily
     // cap (explicit limit, else the configured default). All editable from the
     // admin dashboard; the whole block is skipped when limits are toggled off.

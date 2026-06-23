@@ -1,6 +1,6 @@
 // ── AI Search — Floating chat panel ──────────────────────────────────────────
 // (a.k.a. the "AI Guide" — talks only to our Express backend at POST /api/search;
-//  the Anthropic call is server-side, never in the browser.)
+//  the Gemini call is server-side, never in the browser.)
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
