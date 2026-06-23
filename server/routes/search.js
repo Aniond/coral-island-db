@@ -5,6 +5,26 @@ const supabase = require('../lib/supabase');
 const { requireAuth } = require('../middleware/requireAuth');
 const { getSearchLimits } = require('../lib/settings');
 const rateLimit = require('express-rate-limit');
+const {
+  AI_CONTEXT_TTL_MS,
+  DIRECT_ANSWER_MIN_SCORE,
+  DIRECT_INTENT_WORDS,
+  MAX_CONTEXT_CHARS,
+  MAX_HISTORY_CHARS,
+  MAX_HISTORY_MESSAGES,
+  MAX_IMAGE_CHARS,
+  MAX_QUERY_CHARS,
+  MODEL,
+  RETRIEVAL_LIMIT,
+  STOPWORDS,
+} = require('../ai/config');
+const { cacheKeyFor, getCachedAnswer, setCachedAnswer } = require('../ai/cache');
+const {
+  countAiSearchesToday,
+  getHistoryStats,
+  logRequestMetric,
+  logSearch,
+} = require('../ai/metrics');
 
 const searchRateLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -15,8 +35,6 @@ const searchRateLimiter = rateLimit({
 });
 
 const { GoogleGenAI } = require('@google/genai');
-
-const MODEL = 'gemini-2.5-flash';
 
 const SYSTEM_PROMPT =
   'You are an expert guide for the farming game Coral Island. ' +
@@ -125,30 +143,6 @@ const SYSTEM_PROMPT =
 let cachedAISections = null;
 let cachedAISectionsTime = 0;
 
-const AI_CONTEXT_TTL_MS = 60 * 60 * 1000;
-const MAX_CONTEXT_CHARS = 85000;
-const MAX_HISTORY_MESSAGES = 6;
-const MAX_HISTORY_CHARS = 1800;
-const MAX_IMAGE_CHARS = 4 * 1024 * 1024;
-const RETRIEVAL_LIMIT = 48;
-const DIRECT_ANSWER_MIN_SCORE = 3;
-const AI_CACHE_TTL_MS = 15 * 60 * 1000;
-const AI_CACHE_MAX_ENTRIES = 100;
-const STOPWORDS = new Set([
-  'about', 'after', 'again', 'also', 'and', 'any', 'are', 'ask', 'best', 'can',
-  'coral', 'day', 'does', 'for', 'from', 'get', 'give', 'guide', 'have', 'how',
-  'include', 'into', 'island', 'item', 'items', 'make', 'me', 'need', 'please',
-  'show', 'tell', 'that', 'the', 'their', 'them', 'this', 'what', 'when',
-  'where', 'which', 'with', 'you', 'your',
-]);
-const DIRECT_INTENT_WORDS = new Set([
-  'best', 'boost', 'buff', 'catch', 'cook', 'craft', 'find', 'gift', 'gifts',
-  'ingredient', 'ingredients', 'liked', 'location', 'love', 'loved', 'profit',
-  'recipe', 'sell', 'where',
-]);
-
-const aiResponseCache = new Map();
-
 function normalizeText(value) {
   return String(value || '').toLowerCase();
 }
@@ -206,138 +200,6 @@ function formatIngredients(value) {
   return ingredients.length
     ? ingredients.map(item => `${item.amount || 1}x ${item.name}`).join(', ')
     : 'unknown';
-}
-
-function cacheKeyFor(query, gameState, donatedString) {
-  const state = gameState
-    ? `${gameState.season || ''}|${gameState.day || ''}|${gameState.time || ''}|${gameState.weather || ''}|${gameState.rank || ''}`
-    : '';
-  return `${normalizeText(query).replace(/\s+/g, ' ').trim()}::${state}::${donatedString || ''}`;
-}
-
-function getCachedAnswer(key) {
-  const entry = aiResponseCache.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.time > AI_CACHE_TTL_MS) {
-    aiResponseCache.delete(key);
-    return null;
-  }
-  aiResponseCache.delete(key);
-  aiResponseCache.set(key, entry);
-  return entry.response;
-}
-
-function setCachedAnswer(key, response) {
-  if (!response) return;
-  aiResponseCache.set(key, { response, time: Date.now() });
-  while (aiResponseCache.size > AI_CACHE_MAX_ENTRIES) {
-    const oldestKey = aiResponseCache.keys().next().value;
-    aiResponseCache.delete(oldestKey);
-  }
-}
-
-async function logSearch(user, query, response, source = 'ai') {
-  const userId = user?.id || null;
-  try {
-    const { rows } = await pool.query(
-      'INSERT INTO search_logs (user_id, user_email, query, response, source, created_at) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING id',
-      [userId, user?.email || null, query, response || null, source]
-    );
-    return rows[0].id;
-  } catch (e) {
-    if (e.code === '42703') {
-      try {
-        const { rows } = await pool.query(
-          'INSERT INTO search_logs (user_id, user_email, query, response, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING id',
-          [userId, user?.email || null, query, response || null]
-        );
-        return rows[0].id;
-      } catch (e2) {
-        if (e2.code === '42703') {
-          try {
-            const { rows } = await pool.query(
-              'INSERT INTO search_logs (user_id, query, created_at) VALUES ($1, $2, NOW()) RETURNING id',
-              [userId, query]
-            );
-            if (response) {
-              pool.query('UPDATE search_logs SET response = $1 WHERE id = $2', [response, rows[0].id])
-                .catch(err => console.error(`${source} search log response update failed:`, err.message));
-            }
-            return rows[0].id;
-          } catch (e3) {
-            console.error(`${source} search log insert legacy fallback failed:`, e3.message);
-            return null;
-          }
-        }
-        console.error(`${source} search log insert fallback failed:`, e2.message);
-        return null;
-      }
-    }
-    console.error(`${source} search log insert failed:`, e.message);
-    return null;
-  }
-}
-
-async function logRequestMetric({
-  searchLogId = null,
-  userId = null,
-  source,
-  model = null,
-  status,
-  queryChars = 0,
-  historyMessages = 0,
-  historyChars = 0,
-  contextChars = 0,
-  retrievedDocs = 0,
-  responseChars = 0,
-  durationMs = 0,
-  cacheHit = false,
-  usedToolCall = false,
-  aborted = false,
-  error = null,
-}) {
-  try {
-    await pool.query(
-      `INSERT INTO ai_request_metrics (
-        search_log_id, user_id, source, model, status, query_chars,
-        history_messages, history_chars, context_chars, retrieved_docs,
-        response_chars, duration_ms, cache_hit, used_tool_call, aborted, error
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
-      [
-        searchLogId, userId, source, model, status, queryChars,
-        historyMessages, historyChars, contextChars, retrievedDocs,
-        responseChars, durationMs, cacheHit, usedToolCall, aborted,
-        error ? String(error).slice(0, 500) : null,
-      ]
-    );
-  } catch (e) {
-    if (e.code !== '42P01') console.error('ai_request_metrics insert failed:', e.message);
-  }
-}
-
-function getHistoryStats(history) {
-  const items = Array.isArray(history) ? history.slice(-MAX_HISTORY_MESSAGES) : [];
-  return {
-    historyMessages: items.length,
-    historyChars: items.reduce((sum, item) => sum + String(item.content || '').slice(0, MAX_HISTORY_CHARS).length, 0),
-  };
-}
-
-async function countAiSearchesToday(userId = null) {
-  const withSource = userId
-    ? ["SELECT COUNT(*) FROM search_logs WHERE source = 'ai' AND user_id = $1 AND created_at >= CURRENT_DATE", [userId]]
-    : ["SELECT COUNT(*) FROM search_logs WHERE source = 'ai' AND created_at >= CURRENT_DATE", []];
-  const legacy = userId
-    ? ['SELECT COUNT(*) FROM search_logs WHERE user_id = $1 AND created_at >= CURRENT_DATE', [userId]]
-    : ['SELECT COUNT(*) FROM search_logs WHERE created_at >= CURRENT_DATE', []];
-  try {
-    const { rows } = await pool.query(withSource[0], withSource[1]);
-    return parseInt(rows[0].count, 10);
-  } catch (e) {
-    if (e.code !== '42703') throw e;
-    const { rows } = await pool.query(legacy[0], legacy[1]);
-    return parseInt(rows[0].count, 10);
-  }
 }
 
 async function retrieveContextDocs(query) {
@@ -863,10 +725,6 @@ async function getDonatedString(userId) {
   } catch(e) {}
   return '';
 }
-
-// Hard cap on question length — everything past this is either an accident or
-// an attempt to burn API credits; real questions fit comfortably under it.
-const MAX_QUERY_CHARS = 500;
 
 // GET /api/search/index
 // Returns a cached global search array for the Command Palette.

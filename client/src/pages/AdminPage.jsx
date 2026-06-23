@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { refreshAccessToken } from '../lib/authToken.js';
 import { API_ROOT as API, timeoutSignal } from '../lib/apiBase.js';
+import { THEME } from '../lib/theme.js';
 import { SkeletonLoader } from '../components/ui.jsx';
 
 const { useState, useEffect, useCallback } = React;
-const C = { primary: '#0f766e', dark: '#134e4a', accent: '#f97316', cream: '#fefce8' };
+const C = { primary: THEME.primary, dark: THEME.primaryDark, accent: THEME.accent, cream: THEME.bg };
 
 // Authenticated fetch — a 401 (expired token) triggers one session refresh and
 // retry before the response is handed back to the caller.
@@ -557,10 +558,177 @@ function LogsTab({ token }) {
   );
 }
 
+function formatNumber(value) {
+  if (value === null || value === undefined) return '0';
+  return Number(value).toLocaleString();
+}
+
+function formatMs(value) {
+  if (!value) return '0 ms';
+  return value >= 1000 ? `${(value / 1000).toFixed(1)} s` : `${value} ms`;
+}
+
+function SourceBadge({ source }) {
+  const label = source || 'unknown';
+  const palette = {
+    ai: { bg: THEME.primaryXLight, border: THEME.cardBorder, color: C.primary },
+    direct: { bg: THEME.accentLight, border: THEME.accent, color: THEME.accent },
+    cache: { bg: '#f0fdf4', border: '#86efac', color: '#15803d' },
+  }[label] || { bg: '#f9fafb', border: '#e5e7eb', color: '#6b7280' };
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center', borderRadius: 999,
+      padding: '2px 9px', fontSize: 11.5, fontWeight: 700,
+      background: palette.bg, border: `1px solid ${palette.border}`, color: palette.color,
+      textTransform: 'capitalize',
+    }}>
+      {label}
+    </span>
+  );
+}
+
+function AiMetricsTab({ token }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState('');
+
+  const load = useCallback(async () => {
+    setLoading(true); setErr('');
+    try {
+      const r = await authFetch('/api/admin/ai-metrics?limit=50', token);
+      if (!r.ok) {
+        let m = `Failed (${r.status})`;
+        try { m = (await r.json()).error || m; } catch { m = await r.text(); }
+        throw new Error(m);
+      }
+      setData(await r.json());
+    } catch (e) { setErr(e.message); }
+    finally { setLoading(false); }
+  }, [token]);
+
+  useEffect(() => { load(); }, [load]);
+
+  if (err) return <div style={{ color: '#dc2626', padding: 20 }}>Error: {err}</div>;
+  if (loading) {
+    return (
+      <div style={{ padding: 48, maxWidth: 860, margin: '0 auto', width: '100%' }}>
+        <SkeletonLoader count={5} height={54} />
+      </div>
+    );
+  }
+
+  const summary = data?.summary24h || {};
+  const recent = data?.recent || [];
+
+  return (
+    <div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 190px), 1fr))', gap: 16 }}>
+        <StatCard icon="chart" label="AI Requests" value={formatNumber(summary.ai_calls)} sub="Gemini calls, 24h" color={C.primary} />
+        <StatCard icon="check" label="Direct Answers" value={formatNumber(summary.direct_answers)} sub="DB-only wins, 24h" color={THEME.accent} />
+        <StatCard icon="refresh" label="Cache Hits" value={formatNumber(summary.cache_hits)} sub="served without model" color="#15803d" />
+        <StatCard icon="x" label="Aborted" value={formatNumber(summary.aborted)} sub="user stopped stream" color="#dc2626" />
+        <StatCard icon="chart" label="Avg Duration" value={formatMs(summary.avg_duration_ms)} sub="all sources, 24h" color="#0ea5e9" />
+        <StatCard icon="search" label="Avg Context" value={formatNumber(summary.avg_context_chars)} sub="chars sent to AI" color="#7c3aed" />
+      </div>
+
+      <div style={{ marginTop: 20, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 18 }}>
+        <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '18px 20px' }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Source Mix</div>
+          <div style={{ fontSize: 12.5, color: '#9ca3af', marginTop: 2 }}>Last 24 hours by processing path.</div>
+          <div style={{ marginTop: 15, display: 'grid', gap: 10 }}>
+            {(data?.bySource24h || []).map(row => (
+              <div key={row.source} style={{ display: 'grid', gridTemplateColumns: '80px 1fr auto', alignItems: 'center', gap: 10 }}>
+                <SourceBadge source={row.source} />
+                <div style={{ height: 8, borderRadius: 999, background: '#f1f5f9', overflow: 'hidden' }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${Math.min(100, Math.round((row.count / Math.max(1, summary.total || row.count)) * 100))}%`,
+                    borderRadius: 999,
+                    background: row.source === 'ai' ? C.primary : row.source === 'direct' ? THEME.accent : '#15803d',
+                  }} />
+                </div>
+                <span style={{ fontSize: 12.5, fontWeight: 700, color: C.dark }}>{row.count}</span>
+              </div>
+            ))}
+            {(data?.bySource24h || []).length === 0 && (
+              <div style={{ color: '#9ca3af', fontSize: 13 }}>No AI processing metrics yet.</div>
+            )}
+          </div>
+        </div>
+
+        <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '18px 20px' }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Cost Signals</div>
+          <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+            <div>
+              <div style={{ fontSize: 11.5, color: '#9ca3af', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Retrieved Docs</div>
+              <div style={{ marginTop: 3, fontSize: 24, color: C.dark, fontWeight: 700 }}>{formatNumber(summary.avg_retrieved_docs)}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11.5, color: '#9ca3af', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Model Avoidance</div>
+              <div style={{ marginTop: 3, fontSize: 24, color: C.dark, fontWeight: 700 }}>
+                {summary.total ? `${Math.round(((summary.direct_answers || 0) + (summary.cache_hits || 0)) / summary.total * 100)}%` : '0%'}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11.5, color: '#9ca3af', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Total Events</div>
+              <div style={{ marginTop: 3, fontSize: 24, color: C.dark, fontWeight: 700 }}>{formatNumber(summary.total)}</div>
+            </div>
+          </div>
+          <button onClick={load} style={{
+            marginTop: 18, display: 'flex', alignItems: 'center', gap: 6,
+            background: 'none', border: '1px solid #e5e7eb', borderRadius: 8,
+            padding: '8px 14px', cursor: 'pointer', color: '#6b7280', fontSize: 13,
+          }}>
+            <Ico n="refresh" s={14} /> Refresh metrics
+          </button>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 18, background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #f3f4f6', fontSize: 13, fontWeight: 600, color: '#374151' }}>
+          Recent processing events
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: '#f9fafb' }}>
+                {['When', 'Source', 'Status', 'Duration', 'Context', 'Docs', 'Response', 'Flags'].map(h => (
+                  <th key={h} style={{ padding: '10px 13px', textAlign: 'left', fontSize: 11.5, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {recent.map((row, i) => (
+                <tr key={row.id} style={{ borderTop: i > 0 ? '1px solid #f3f4f6' : 'none' }}>
+                  <td style={{ padding: '11px 13px', fontSize: 12, color: '#9ca3af', whiteSpace: 'nowrap' }}>{row.created_at ? new Date(row.created_at).toLocaleString() : '—'}</td>
+                  <td style={{ padding: '11px 13px' }}><SourceBadge source={row.source} /></td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: row.status === 'error' ? '#dc2626' : row.status === 'aborted' ? '#b45309' : C.dark, fontWeight: 700 }}>{row.status}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatMs(row.duration_ms)}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatNumber(row.context_chars)}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatNumber(row.retrieved_docs)}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatNumber(row.response_chars)}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280', whiteSpace: 'nowrap' }}>
+                    {row.cache_hit ? 'cache ' : ''}{row.used_tool_call ? 'tool ' : ''}{row.aborted ? 'stopped' : ''}
+                    {!row.cache_hit && !row.used_tool_call && !row.aborted ? '—' : ''}
+                  </td>
+                </tr>
+              ))}
+              {recent.length === 0 && (
+                <tr><td colSpan={8} style={{ padding: 30, textAlign: 'center', color: '#9ca3af' }}>No metrics recorded yet</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const TABS = [
   { id: 'stats', label: 'Stats',        icon: 'chart'  },
   { id: 'users', label: 'Users',        icon: 'users'  },
   { id: 'logs',  label: 'Search Logs',  icon: 'search' },
+  { id: 'metrics', label: 'AI Metrics', icon: 'chart'  },
 ];
 
 export default function AdminPage() {
@@ -636,6 +804,7 @@ export default function AdminPage() {
         {activeTab === 'stats' && <StatsTab token={token} />}
         {activeTab === 'users' && <UsersTab token={token} currentUserId={user?.id} />}
         {activeTab === 'logs'  && <LogsTab  token={token} />}
+        {activeTab === 'metrics' && <AiMetricsTab token={token} />}
       </div>
     </div>
   );

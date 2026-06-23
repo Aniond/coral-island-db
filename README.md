@@ -45,8 +45,9 @@ npm run seed         # creates tables + inserts all data
 3. Seed it: locally set `server/.env` `DATABASE_URL` to that value, then
    `cd server && npm run seed` (use `$env:NODE_ENV="production"` on Windows if
    the public URL requires SSL).
-4. *(Phase 2)* Deploy the Express API as a service with **Root Directory = `server`**,
-   start command `node index.js`, and `DATABASE_URL` + `GEMINI_API_KEY` set as variables.
+4. Deploy the Express API as a service with **Root Directory = `server`**,
+   start command `npm start`, and `DATABASE_URL` + `GEMINI_API_KEY` set as variables.
+   `npm start` runs pending migrations before starting the API.
 
 ### Vercel — frontend
 1. Import this GitHub repo.
@@ -54,6 +55,8 @@ npm run seed         # creates tables + inserts all data
 3. Build command `npm run build`, output `dist`.
 4. `client/vercel.json` provides the SPA rewrite so `/login` and `/app` deep-links work.
 5. *(Phase 2)* Add `VITE_API_URL` (your Railway API URL) and route `/api/*` to it.
+
+After deploys, use the [production smoke checklist](docs/production-smoke-checklist.md).
 
 ## Environment variables
 
