@@ -354,7 +354,7 @@ floatBtn:  '0 4px 18px rgba(0,0,0,0.22)',
 
 **Typing indicator:** 3 dots, `ciWave` animation (each dot staggers 0.16s)
 
-**AI response logic:** See `ai-guide.jsx` → `getResponse()`. Keyword → response map in `lib/ai-responses.ts`. In production, swap for a real API call (Claude, OpenAI, etc.).
+**AI response logic:** See `ai-guide.jsx` → `getResponse()`. Keyword → response map in `lib/ai-responses.ts`. In production, swap for the server-backed Gemini AI guide.
 
 ---
 
@@ -646,7 +646,7 @@ In production, add auth middleware that redirects unauthenticated users to `/log
 
 ---
 
-## Notes for Claude Code
+## Notes for AI Coding Agents
 
 1. **Start with the data layer** — move `data.js` contents into typed JSON/TS files under `src/data/`
 2. **Implement the token system first** (`src/lib/theme.ts`) — every component references it
