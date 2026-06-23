@@ -290,13 +290,23 @@ router.get('/index', async (req, res) => {
     ]);
 
     const index = [];
-    crops.rows.forEach(c => index.push({ id: `crop-${c.id}`, type: 'Crop', name: c.name, subtitle: `${c.season} • ${c.type}`, route: '/app/crops' }));
-    caves.rows.forEach(c => index.push({ id: `cave-${c.id}`, type: 'Cave Item', name: c.name, subtitle: `${c.type} • ${c.cave} mine`, route: '/app/caves' }));
-    forageables.rows.forEach(c => index.push({ id: `forage-${c.id}`, type: 'Forageable', name: c.name, subtitle: `${c.season} • ${c.location}`, route: '/app/foraging' }));
-    npcs.rows.forEach(c => index.push({ id: `npc-${c.id}`, type: 'NPC', name: c.name, subtitle: c.role || 'Villager', route: '/app/npcs' }));
-    collectibles.rows.forEach(c => index.push({ id: `coll-${c.id}`, type: 'Collectible', name: c.name, subtitle: c.category, route: '/app/collections' }));
-    cooking.rows.forEach(c => index.push({ id: `cook-${c.id}`, type: 'Cooking', name: c.name, subtitle: `Utensil: ${c.utensil}`, route: '/app/recipes' }));
-    crafting.rows.forEach(c => index.push({ id: `craft-${c.id}`, type: 'Crafting', name: c.name, subtitle: `Category: ${c.category}`, route: '/app/recipes' }));
+    const aiGuideResult = (id, type, name, subtitle, prompt) => ({
+      id,
+      type,
+      name,
+      subtitle,
+      page: 'home',
+      route: '/app',
+      query: prompt || `Tell me about ${name}.`,
+    });
+
+    crops.rows.forEach(c => index.push(aiGuideResult(`crop-${c.id}`, 'Crop', c.name, `${c.season} • ${c.type}`, `Tell me about ${c.name}. Include season, town rank, grow time, and profit.`)));
+    caves.rows.forEach(c => index.push(aiGuideResult(`cave-${c.id}`, 'Cave Item', c.name, `${c.type} • ${c.cave} mine`, `Where do I find ${c.name} in the mines?`)));
+    forageables.rows.forEach(c => index.push(aiGuideResult(`forage-${c.id}`, 'Forageable', c.name, `${c.season} • ${c.location}`, `Where and when can I forage ${c.name}?`)));
+    npcs.rows.forEach(c => index.push(aiGuideResult(`npc-${c.id}`, 'NPC', c.name, c.role || 'Villager', `Tell me about ${c.name}, including gifts and schedule.`)));
+    collectibles.rows.forEach(c => index.push(aiGuideResult(`coll-${c.id}`, 'Collectible', c.name, c.category, `Where do I find ${c.name}? Include season, location, and time.`)));
+    cooking.rows.forEach(c => index.push(aiGuideResult(`cook-${c.id}`, 'Cooking', c.name, `Utensil: ${c.utensil}`, `How do I cook ${c.name}? Include ingredients, utensil, and buffs.`)));
+    crafting.rows.forEach(c => index.push(aiGuideResult(`craft-${c.id}`, 'Crafting', c.name, `Category: ${c.category}`, `How do I craft ${c.name}? Show the full recipe.`)));
 
     const sortedIndex = index.sort((a, b) => a.name.localeCompare(b.name));
     cachedGlobalIndex = sortedIndex;
@@ -331,6 +341,10 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   const { query, image, gameState, activeTab } = req.body;
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
+  }
+  const trimmedQuery = query.trim();
+  if (trimmedQuery.length > MAX_QUERY_CHARS) {
+    return res.status(400).json({ error: `Query is too long. Please keep it under ${MAX_QUERY_CHARS} characters.` });
   }
 
   if (!process.env.GEMINI_API_KEY) {

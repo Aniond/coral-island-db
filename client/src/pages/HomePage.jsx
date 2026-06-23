@@ -255,7 +255,7 @@ function TypingBubble() {
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ initialQuery }) {
   const { session } = useAuth();
   const isMobile = useIsMobile();
   const [messages, setMessages] = React.useState([]);
@@ -301,7 +301,9 @@ export default function HomePage() {
     loadHistory();
   }, [session, historyLoaded]);
 
-  /* initialQuery not needed for full page, removed effect */
+  React.useEffect(() => {
+    if (initialQuery?.text) setInput(initialQuery.text);
+  }, [initialQuery?.id, initialQuery?.text]);
 
   async function send(text) {
     const t = text.trim();
@@ -430,6 +432,28 @@ export default function HomePage() {
     </div>
   );
 
+  const gameStateGroupStyle = {
+    display: 'flex',
+    gap: 4,
+    alignItems: 'center',
+    flex: isMobile ? '1 1 142px' : '0 0 auto',
+    minWidth: 0,
+  };
+  const gameStateSelectStyle = {
+    background: 'rgba(0,0,0,0.15)',
+    color: 'white',
+    border: 'none',
+    borderRadius: 4,
+    padding: '3px 6px',
+    fontSize: 11,
+    outline: 'none',
+    cursor: 'pointer',
+    fontFamily: "'Inter', sans-serif",
+    minWidth: 0,
+    maxWidth: '100%',
+    flex: '1 1 auto',
+  };
+
   return (
     <div style={{
       display: 'flex', flexDirection: 'column',
@@ -476,35 +500,35 @@ export default function HomePage() {
         <div style={{
           padding: '8px 12px',
           background: THEME.primaryDark || '#0b5a54',
-          display: 'flex', gap: 8, alignItems: 'center',
-          flexShrink: 0, overflowX: 'auto', borderBottom: `1px solid ${THEME.primaryLight}`,
+          display: 'flex', gap: 8, alignItems: 'center', flexWrap: isMobile ? 'wrap' : 'nowrap',
+          flexShrink: 0, overflowX: isMobile ? 'visible' : 'auto', borderBottom: `1px solid ${THEME.primaryLight}`,
         }}>
-          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <div style={{ ...gameStateGroupStyle, flexBasis: isMobile ? '184px' : 'auto' }}>
             <Icon name="calendar" size={13} color="rgba(255,255,255,0.8)" />
-            <select value={season} onChange={e => setSeason(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+            <select value={season} onChange={e => setSeason(e.target.value)} style={gameStateSelectStyle}>
               <option value="Spring">Spring</option>
               <option value="Summer">Summer</option>
               <option value="Fall">Fall</option>
               <option value="Winter">Winter</option>
             </select>
-            <select value={day} onChange={e => setDay(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif", marginLeft: 4 }}>
+            <select value={day} onChange={e => setDay(e.target.value)} style={{ ...gameStateSelectStyle, marginLeft: 4 }}>
               {Array.from({ length: 28 }, (_, i) => i + 1).map(d => (
                 <option key={d} value={d}>Day {d}</option>
               ))}
             </select>
           </div>
-          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <div style={gameStateGroupStyle}>
             <Icon name="clock" size={13} color="rgba(255,255,255,0.8)" />
-            <select value={time} onChange={e => setTime(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+            <select value={time} onChange={e => setTime(e.target.value)} style={gameStateSelectStyle}>
               <option value="Morning">Morning</option>
               <option value="Afternoon">Afternoon</option>
               <option value="Evening">Evening</option>
               <option value="Night">Night</option>
             </select>
           </div>
-          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <div style={gameStateGroupStyle}>
             <Icon name="sun" size={13} color="rgba(255,255,255,0.8)" />
-            <select value={weather} onChange={e => setWeather(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+            <select value={weather} onChange={e => setWeather(e.target.value)} style={gameStateSelectStyle}>
               <option value="Sunny">Sunny</option>
               <option value="Raining">Raining</option>
               <option value="Snowing">Snowing</option>
@@ -512,9 +536,9 @@ export default function HomePage() {
               <option value="Windy">Windy</option>
             </select>
           </div>
-          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <div style={gameStateGroupStyle}>
             <Icon name="map" size={13} color="rgba(255,255,255,0.8)" />
-            <select value={rank} onChange={e => setRank(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+            <select value={rank} onChange={e => setRank(e.target.value)} style={gameStateSelectStyle}>
               <option value="F">Rank F</option>
               <option value="E">Rank E</option>
               <option value="D">Rank D</option>

@@ -16,9 +16,11 @@ const PAGES = { home: HomePage, itinerary: ItineraryPage, roadmap: RoadmapPage, 
 
 export default function AppShell() {
   const [activePage, setActivePage] = React.useState('home');
+  const [pendingQuery, setPendingQuery] = React.useState(null);
 
   function handleNavigate(page, query) {
-    setActivePage(page);
+    setActivePage(PAGES[page] ? page : 'home');
+    if (query) setPendingQuery({ text: query, id: Date.now() });
   }
 
   const CurrentPage = PAGES[activePage] || HomePage;
@@ -32,7 +34,7 @@ export default function AppShell() {
       background: THEME.bg,
       fontFamily: "'Inter', sans-serif",
     }}>
-      <CommandPalette />
+      <CommandPalette onNavigate={handleNavigate} />
 
       <Sidebar
         activePage={activePage}
@@ -47,7 +49,7 @@ export default function AppShell() {
         animation: 'ciPageIn 0.18s ease',
       }}>
         <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
-          <CurrentPage density={density} onNavigate={handleNavigate} />
+          <CurrentPage density={density} onNavigate={handleNavigate} initialQuery={activePage === 'home' ? pendingQuery : null} />
         </Suspense>
       </main>
     </div>
