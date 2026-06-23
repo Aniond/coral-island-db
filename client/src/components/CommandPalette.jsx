@@ -7,7 +7,15 @@ import Fuse from 'fuse.js';
 
 let globalCache = null;
 
-export default function CommandPalette() {
+const APP_ACTIONS = [
+  { id: 'page-home', type: 'Page', name: 'AI Guide', subtitle: 'Ask Coral Island questions', page: 'home' },
+  { id: 'page-itinerary', type: 'Page', name: 'Daily Itinerary', subtitle: 'Plan today by season, weather, and rank', page: 'itinerary' },
+  { id: 'page-plans', type: 'Page', name: 'Saved Plans', subtitle: 'Review saved AI plans', page: 'plans' },
+  { id: 'page-planner', type: 'Page', name: 'Farm Planner', subtitle: 'Open the visual farm planner', page: 'planner' },
+  { id: 'page-roadmap', type: 'Page', name: 'Roadmap', subtitle: 'See app and game update notes', page: 'roadmap' },
+];
+
+export default function CommandPalette({ onNavigate }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [results, setResults] = React.useState([]);
@@ -16,9 +24,24 @@ export default function CommandPalette() {
   const navigate = useNavigate();
   const inputRef = React.useRef(null);
 
+  function normalizeResults(data) {
+    return [...APP_ACTIONS, ...(Array.isArray(data) ? data : [])];
+  }
+
+  function choose(item) {
+    if (!item) return;
+    if (item.page && onNavigate) {
+      onNavigate(item.page, item.query);
+      navigate('/app');
+    } else {
+      navigate(item.route || '/app');
+    }
+    setIsOpen(false);
+  }
+
   React.useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsOpen(prev => !prev);
       }
@@ -37,8 +60,12 @@ export default function CommandPalette() {
       if (!globalCache) {
         setLoading(true);
         fetchGlobalSearchIndex().then(data => {
-          globalCache = data;
-          setResults(data);
+          globalCache = normalizeResults(data);
+          setResults(globalCache);
+          setLoading(false);
+        }).catch(() => {
+          globalCache = APP_ACTIONS;
+          setResults(globalCache);
           setLoading(false);
         });
       } else {
@@ -74,8 +101,7 @@ export default function CommandPalette() {
       setSelectedIndex(prev => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       e.preventDefault();
-      navigate(results[selectedIndex].route);
-      setIsOpen(false);
+      choose(results[selectedIndex]);
     }
   };
 
@@ -106,7 +132,7 @@ export default function CommandPalette() {
             results.map((item, idx) => (
               <div 
                 key={item.id} 
-                onClick={() => { navigate(item.route); setIsOpen(false); }}
+                onClick={() => choose(item)}
                 onMouseEnter={() => setSelectedIndex(idx)}
                 style={{
                   padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
