@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node start.js",
     "dev": "nodemon index.js",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "smoke": "node scripts/smoke.js",
+    "eval:ai": "node scripts/eval-ai.js"
   },
   "dependencies": {
     "@google/genai": "^2.8.0",

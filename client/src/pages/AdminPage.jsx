@@ -587,6 +587,30 @@ function SourceBadge({ source }) {
   );
 }
 
+function getAiRecommendations(summary = {}) {
+  const total = summary.total || 0;
+  const avoided = (summary.direct_answers || 0) + (summary.cache_hits || 0);
+  const modelAvoidance = total ? avoided / total : 0;
+  const recs = [];
+
+  if ((summary.avg_context_chars || 0) > 45000) {
+    recs.push('Context is running high. Tighten retrieval limits or add more direct-answer paths for frequent questions.');
+  }
+  if (total >= 10 && modelAvoidance < 0.35) {
+    recs.push('Model avoidance is low. Add direct handlers for the top repeated query types to reduce Gemini spend.');
+  }
+  if ((summary.cache_hits || 0) === 0 && total >= 10) {
+    recs.push('Cache hits are low. Review cache keys and repeated prompts in Search Logs.');
+  }
+  if ((summary.aborted || 0) >= 3) {
+    recs.push('Users are stopping streams. Check first-token latency and answer length for recent AI events.');
+  }
+  if (recs.length === 0) {
+    recs.push('AI processing looks balanced. Keep watching direct answers, cache hits, and context size as traffic grows.');
+  }
+  return recs;
+}
+
 function AiMetricsTab({ token }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -619,6 +643,7 @@ function AiMetricsTab({ token }) {
 
   const summary = data?.summary24h || {};
   const recent = data?.recent || [];
+  const recommendations = getAiRecommendations(summary);
 
   return (
     <div>
@@ -681,6 +706,21 @@ function AiMetricsTab({ token }) {
           }}>
             <Ico n="refresh" s={14} /> Refresh metrics
           </button>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 18, background: THEME.cardBg, borderRadius: 14, border: '1px solid #e5e7eb', padding: '18px 20px' }}>
+        <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Optimization Queue</div>
+        <div style={{ fontSize: 12.5, color: '#9ca3af', marginTop: 2 }}>Generated from the last 24 hours of AI metrics.</div>
+        <div style={{ marginTop: 12, display: 'grid', gap: 8 }}>
+          {recommendations.map((item, index) => (
+            <div key={item} style={{ display: 'flex', gap: 9, alignItems: 'flex-start', fontSize: 13, color: '#374151', lineHeight: 1.45 }}>
+              <span style={{ width: 22, height: 22, borderRadius: 999, background: THEME.primaryXLight, color: C.primary, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11.5, fontWeight: 800, flexShrink: 0 }}>
+                {index + 1}
+              </span>
+              <span>{item}</span>
+            </div>
+          ))}
         </div>
       </div>
 

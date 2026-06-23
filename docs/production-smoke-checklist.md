@@ -7,13 +7,21 @@ database migrations, routing, or the admin dashboard.
 
 1. Confirm the Railway deploy logs show `npm start`.
 2. Confirm pending migrations ran before `Server listening`.
-3. Open `/` on the Railway public URL and expect:
+3. Run the automated smoke check against the deployed API:
+
+```bash
+cd server
+SMOKE_BASE_URL=https://your-railway-domain.up.railway.app npm run smoke
+```
+
+4. Open `/` on the Railway public URL and expect:
 
 ```json
 {"status":"ok","app":"Coral Island DB","version":2}
 ```
 
-4. Open `/api/crops` and confirm JSON rows are returned.
+5. Open `/api/health/deep` and confirm every check reports `ok`.
+6. Open `/api/crops` and confirm JSON rows are returned.
 
 ## 2. Vercel Client
 
@@ -35,9 +43,16 @@ database migrations, routing, or the admin dashboard.
 
 Use DB-only checks first. These should not call Gemini:
 
-1. Ask a direct database question such as `Where does Wakuu live?`.
-2. Confirm the answer appears quickly.
-3. Check Admin -> AI Metrics and confirm the event source is `direct`.
+1. Run the no-cost AI eval harness:
+
+```bash
+cd server
+npm run eval:ai
+```
+
+2. Ask a direct database question such as `Where does Wakuu live?`.
+3. Confirm the answer appears quickly.
+4. Check Admin -> AI Metrics and confirm the event source is `direct`.
 
 Do not run an open-ended Gemini-backed prompt unless the person testing has
 explicitly accepted that it can spend model credits.

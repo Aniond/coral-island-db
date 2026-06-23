@@ -13,10 +13,9 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Health check
-app.get('/', (req, res) => {
-  res.json({ status: 'ok', app: 'Coral Island DB', version: 2 });
-});
+// Health checks
+app.use('/', require('./routes/health'));
+app.use('/api/health', require('./routes/health'));
 
 // API routes
 app.use('/api/crops', require('./routes/crops'));
