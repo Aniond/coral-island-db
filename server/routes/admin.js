@@ -5,6 +5,15 @@ const { requireAuth, requireAdmin } = require('../middleware/requireAuth');
 const supabase = require('../lib/supabase');
 const settings = require('../lib/settings');
 
+async function queryWithSourceFallback(sql, params, fallbackSql, fallbackParams = params) {
+  try {
+    return await pool.query(sql, params);
+  } catch (err) {
+    if (err.code !== '42703') throw err;
+    return pool.query(fallbackSql, fallbackParams);
+  }
+}
+
 // GET /api/admin/me  — lightweight role check (used by AuthContext on login)
 router.get('/me', requireAuth, (req, res) => {
   res.json({ isAdmin: req.isAdmin });
@@ -17,8 +26,18 @@ router.get('/stats', requireAdmin, async (req, res) => {
       // Supabase lists all auth users via admin API
       supabase.auth.admin.listUsers({ perPage: 1 }),
       pool.query("SELECT COUNT(*) FROM user_roles WHERE role = 'admin'"),
-      pool.query('SELECT COUNT(*) FROM search_logs'),
-      pool.query("SELECT COUNT(*) FROM search_logs WHERE created_at >= CURRENT_DATE"),
+      queryWithSourceFallback(
+        "SELECT COUNT(*) FROM search_logs WHERE source = 'ai'",
+        [],
+        'SELECT COUNT(*) FROM search_logs',
+        []
+      ),
+      queryWithSourceFallback(
+        "SELECT COUNT(*) FROM search_logs WHERE source = 'ai' AND created_at >= CURRENT_DATE",
+        [],
+        "SELECT COUNT(*) FROM search_logs WHERE created_at >= CURRENT_DATE",
+        []
+      ),
       settings.getSearchLimits(),
     ]);
 
@@ -44,8 +63,11 @@ router.get('/users', requireAdmin, async (req, res) => {
     const [authRes, roleRes, todayRes, limits] = await Promise.all([
       supabase.auth.admin.listUsers({ perPage: 1000 }),
       pool.query('SELECT user_id, role, daily_search_limit FROM user_roles'),
-      pool.query(
-        'SELECT user_id, COUNT(*) AS count FROM search_logs WHERE created_at >= CURRENT_DATE GROUP BY user_id'
+      queryWithSourceFallback(
+        "SELECT user_id, COUNT(*) AS count FROM search_logs WHERE source = 'ai' AND created_at >= CURRENT_DATE GROUP BY user_id",
+        [],
+        'SELECT user_id, COUNT(*) AS count FROM search_logs WHERE created_at >= CURRENT_DATE GROUP BY user_id',
+        []
       ),
       settings.getSearchLimits(),
     ]);
