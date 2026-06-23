@@ -270,6 +270,7 @@ export default function HomePage({ initialQuery }) {
   const [input,    setInput]    = React.useState('');
   const [typing,   setTyping]   = React.useState(false);
   const scrollRef = React.useRef(null);
+  const activeAbortRef = React.useRef(null);
   const [season,   setSeason]   = React.useState('Spring');
   const [day,      setDay]      = React.useState('1');
   const [time,     setTime]     = React.useState('Morning');
@@ -313,11 +314,21 @@ export default function HomePage({ initialQuery }) {
     if (initialQuery?.text) setInput(initialQuery.text);
   }, [initialQuery?.id, initialQuery?.text]);
 
+  React.useEffect(() => () => activeAbortRef.current?.abort(), []);
+
+  function stopGenerating() {
+    activeAbortRef.current?.abort();
+    activeAbortRef.current = null;
+    setTyping(false);
+  }
+
   async function send(text) {
     const t = text.trim();
-    if (!t) return;
+    if (!t || typing) return;
     const userId = Date.now();
     const aiId = userId + 1;
+    const controller = new AbortController();
+    activeAbortRef.current = controller;
     setMessages(prev => [...prev, { role: 'user', content: t, id: userId, query: t }]);
     setInput('');
     const currentImage = selectedImage;
@@ -337,13 +348,28 @@ export default function HomePage({ initialQuery }) {
     try {
       const history = compactHistory(messages);
       const gameState = { season, day, time, weather, rank };
-      await streamSearch(t, currentImage, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      await streamSearch(
+        t,
+        currentImage,
+        history,
+        gameState,
+        (chunk) => { started = true; appendChunk(chunk); },
+        session?.access_token,
+        { signal: controller.signal },
+      );
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
+      if (err.name === 'AbortError') {
+        appendChunk(started ? '\n\n_Stopped._' : '_Stopped._');
+        return;
+      }
       // Mid-stream failure appends to the partial answer instead of adding a
       // second orphaned bubble; pre-stream failure creates the bubble.
       appendChunk(`${started ? '\n\n' : ''}⚠️ ${err.message}`);
+    } finally {
+      if (activeAbortRef.current === controller) activeAbortRef.current = null;
+      setTyping(false);
     }
   }
 
@@ -425,16 +451,18 @@ export default function HomePage({ initialQuery }) {
           onBlur={e => (e.target.style.borderColor = THEME.cardBorder)}
         />
         <button
-          onClick={() => send(input)}
+          onClick={typing ? stopGenerating : () => send(input)}
+          title={typing ? 'Stop generating' : 'Send'}
+          aria-label={typing ? 'Stop generating' : 'Send'}
           style={{
             width: 36, height: 36, borderRadius: 8, flexShrink: 0,
-            background: input.trim() ? THEME.primary : '#e2e8f0',
-            border: 'none', cursor: input.trim() ? 'pointer' : 'default',
+            background: typing ? THEME.accent : (input.trim() ? THEME.primary : '#e2e8f0'),
+            border: 'none', cursor: typing || input.trim() ? 'pointer' : 'default',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             transition: 'background 0.15s',
           }}
         >
-          <Icon name="send" size={15} color="white" />
+          <Icon name={typing ? 'x' : 'send'} size={15} color="white" />
         </button>
       </div>
     </div>
