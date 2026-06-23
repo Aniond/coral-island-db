@@ -7,6 +7,24 @@ const {
   pickBestRow,
   scoreRow,
 } = require('./text');
+const {
+  buildItemSourceIndex,
+  describeItemSources,
+  parseItemList,
+} = require('./crosslinks');
+
+function renderSourceTable(items, sourceIndex) {
+  const rows = parseItemList(items);
+  if (!rows.length) return [];
+  return [
+    '| Ingredient | Qty | Where to get it |',
+    '|---|---:|---|',
+    ...rows.map(item => {
+      const name = item.name || item.item_name || String(item);
+      return `| ${name} | ${item.amount || 1} | ${describeItemSources(name, sourceIndex)} |`;
+    }),
+  ];
+}
 
 function hasQuestionIntent(query, words) {
   return hasAny(normalizeText(query), words);
@@ -80,12 +98,15 @@ async function directRecipeAnswer(query) {
   const recipe = cookingScore > craftingScore ? cookingPick : craftingPick;
   const isCooking = cookingScore > craftingScore;
   if (!recipe) return null;
+  const sourceIndex = await buildItemSourceIndex();
+  const sourceTable = renderSourceTable(recipe.ingredients, sourceIndex);
   if (isCooking) {
     return [
       `## ${recipe.name}`,
       `- **Type:** Cooking`,
       `- **Utensil:** ${recipe.utensil || '-'}`,
       `- **Ingredients:** ${formatIngredients(recipe.ingredients)}`,
+      ...sourceTable,
       recipe.buff ? `- **Buff:** ${recipe.buff}${recipe.buff_duration_min ? ` for about ${recipe.buff_duration_min} minutes` : ''}` : '',
       `- **Restores:** HP +${recipe.health || 0}, Energy +${recipe.energy || 0}`,
     ].filter(Boolean).join('\n');
@@ -97,6 +118,7 @@ async function directRecipeAnswer(query) {
     `- **Output:** ${recipe.output_amount || 1}`,
     recipe.mastery_type ? `- **Unlock:** ${recipe.mastery_type} mastery level ${recipe.mastery_level || '-'}` : '',
     `- **Ingredients:** ${formatIngredients(recipe.ingredients)}`,
+    ...sourceTable,
   ].filter(Boolean).join('\n');
 }
 
@@ -202,6 +224,7 @@ async function directOfferingAnswer(query) {
     });
   }
   if (!filtered.length) filtered = rows.slice(0, 20);
+  const sourceIndex = await buildItemSourceIndex();
   const grouped = new Map();
   for (const row of filtered.slice(0, 30)) {
     const key = `${row.altar_name} - ${row.bundle_name}`;
@@ -211,10 +234,10 @@ async function directOfferingAnswer(query) {
   const lines = ['## Goddess Offering Requirements'];
   for (const [group, items] of grouped.entries()) {
     lines.push(`### ${group}`);
-    lines.push('| Item | Amount | Quality |');
-    lines.push('|---|---:|---|');
+    lines.push('| Item | Amount | Quality | Where to get it |');
+    lines.push('|---|---:|---|---|');
     for (const item of items) {
-      lines.push(`| ${item.item_name} | ${item.amount || 1} | ${item.quality || '-'} |`);
+      lines.push(`| ${item.item_name} | ${item.amount || 1} | ${item.quality || '-'} | ${describeItemSources(item.item_name, sourceIndex)} |`);
     }
   }
   return lines.join('\n');
@@ -225,6 +248,8 @@ async function directToolAnswer(query) {
   const { rows } = await pool.query('SELECT name, tool_type, tier, price, days_delay, requirements FROM tools ORDER BY tool_type, tier');
   const tool = pickBestRow(rows, query, ['name', 'tool_type', 'tier', 'requirements']);
   if (!tool) return null;
+  const sourceIndex = await buildItemSourceIndex();
+  const reqTable = renderSourceTable(tool.requirements, sourceIndex);
   return [
     `## ${tool.name}`,
     `- **Type:** ${tool.tool_type}`,
@@ -232,6 +257,7 @@ async function directToolAnswer(query) {
     `- **Cost:** ${tool.price || 0}g`,
     `- **Upgrade time:** ${tool.days_delay || 0} day(s)`,
     `- **Requirements:** ${formatIngredients(tool.requirements)}`,
+    ...reqTable.map(line => line.replace('Ingredient', 'Requirement')),
   ].join('\n');
 }
 

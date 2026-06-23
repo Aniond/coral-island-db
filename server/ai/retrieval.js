@@ -10,6 +10,12 @@ const {
   normalizeText,
   scoreLine,
 } = require('./text');
+const {
+  buildItemSourceIndex,
+  describeItemSources,
+  parseItemList,
+  renderItemSourceList,
+} = require('./crosslinks');
 
 let cachedAISections = null;
 let cachedAISectionsTime = 0;
@@ -149,11 +155,6 @@ function renderSection(section, terms, forceFull) {
   return '';
 }
 
-function parseIngredients(v) {
-  if (Array.isArray(v)) return v;
-  try { return JSON.parse(v) || []; } catch { return []; }
-}
-
 async function buildContextSections() {
   if (cachedAISections && (Date.now() - cachedAISectionsTime < AI_CONTEXT_TTL_MS)) {
     return cachedAISections;
@@ -180,6 +181,7 @@ async function buildContextSections() {
     q('SELECT name, sell_price, description FROM artisan_products ORDER BY name'),
     q('SELECT name, tool_type, tier, price, days_delay, requirements FROM tools ORDER BY tool_type, tier'),
   ]);
+  const sourceIndex = await buildItemSourceIndex();
 
   const cropLines = crops.rows.map(c =>
     `- ${c.name} (${c.type}, ${c.season}, rank ${c.town_rank}): ` +
@@ -208,17 +210,20 @@ async function buildContextSections() {
   });
 
   const craftingLines = crafting.rows.map(r => {
-    const ingredients = parseIngredients(r.ingredients);
+    const ingredients = parseItemList(r.ingredients);
     const ingStr = ingredients.map(i => `${i.amount}x ${i.name}`).join(', ') || 'unknown';
+    const sourceStr = renderItemSourceList(ingredients, sourceIndex);
     let line = `- ${r.name}${r.output_amount > 1 ? ` (makes ${r.output_amount})` : ''} [${r.category}]`;
     if (r.mastery_type) line += ` - unlocks at ${r.mastery_type} mastery lvl ${r.mastery_level}`;
     line += `. Ingredients: ${ingStr}`;
+    if (sourceStr) line += `. Ingredient sources: ${sourceStr}`;
     return line;
   });
 
   const cookingLines = cooking.rows.map(r => {
-    const ingredients = parseIngredients(r.ingredients);
+    const ingredients = parseItemList(r.ingredients);
     const ingStr = ingredients.map(i => `${i.amount}x ${i.name}`).join(', ') || 'unknown';
+    const sourceStr = renderItemSourceList(ingredients, sourceIndex);
     let line = `- ${r.name} [cooked in ${r.utensil}]`;
     if (r.buff) line += ` - buff: ${r.buff}${r.buff_duration_min ? ` (~${r.buff_duration_min}m)` : ''}`;
     const restore = [];
@@ -226,6 +231,7 @@ async function buildContextSections() {
     if (r.energy) restore.push(`Energy +${r.energy}`);
     if (restore.length) line += `; restores ${restore.join(', ')}`;
     line += `. Ingredients: ${ingStr}`;
+    if (sourceStr) line += `. Ingredient sources: ${sourceStr}`;
     return line;
   });
 
@@ -241,7 +247,7 @@ async function buildContextSections() {
   });
 
   const offeringLines = offerings.rows.map(o =>
-    `- [${o.altar_name}] ${o.bundle_name}: requires ${o.amount}x ${o.quality} ${o.item_name}`
+    `- [${o.altar_name}] ${o.bundle_name}: requires ${o.amount}x ${o.quality} ${o.item_name}. Source: ${describeItemSources(o.item_name, sourceIndex)}`
   );
 
   const animalLines = animals.rows.map(a =>
@@ -256,7 +262,8 @@ async function buildContextSections() {
     let reqs = [];
     try { reqs = JSON.parse(t.requirements); } catch {}
     const reqStr = reqs.map(r => `${r.amount}x ${r.name}`).join(', ');
-    return `- ${t.name} (${t.tool_type}, ${t.tier}): Costs ${t.price}g and takes ${t.days_delay} days. Requires: ${reqStr}`;
+    const sourceStr = renderItemSourceList(reqs, sourceIndex);
+    return `- ${t.name} (${t.tool_type}, ${t.tier}): Costs ${t.price}g and takes ${t.days_delay} days. Requires: ${reqStr}${sourceStr ? `. Requirement sources: ${sourceStr}` : ''}`;
   });
 
   const sections = [

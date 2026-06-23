@@ -7,7 +7,8 @@
     "dev": "nodemon index.js",
     "seed": "node seed.js",
     "smoke": "node scripts/smoke.js",
-    "eval:ai": "node scripts/eval-ai.js"
+    "eval:ai": "node scripts/eval-ai.js",
+    "audit:crosslinks": "node scripts/audit-crosslinks.js"
   },
   "dependencies": {
     "@google/genai": "^2.8.0",

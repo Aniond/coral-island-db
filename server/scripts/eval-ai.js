@@ -20,19 +20,19 @@ const CASES = [
     name: 'Recipe direct answer',
     query: 'How do I craft a sprinkler?',
     expectedDirect: true,
-    answerIncludes: ['Ingredients'],
+    answerIncludes: ['Ingredients', 'Where to get it'],
   },
   {
     name: 'Offering direct answer',
     query: 'What do I need for the rare crop offering?',
     expectedDirect: true,
-    answerIncludes: ['Goddess Offering Requirements', 'Rare'],
+    answerIncludes: ['Goddess Offering Requirements', 'Rare', 'Where to get it'],
   },
   {
     name: 'Tool upgrade direct answer',
     query: 'How much does the silver pickaxe upgrade cost?',
     expectedDirect: true,
-    answerIncludes: ['Cost', 'Requirements'],
+    answerIncludes: ['Cost', 'Requirements', 'Where to get it'],
   },
   {
     name: 'Collectibles list direct answer',
@@ -50,7 +50,13 @@ const CASES = [
     name: 'Offering planning context retrieval',
     query: 'What should I do today for the rare crop offering?',
     expectedDirect: false,
-    contextIncludes: ['GODDESS OFFERINGS'],
+    contextIncludes: ['GODDESS OFFERINGS', 'Source:'],
+  },
+  {
+    name: 'Crafting context includes ingredient sources',
+    query: 'What should I gather to craft sprinkler I?',
+    expectedDirect: false,
+    contextIncludes: ['CRAFTING RECIPES', 'Ingredient sources:'],
   },
 ];
 
