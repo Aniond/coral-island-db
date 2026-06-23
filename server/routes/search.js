@@ -51,6 +51,8 @@ const SYSTEM_PROMPT =
   'When the user asks which food boosts a skill or stat (e.g. "what food increases Fishing"), list every matching dish ' +
   'in a markdown table: Dish | Buff | Utensil | Key ingredients. Note that proficiency buffs map to skills ' +
   '(Fishing, Mining, Farming, Foraging, Diving, Ranching, Catching). Sort strongest buff first.\n' +
+  'TOWN RANKS:\n' +
+  'Valid Town Ranks in Coral Island are F, E, D, C, B, A, and S. If the user provides an invalid rank (like a number), politely correct them and assume they meant Rank F unless context suggests otherwise.\n' +
   'FARM LAYOUTS:\n' +
   'When the user asks for a farm layout, crop grid, or spatial design (e.g., "Build me an 11x11 grid"), you MUST output the layout ' +
   'in a special markdown code block exactly like this:\n' +
@@ -68,7 +70,53 @@ const SYSTEM_PROMPT =
   '```\n' +
   'Use valid item IDs for equipment/paths: "dirt", "sprinkler_1", "sprinkler_2", "sprinkler_3", "scarecrow_1", "scarecrow_2", "path_stone".\n' +
   'For crops, you can use ANY crop name formatted as `crop_name` (e.g. "crop_blueberry", "crop_radish", "crop_melon").\n' +
-  'NEVER draw ASCII or text-based grids (like C C P C). Only use the JSON block. You can add normal text to explain your layout before or after the JSON block.';
+  'NEVER draw ASCII or text-based grids (like C C P C). Only use the JSON block. You can add normal text to explain your layout before or after the JSON block.\n' +
+  'GIFT COACH:\n' +
+  'If the user asks who to gift or talk to (e.g., "I have 500g and it is Night, who should I gift?"), act as a Gift Coach. Cross-reference the [CURRENT GAME STATE] time/season with NPC schedules in the database to determine who is currently available, and suggest their easiest loved/liked gifts.\n' +
+  'DAILY PLANNER / GAME SYNCING:\n' +
+  'If the user asks "What should I do today?" or similar, act as a Daily Planner. Look at the [CURRENT GAME STATE]. Suggest 3-5 highly specific activities for that exact day/season (e.g., crops that need planting before season ends, birthdays today, limited-time bugs/fish to catch, or bundles to finish).\n' +
+  'PROFIT CALCULATORS:\n' +
+  'If the user asks to calculate crop profits, ROI, or math for a specific crop/setup, you MUST output the math in a special markdown code block exactly like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "profit_calculator",\n' +
+  '  "crop": "Radish",\n' +
+  '  "seedCost": 60,\n' +
+  '  "sellPriceBase": 90,\n' +
+  '  "growDays": 6,\n' +
+  '  "amount": 10,\n' +
+  '  "totalCost": 600,\n' +
+  '  "totalRevenue": 900,\n' +
+  '  "netProfit": 300\n' +
+  '}\n' +
+  '```\n' +
+  'You can add normal text before or after this JSON block to explain your math. If the user asks to factor in fertilizer, assume Fertilizer I costs 20g, Fertilizer II costs 40g, and Fertilizer III costs 60g, and add this to the seedCost/totalCost calculation.\n' +
+  'BUNDLE WIZARD:\n' +
+  'If the user asks for their progress on an Altar or Bundle (e.g., "What do I need for the Rare Altar?"), you MUST output a JSON block like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "bundle_wizard",\n' +
+  '  "altar": "Advanced Altar",\n' +
+  '  "bundle": "Rare Crop",\n' +
+  '  "items": [\n' +
+  '    {"name": "Osmium Cotton", "season": "Winter", "location": "Farm", "completed": false}\n' +
+  '  ]\n' +
+  '}\n' +
+  '```\n' +
+  'Cross-reference the items in the bundle with the [COMPLETED OFFERINGS] list to set "completed": true or false.\n' +
+  'COLLECTIONS VISUALIZER:\n' +
+  'If the user asks what bugs, fish, or ocean critters they are missing for the museum (e.g., "What bugs am I missing in Summer?"), you MUST output a JSON block like this:\n' +
+  '```json\n' +
+  '{\n' +
+  '  "type": "collections_visualizer",\n' +
+  '  "category": "Bug",\n' +
+  '  "season": "Summer",\n' +
+  '  "items": [\n' +
+  '    {"name": "Atlas Moth", "completed": false}\n' +
+  '  ]\n' +
+  '}\n' +
+  '```\n' +
+  'Filter the items by the user\'s criteria. Cross-reference with [COMPLETED OFFERINGS] to set "completed": true or false. Include ONLY items that are relevant (e.g. only bugs found in Summer).';
 
 // Pull the whole database and render it as compact text for the model.
 // Each table is fetched independently: a missing or failing table (e.g. a newly
@@ -280,7 +328,7 @@ router.get('/history', requireAuth, async (req, res) => {
 // POST /api/search  { query, gameState }
 // Streams the AI answer back as plain text. Requires a valid auth token.
 router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
-  const { query, gameState, activeTab } = req.body;
+  const { query, image, gameState, activeTab } = req.body;
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
   }
@@ -292,7 +340,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
   const user = req.user;
   const userId = user.id;
 
-  // Abort the Anthropic stream if the caller disconnects mid-answer so we stop
+  // Abort the Gemini stream if the caller disconnects mid-answer so we stop
   // paying for tokens nobody will read. ServerResponse 'close' also fires after
   // a normal finish, hence the writableFinished guard.
   const abort = new AbortController();
@@ -302,7 +350,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 
   try {
     // ── Testing limits ────────────────────────────────────────────────────────
-    // A master toggle + two caps guard against unexpectedly burning Anthropic
+    // A master toggle + two caps guard against unexpectedly burning Gemini
     // credits: a GLOBAL daily cap (total across everyone) and a per-user daily
     // cap (explicit limit, else the configured default). All editable from the
     // admin dashboard; the whole block is skipped when limits are toggled off.
@@ -349,13 +397,59 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
 
     let dynamicPrompt = SYSTEM_PROMPT;
     dynamicPrompt += `\n\nCRITICAL TOOL INSTRUCTIONS:
+- IMAGE PROCESSING: If the user uploads an image/screenshot, use your vision capabilities to identify the game items shown. If the user asks you to process them or mark them, automatically use the 'mark_offering_complete' tool for every single identified item.
 - If the user asks to set a reminder, add a task, or do something related to a checklist, YOU MUST use the 'add_custom_task' tool.
 - If the user asks to mark an offering as complete or donated, YOU MUST use the 'mark_offering_complete' tool.
 - Tool execution is independent of the game database context. NEVER decline a task simply because it is not found in the context.`;
 
+    const historyParams = (req.body.history || []).map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }]
+    }));
+    
+    let stateString = '';
+    if (gameState) {
+      stateString = `\n[CURRENT GAME STATE: ${gameState.season} Day ${gameState.day || 1}, Time: ${gameState.time}, Weather: ${gameState.weather}, Town Rank: ${gameState.rank || 'F'}]\n`;
+    }
+
+    let donatedString = '';
+    if (userId) {
+      try {
+        const { rows } = await pool.query('SELECT items FROM user_offerings WHERE user_id = $1', [userId]);
+        let items = rows.length > 0 ? rows[0].items : [];
+        if (typeof items === 'string') {
+          try { items = JSON.parse(items); } catch(e) { items = []; }
+        }
+        if (Array.isArray(items) && items.length > 0) {
+          donatedString = `\n[COMPLETED OFFERINGS: ${items.join(', ')}]\n`;
+        }
+      } catch(e) {}
+    }
+
+    const userParts = [{ text: `User Request: ${query.trim()}${stateString}${donatedString}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}` }];
+    
+    if (image) {
+      try {
+        const matches = image.match(/^data:(image\/[a-zA-Z0-9+]+);base64,(.*)$/);
+        if (matches && matches.length === 3) {
+          userParts.unshift({
+            inlineData: {
+              mimeType: matches[1],
+              data: matches[2]
+            }
+          });
+        }
+      } catch(e) {
+        console.error('Failed to parse image data', e);
+      }
+    }
+
     const stream = await ai.models.generateContentStream({
       model: MODEL,
-      contents: `User Request: ${query.trim()}\n\n---\nGame Database Context (use only if relevant to the request):\n${context}`,
+      contents: [
+        ...historyParams,
+        { role: 'user', parts: userParts }
+      ],
       config: {
         systemInstruction: dynamicPrompt,
         tools: [

@@ -1,6 +1,6 @@
 // ── AI Search — Floating chat panel ──────────────────────────────────────────
 // (a.k.a. the "AI Guide" — talks only to our Express backend at POST /api/search;
-//  the Anthropic call is server-side, never in the browser.)
+//  the Gemini call is server-side, never in the browser.)
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -12,6 +12,9 @@ import { useAuth } from '../contexts/AuthContext.jsx';
 import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
 import FarmPlanner from '../components/FarmPlanner.jsx';
+import ProfitCalculator from '../components/ProfitCalculator.jsx';
+import BundleWizard from '../components/BundleWizard.jsx';
+import CollectionsVisualizer from '../components/CollectionsVisualizer.jsx';
 
 const isEmpty = (children) => !children || (typeof children === 'string' && !children.trim());
 
@@ -41,6 +44,15 @@ function makeMdComponents(large = false) {
           const data = JSON.parse(text);
           if (data.type === 'farm_layout') {
             return <FarmPlanner layoutData={data} />;
+          }
+          if (data.type === 'profit_calculator') {
+            return <ProfitCalculator data={data} />;
+          }
+          if (data.type === 'bundle_wizard') {
+            return <BundleWizard data={data} />;
+          }
+          if (data.type === 'collections_visualizer') {
+            return <CollectionsVisualizer data={data} />;
           }
         } catch (e) {}
       }
@@ -251,8 +263,13 @@ export default function HomePage() {
   const [typing,   setTyping]   = React.useState(false);
   const scrollRef = React.useRef(null);
   const [season,   setSeason]   = React.useState('Spring');
+  const [day,      setDay]      = React.useState('1');
   const [time,     setTime]     = React.useState('Morning');
   const [weather,  setWeather]  = React.useState('Sunny');
+  const [rank,     setRank]     = React.useState('F');
+
+  const [selectedImage, setSelectedImage] = React.useState(null);
+  const fileInputRef = React.useRef(null);
 
   const [historyLoaded, setHistoryLoaded] = React.useState(false);
 
@@ -293,6 +310,8 @@ export default function HomePage() {
     const aiId = userId + 1;
     setMessages(prev => [...prev, { role: 'user', content: t, id: userId, query: t }]);
     setInput('');
+    const currentImage = selectedImage;
+    setSelectedImage(null);
     setTyping(true);
 
     // The assistant bubble is created inside the state updater on first chunk,
@@ -306,8 +325,9 @@ export default function HomePage() {
 
     let started = false;
     try {
-      const gameState = { season, time, weather };
-      await streamSearch(t, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
+      const history = messages.map(m => ({ role: m.role, content: m.content }));
+      const gameState = { season, day, time, weather, rank };
+      await streamSearch(t, currentImage, history, gameState, (chunk) => { started = true; appendChunk(chunk); }, session?.access_token);
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
@@ -316,6 +336,99 @@ export default function HomePage() {
       appendChunk(`${started ? '\n\n' : ''}⚠️ ${err.message}`);
     }
   }
+
+  const renderInput = (isInline = false) => (
+    <div style={{
+      borderRadius: isInline ? 12 : 0,
+      border: isInline ? `1px solid ${THEME.cardBorder}` : 'none',
+      borderTop: isInline ? `1px solid ${THEME.cardBorder}` : `1px solid ${THEME.primaryLight}`,
+      overflow: 'hidden',
+      background: '#fafaf9',
+      flexShrink: 0,
+      boxShadow: isInline ? '0 4px 12px rgba(0,0,0,0.05)' : 'none'
+    }}>
+      {/* Image Preview */}
+      {selectedImage && (
+        <div style={{
+          padding: '8px 12px', borderBottom: `1px solid ${THEME.primaryLight}`,
+          display: 'flex', alignItems: 'center', gap: 12
+        }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 4, background: '#e2e8f0',
+            backgroundImage: `url(${selectedImage})`, backgroundSize: 'cover', backgroundPosition: 'center',
+            border: `1px solid ${THEME.primaryLight}`
+          }} />
+          <div style={{ flex: 1, fontSize: 11, color: THEME.textMuted }}>Image attached</div>
+          <button onClick={() => setSelectedImage(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
+            <Icon name="x" size={14} color={THEME.textMuted} />
+          </button>
+        </div>
+      )}
+      
+      {/* Input */}
+      <div style={{
+        padding: '10px 12px',
+        display: 'flex', gap: 8, alignItems: 'center',
+      }}>
+        <input 
+          type="file" 
+          accept="image/*" 
+          ref={fileInputRef} 
+          style={{ display: 'none' }}
+          onChange={e => {
+            const file = e.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => setSelectedImage(reader.result);
+              reader.readAsDataURL(file);
+            }
+            e.target.value = null;
+          }}
+        />
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          title="Attach a screenshot"
+          style={{
+            width: 36, height: 36, borderRadius: 8, flexShrink: 0,
+            background: selectedImage ? THEME.primaryLight : 'white',
+            border: `1.5px solid ${selectedImage ? THEME.primary : THEME.cardBorder}`,
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'all 0.15s', color: selectedImage ? THEME.primaryDark : THEME.textMuted
+          }}
+        >
+          <Icon name="camera" size={18} />
+        </button>
+
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
+          placeholder="Ask about crops, mines, NPCs…"
+          style={{
+            flex: 1, padding: '8px 12px',
+            border: `1.5px solid ${THEME.cardBorder}`,
+            borderRadius: 8, fontSize: 13, outline: 'none',
+            fontFamily: "'Inter', sans-serif", color: THEME.textDark,
+            background: 'white',
+          }}
+          onFocus={e => (e.target.style.borderColor = THEME.primary)}
+          onBlur={e => (e.target.style.borderColor = THEME.cardBorder)}
+        />
+        <button
+          onClick={() => send(input)}
+          style={{
+            width: 36, height: 36, borderRadius: 8, flexShrink: 0,
+            background: input.trim() ? THEME.primary : '#e2e8f0',
+            border: 'none', cursor: input.trim() ? 'pointer' : 'default',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 0.15s',
+          }}
+        >
+          <Icon name="send" size={15} color="white" />
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{
@@ -374,6 +487,11 @@ export default function HomePage() {
               <option value="Fall">Fall</option>
               <option value="Winter">Winter</option>
             </select>
+            <select value={day} onChange={e => setDay(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif", marginLeft: 4 }}>
+              {Array.from({ length: 28 }, (_, i) => i + 1).map(d => (
+                <option key={d} value={d}>Day {d}</option>
+              ))}
+            </select>
           </div>
           <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
             <Icon name="clock" size={13} color="rgba(255,255,255,0.8)" />
@@ -394,6 +512,18 @@ export default function HomePage() {
               <option value="Windy">Windy</option>
             </select>
           </div>
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <Icon name="map" size={13} color="rgba(255,255,255,0.8)" />
+            <select value={rank} onChange={e => setRank(e.target.value)} style={{ background: 'rgba(0,0,0,0.15)', color: 'white', border: 'none', borderRadius: 4, padding: '3px 6px', fontSize: 11, outline: 'none', cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+              <option value="F">Rank F</option>
+              <option value="E">Rank E</option>
+              <option value="D">Rank D</option>
+              <option value="C">Rank C</option>
+              <option value="B">Rank B</option>
+              <option value="A">Rank A</option>
+              <option value="S">Rank S</option>
+            </select>
+          </div>
         </div>
 
         {/* Messages */}
@@ -410,6 +540,11 @@ export default function HomePage() {
                   Ask about crops, mining, NPCs, or island life.
                 </div>
               </div>
+              
+              <div style={{ marginBottom: 24 }}>
+                {renderInput(true)}
+              </div>
+
               <div style={{
                 fontSize: 10.5, fontWeight: 700, color: THEME.textMid,
                 textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 8,
@@ -445,41 +580,8 @@ export default function HomePage() {
           )}
         </div>
 
-        {/* Input */}
-        <div style={{
-          padding: '10px 12px',
-          borderTop: `1px solid ${THEME.primaryLight}`,
-          display: 'flex', gap: 8, alignItems: 'center',
-          background: '#fafaf9', flexShrink: 0,
-        }}>
-          <input
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send(input)}
-            placeholder="Ask about crops, mines, NPCs…"
-            style={{
-              flex: 1, padding: '8px 12px',
-              border: `1.5px solid ${THEME.cardBorder}`,
-              borderRadius: 8, fontSize: 13, outline: 'none',
-              fontFamily: "'Inter', sans-serif", color: THEME.textDark,
-              background: 'white',
-            }}
-            onFocus={e => (e.target.style.borderColor = THEME.primary)}
-            onBlur={e => (e.target.style.borderColor = THEME.cardBorder)}
-          />
-          <button
-            onClick={() => send(input)}
-            style={{
-              width: 36, height: 36, borderRadius: 8, flexShrink: 0,
-              background: input.trim() ? THEME.primary : '#e2e8f0',
-              border: 'none', cursor: input.trim() ? 'pointer' : 'default',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'background 0.15s',
-            }}
-          >
-            <Icon name="send" size={15} color="white" />
-          </button>
-        </div>
+        {/* Bottom Input (only if messages exist) */}
+        {(messages.length > 0 || typing) && renderInput(false)}
     </div>
   );
 }

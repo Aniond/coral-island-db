@@ -46,7 +46,7 @@ npm run seed         # creates tables + inserts all data
    `cd server && npm run seed` (use `$env:NODE_ENV="production"` on Windows if
    the public URL requires SSL).
 4. *(Phase 2)* Deploy the Express API as a service with **Root Directory = `server`**,
-   start command `node index.js`, and `DATABASE_URL` + `ANTHROPIC_API_KEY` set as variables.
+   start command `node index.js`, and `DATABASE_URL` + `GEMINI_API_KEY` set as variables.
 
 ### Vercel — frontend
 1. Import this GitHub repo.
