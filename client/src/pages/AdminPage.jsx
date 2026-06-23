@@ -764,11 +764,176 @@ function AiMetricsTab({ token }) {
   );
 }
 
+function PromptAnalyticsTab({ token }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState('');
+
+  const load = useCallback(async () => {
+    setLoading(true); setErr('');
+    try {
+      const r = await authFetch('/api/admin/prompt-analytics', token);
+      if (!r.ok) {
+        let m = `Failed (${r.status})`;
+        try { m = (await r.json()).error || m; } catch { m = await r.text(); }
+        throw new Error(m);
+      }
+      setData(await r.json());
+    } catch (e) { setErr(e.message); }
+    finally { setLoading(false); }
+  }, [token]);
+
+  useEffect(() => { load(); }, [load]);
+
+  if (err) return <div style={{ color: '#dc2626', padding: 20 }}>Error: {err}</div>;
+  if (loading) {
+    return (
+      <div style={{ padding: 48, maxWidth: 860, margin: '0 auto', width: '100%' }}>
+        <SkeletonLoader count={5} height={54} />
+      </div>
+    );
+  }
+
+  const feedbackTotal = (data?.feedbackSummary || []).reduce((sum, row) => sum + (row.count || 0), 0);
+  const sourceTotal = (data?.sourceMix30d || []).reduce((sum, row) => sum + (row.count || 0), 0);
+
+  return (
+    <div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 18 }}>
+        <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+          <div style={{ padding: '14px 20px', borderBottom: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#374151' }}>Top repeated prompts</span>
+            <button onClick={load} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', display: 'flex' }}>
+              <Ico n="refresh" s={15} />
+            </button>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ background: '#f9fafb' }}>
+                  {['Prompt', 'Count', 'AI', 'Direct', 'Cache'].map(h => (
+                    <th key={h} style={{ padding: '10px 13px', textAlign: 'left', fontSize: 11.5, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(data?.topQuestions || []).map((row, i) => (
+                  <tr key={`${row.query}-${i}`} style={{ borderTop: i > 0 ? '1px solid #f3f4f6' : 'none' }}>
+                    <td style={{ padding: '11px 13px', color: C.dark, fontSize: 13, maxWidth: 360 }}>{row.query}</td>
+                    <td style={{ padding: '11px 13px', color: C.dark, fontWeight: 700 }}>{row.count}</td>
+                    <td style={{ padding: '11px 13px', color: '#6b7280' }}>{row.ai_count}</td>
+                    <td style={{ padding: '11px 13px', color: C.primary }}>{row.direct_count}</td>
+                    <td style={{ padding: '11px 13px', color: '#15803d' }}>{row.cache_count}</td>
+                  </tr>
+                ))}
+                {(data?.topQuestions || []).length === 0 && (
+                  <tr><td colSpan={5} style={{ padding: 30, textAlign: 'center', color: '#9ca3af' }}>No prompt traffic yet</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gap: 18 }}>
+          <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '18px 20px' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>30-day Source Mix</div>
+            <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
+              {(data?.sourceMix30d || []).map(row => (
+                <div key={row.source} style={{ display: 'grid', gridTemplateColumns: '72px 1fr auto', gap: 10, alignItems: 'center' }}>
+                  <SourceBadge source={row.source} />
+                  <div style={{ height: 8, background: '#f1f5f9', borderRadius: 999, overflow: 'hidden' }}>
+                    <div style={{ width: `${Math.round((row.count / Math.max(1, sourceTotal)) * 100)}%`, height: '100%', background: row.source === 'direct' ? THEME.accent : row.source === 'cache' ? '#15803d' : C.primary }} />
+                  </div>
+                  <span style={{ fontSize: 12.5, fontWeight: 700, color: C.dark }}>{row.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', padding: '18px 20px' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: C.dark }}>Feedback Summary</div>
+            <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {(data?.feedbackSummary || []).map(row => (
+                <span key={row.rating} style={{ padding: '5px 10px', borderRadius: 999, border: '1px solid #e5e7eb', fontSize: 12.5, color: C.dark, background: row.rating === 'up' ? THEME.primaryXLight : '#f9fafb' }}>
+                  {row.rating}: <b>{row.count}</b>
+                </span>
+              ))}
+              {feedbackTotal === 0 && <span style={{ color: '#9ca3af', fontSize: 13 }}>No feedback yet</span>}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 18, background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #f3f4f6', fontSize: 13, fontWeight: 700, color: '#374151' }}>
+          Recent answer feedback
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: '#f9fafb' }}>
+                {['Rating', 'Prompt', 'Source', 'When'].map(h => (
+                  <th key={h} style={{ padding: '10px 13px', textAlign: 'left', fontSize: 11.5, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(data?.recentFeedback || []).map((row, i) => (
+                <tr key={row.id} style={{ borderTop: i > 0 ? '1px solid #f3f4f6' : 'none' }}>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, fontWeight: 700, color: row.rating === 'up' ? C.primary : '#dc2626' }}>{row.rating}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 13, color: C.dark, maxWidth: 520 }}>{row.query || '-'}</td>
+                  <td style={{ padding: '11px 13px' }}><SourceBadge source={row.source} /></td>
+                  <td style={{ padding: '11px 13px', fontSize: 12, color: '#9ca3af', whiteSpace: 'nowrap' }}>{row.created_at ? new Date(row.created_at).toLocaleString() : '—'}</td>
+                </tr>
+              ))}
+              {(data?.recentFeedback || []).length === 0 && (
+                <tr><td colSpan={4} style={{ padding: 30, textAlign: 'center', color: '#9ca3af' }}>No feedback yet</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 18, background: 'white', borderRadius: 14, border: '1px solid #e5e7eb', overflow: 'hidden' }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #f3f4f6', fontSize: 13, fontWeight: 700, color: '#374151' }}>
+          Highest-cost prompts
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ background: '#f9fafb' }}>
+                {['Prompt', 'Source', 'Status', 'Context', 'Duration'].map(h => (
+                  <th key={h} style={{ padding: '10px 13px', textAlign: 'left', fontSize: 11.5, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(data?.costlyPrompts || []).map((row, i) => (
+                <tr key={`${row.id}-${i}`} style={{ borderTop: i > 0 ? '1px solid #f3f4f6' : 'none' }}>
+                  <td style={{ padding: '11px 13px', fontSize: 13, color: C.dark, maxWidth: 520 }}>{row.query || '-'}</td>
+                  <td style={{ padding: '11px 13px' }}><SourceBadge source={row.source} /></td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{row.status}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatNumber(row.context_chars)}</td>
+                  <td style={{ padding: '11px 13px', fontSize: 12.5, color: '#6b7280' }}>{formatMs(row.duration_ms)}</td>
+                </tr>
+              ))}
+              {(data?.costlyPrompts || []).length === 0 && (
+                <tr><td colSpan={5} style={{ padding: 30, textAlign: 'center', color: '#9ca3af' }}>No cost data yet</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const TABS = [
   { id: 'stats', label: 'Stats',        icon: 'chart'  },
   { id: 'users', label: 'Users',        icon: 'users'  },
   { id: 'logs',  label: 'Search Logs',  icon: 'search' },
   { id: 'metrics', label: 'AI Metrics', icon: 'chart'  },
+  { id: 'analytics', label: 'Prompt Analytics', icon: 'search' },
 ];
 
 export default function AdminPage() {
@@ -823,7 +988,7 @@ export default function AdminPage() {
         </div>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: 'white', padding: 4, borderRadius: 10, width: 'fit-content', border: '1px solid #e5e7eb' }}>
+        <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: 'white', padding: 4, borderRadius: 10, width: 'fit-content', maxWidth: '100%', border: '1px solid #e5e7eb', flexWrap: 'wrap' }}>
           {TABS.map(t => (
             <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
               display: 'flex', alignItems: 'center', gap: 7,
@@ -845,6 +1010,7 @@ export default function AdminPage() {
         {activeTab === 'users' && <UsersTab token={token} currentUserId={user?.id} />}
         {activeTab === 'logs'  && <LogsTab  token={token} />}
         {activeTab === 'metrics' && <AiMetricsTab token={token} />}
+        {activeTab === 'analytics' && <PromptAnalyticsTab token={token} />}
       </div>
     </div>
   );

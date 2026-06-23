@@ -227,6 +227,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
     const logId = await logSearch(user, trimmedQuery, directAnswer, 'direct');
+    if (logId) res.setHeader('X-Search-Log-Id', String(logId));
     await logRequestMetric({
       searchLogId: logId,
       userId,
@@ -247,6 +248,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache');
     const logId = await logSearch(user, trimmedQuery, cachedAnswer, 'cache');
+    if (logId) res.setHeader('X-Search-Log-Id', String(logId));
     await logRequestMetric({
       searchLogId: logId,
       userId,
@@ -324,6 +326,7 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
 
     const logId = await logSearch(user, trimmedQuery, null, 'ai');
+    if (logId) res.setHeader('X-Search-Log-Id', String(logId));
     const { fullResponse, usedToolCall } = await streamGeminiAnswer({
       systemPrompt: SYSTEM_PROMPT,
       query: trimmedQuery,
@@ -404,6 +407,43 @@ router.post('/', searchRateLimiter, requireAuth, async (req, res) => {
       durationMs: Date.now() - startedAt,
       error: err.message || 'Unknown error',
     });
+  }
+});
+
+// POST /api/search/feedback
+// Stores lightweight answer-quality feedback for the Admin analytics loop.
+router.post('/feedback', requireAuth, async (req, res) => {
+  const user = req.user;
+  const { searchLogId, rating, note } = req.body || {};
+  if (!searchLogId) return res.status(400).json({ error: 'searchLogId is required' });
+  if (!['up', 'down', 'wrong', 'missing'].includes(rating)) {
+    return res.status(400).json({ error: 'rating must be up, down, wrong, or missing' });
+  }
+
+  try {
+    const { rows } = await pool.query(
+      `SELECT id FROM search_logs
+       WHERE id = $1 AND (user_id = $2 OR user_id IS NULL)
+       LIMIT 1`,
+      [searchLogId, user.id],
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Search result not found' });
+
+    const saved = await pool.query(
+      `INSERT INTO ai_answer_feedback (search_log_id, user_id, rating, note)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (search_log_id, user_id)
+       DO UPDATE SET rating = EXCLUDED.rating, note = EXCLUDED.note, created_at = NOW()
+       RETURNING id, search_log_id, rating, note, created_at`,
+      [searchLogId, user.id, rating, note ? String(note).slice(0, 500) : null],
+    );
+    res.json(saved.rows[0]);
+  } catch (err) {
+    console.error('POST /api/search/feedback failed:', err.message);
+    if (err.code === '42P01') {
+      return res.status(503).json({ error: 'Feedback table not found - run node migrate.js first.' });
+    }
+    res.status(500).json({ error: 'Failed to save feedback' });
   }
 });
 

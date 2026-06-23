@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import Icon from '../components/Icon.jsx';
 import { THEME } from '../lib/theme.js';
 import { SUGGESTED_QS } from '../ai/responses.js';
-import { streamSearch, savePlan, fetchSearchHistory } from '../data/api.js';
+import { streamSearch, savePlan, fetchSearchHistory, submitSearchFeedback } from '../data/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useToast } from '../contexts/ToastContext.jsx';
 import { useIsMobile } from '../lib/useIsMobile.js';
@@ -142,12 +142,14 @@ function ExpandModal({ content, query, onClose }) {
   );
 }
 
-function ChatBubble({ msg, query, isTyping }) {
+function ChatBubble({ msg, query, isTyping, onFeedback }) {
   const { session } = useAuth();
   const toast = useToast();
   const [expanded, setExpanded] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
+  const [feedback, setFeedback] = React.useState(msg.feedback || '');
+  const [feedbackBusy, setFeedbackBusy] = React.useState(false);
   const isUser = msg.role === 'user';
 
   async function handleSave() {
@@ -164,6 +166,36 @@ function ChatBubble({ msg, query, isTyping }) {
       setSaving(false);
     }
   }
+  async function handleFeedback(rating) {
+    if (!msg.searchLogId || feedbackBusy) return;
+    setFeedbackBusy(true);
+    try {
+      await onFeedback(msg.id, msg.searchLogId, rating);
+      setFeedback(rating);
+      if (toast) toast.success('Feedback saved. Thank you!');
+    } catch (err) {
+      console.error('Feedback failed:', err);
+      if (toast) toast.error('Failed to save feedback.');
+    } finally {
+      setFeedbackBusy(false);
+    }
+  }
+
+  const feedbackButton = (rating, label, icon = 'check') => (
+    <button onClick={() => handleFeedback(rating)} disabled={feedbackBusy || feedback === rating} style={{
+      display: 'flex', alignItems: 'center', gap: 4,
+      background: feedback === rating ? THEME.primaryXLight : 'none',
+      border: `1px solid ${THEME.primaryLight}`,
+      borderRadius: 6, padding: '3px 8px',
+      cursor: feedbackBusy || feedback === rating ? 'default' : 'pointer',
+      color: feedback === rating ? THEME.primary : THEME.textMuted,
+      fontSize: 11, fontWeight: 500, fontFamily: "'Inter', sans-serif",
+      opacity: feedbackBusy ? 0.6 : 1,
+    }}>
+      <Icon name={icon} size={11} color={feedback === rating ? THEME.primary : THEME.textMuted} /> {label}
+    </button>
+  );
+
   return (
     <>
       {expanded && <ExpandModal content={msg.content} query={query} onClose={() => setExpanded(false)} />}
@@ -228,6 +260,13 @@ function ChatBubble({ msg, query, isTyping }) {
                 onMouseLeave={e => { if (!saved && !saving) e.currentTarget.style.background = 'none'; }}>
                   <Icon name={saved ? 'check' : 'bookmark'} size={12} color={THEME.primary} /> {saved ? 'Saved' : saving ? 'Saving...' : 'Save Plan'}
                 </button>
+              )}
+              {!isTyping && msg.searchLogId && (
+                <>
+                  {feedbackButton('up', 'Helpful', 'check')}
+                  {feedbackButton('wrong', 'Wrong', 'x')}
+                  {feedbackButton('missing', 'Missing', 'search')}
+                </>
               )}
             </div>
           )}
@@ -297,7 +336,7 @@ export default function HomePage({ initialQuery }) {
           const loadedMessages = [];
           for (const row of history) {
             loadedMessages.push({ role: 'user', content: row.query, id: row.id, query: row.query });
-            loadedMessages.push({ role: 'assistant', content: row.response, id: row.id + '_ai', query: row.query });
+            loadedMessages.push({ role: 'assistant', content: row.response, id: row.id + '_ai', query: row.query, searchLogId: row.id });
           }
           setMessages(loadedMessages);
         }
@@ -348,7 +387,7 @@ export default function HomePage({ initialQuery }) {
     try {
       const history = compactHistory(messages);
       const gameState = { season, day, time, weather, rank };
-      await streamSearch(
+      const result = await streamSearch(
         t,
         currentImage,
         history,
@@ -357,6 +396,9 @@ export default function HomePage({ initialQuery }) {
         session?.access_token,
         { signal: controller.signal },
       );
+      if (result?.searchLogId) {
+        setMessages(prev => prev.map(m => (m.id === aiId ? { ...m, searchLogId: result.searchLogId } : m)));
+      }
       if (!started) appendChunk('(No response received.)');
       setTyping(false);
     } catch (err) {
@@ -371,6 +413,11 @@ export default function HomePage({ initialQuery }) {
       if (activeAbortRef.current === controller) activeAbortRef.current = null;
       setTyping(false);
     }
+  }
+
+  async function handleFeedback(messageId, searchLogId, rating) {
+    await submitSearchFeedback(searchLogId, rating, null, session?.access_token);
+    setMessages(prev => prev.map(m => (m.id === messageId ? { ...m, feedback: rating } : m)));
   }
 
   const renderInput = (isInline = false) => (
@@ -634,7 +681,7 @@ export default function HomePage({ initialQuery }) {
             </div>
           ) : (
             <>
-              {messages.map((msg, idx) => <ChatBubble key={msg.id} msg={msg} query={msg.query} isTyping={typing && idx === messages.length - 1} />)}
+              {messages.map((msg, idx) => <ChatBubble key={msg.id} msg={msg} query={msg.query} isTyping={typing && idx === messages.length - 1} onFeedback={handleFeedback} />)}
               {typing && <TypingBubble />}
             </>
           )}

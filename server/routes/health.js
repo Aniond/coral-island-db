@@ -13,6 +13,7 @@ const REQUIRED_TABLES = [
   'npcs',
   'search_logs',
   'ai_request_metrics',
+  'ai_answer_feedback',
   'schema_migrations',
 ];
 

@@ -186,10 +186,101 @@ async function directLocationAnswer(query) {
   ].filter(Boolean).join('\n');
 }
 
+async function directOfferingAnswer(query) {
+  if (!hasQuestionIntent(query, ['offering', 'offerings', 'bundle', 'altar', 'temple', 'goddess', 'rare crop'])) return null;
+  const { rows } = await pool.query(
+    `SELECT altar_name, bundle_name, item_name, amount, quality
+     FROM goddess_offerings
+     ORDER BY altar_name, bundle_name, item_name`
+  );
+  const terms = getDirectTerms(query);
+  let filtered = rows;
+  if (terms.length) {
+    filtered = rows.filter(row => {
+      const text = normalizeText(`${row.altar_name} ${row.bundle_name} ${row.item_name} ${row.quality}`);
+      return terms.some(term => text.includes(term));
+    });
+  }
+  if (!filtered.length) filtered = rows.slice(0, 20);
+  const grouped = new Map();
+  for (const row of filtered.slice(0, 30)) {
+    const key = `${row.altar_name} - ${row.bundle_name}`;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(row);
+  }
+  const lines = ['## Goddess Offering Requirements'];
+  for (const [group, items] of grouped.entries()) {
+    lines.push(`### ${group}`);
+    lines.push('| Item | Amount | Quality |');
+    lines.push('|---|---:|---|');
+    for (const item of items) {
+      lines.push(`| ${item.item_name} | ${item.amount || 1} | ${item.quality || '-'} |`);
+    }
+  }
+  return lines.join('\n');
+}
+
+async function directToolAnswer(query) {
+  if (!hasQuestionIntent(query, ['tool', 'upgrade', 'axe', 'pickaxe', 'hoe', 'scythe', 'pole', 'net', 'cost'])) return null;
+  const { rows } = await pool.query('SELECT name, tool_type, tier, price, days_delay, requirements FROM tools ORDER BY tool_type, tier');
+  const tool = pickBestRow(rows, query, ['name', 'tool_type', 'tier', 'requirements']);
+  if (!tool) return null;
+  return [
+    `## ${tool.name}`,
+    `- **Type:** ${tool.tool_type}`,
+    `- **Tier:** ${tool.tier}`,
+    `- **Cost:** ${tool.price || 0}g`,
+    `- **Upgrade time:** ${tool.days_delay || 0} day(s)`,
+    `- **Requirements:** ${formatIngredients(tool.requirements)}`,
+  ].join('\n');
+}
+
+async function directCollectiblesAnswer(query) {
+  const text = normalizeText(query);
+  const categories = [
+    ['fish', 'fish'],
+    ['bug', 'insect'],
+    ['insect', 'insect'],
+    ['critter', 'sea_critter'],
+    ['sea critter', 'sea_critter'],
+    ['gem', 'gem'],
+    ['artifact', 'artifact'],
+    ['fossil', 'fossil'],
+  ];
+  const category = categories.find(([word]) => text.includes(word))?.[1];
+  if (!category || !hasQuestionIntent(query, ['fish', 'bug', 'insect', 'critter', 'gem', 'artifact', 'fossil', 'catch', 'find', 'missing', 'museum'])) return null;
+  const season = detectSeason(query);
+  const params = [category];
+  let where = 'WHERE category = $1';
+  if (season) {
+    params.push(`%${season}%`);
+    where += ` AND (seasons ILIKE $${params.length} OR seasons ILIKE '%any%')`;
+  }
+  const { rows } = await pool.query(
+    `SELECT name, category, seasons, locations, time_of_day, rarity, sell_price
+     FROM collectibles
+     ${where}
+     ORDER BY name
+     LIMIT 40`,
+    params,
+  );
+  if (!rows.length) return null;
+  const label = category.replace('_', ' ');
+  return [
+    `## ${season ? season[0].toUpperCase() + season.slice(1) + ' ' : ''}${label[0].toUpperCase() + label.slice(1)} List`,
+    '| Name | Season | Location | Time | Rarity | Sell |',
+    '|---|---|---|---|---|---:|',
+    ...rows.map(row => `| ${row.name} | ${row.seasons || 'Any'} | ${row.locations || '-'} | ${row.time_of_day || 'Any'} | ${row.rarity || '-'} | ${row.sell_price || 0}g |`),
+  ].join('\n');
+}
+
 async function tryDirectAnswer(query) {
   const text = normalizeText(query);
   if (hasAny(text, ['plan', 'today', 'layout', 'strategy', 'should i', 'what should'])) return null;
   const answerFns = [
+    directOfferingAnswer,
+    directCollectiblesAnswer,
+    directToolAnswer,
     directFoodBuffAnswer,
     directNpcGiftAnswer,
     directRecipeAnswer,
@@ -204,10 +295,13 @@ async function tryDirectAnswer(query) {
 }
 
 module.exports = {
+  directCollectiblesAnswer,
   directCropAnswer,
   directFoodBuffAnswer,
   directLocationAnswer,
   directNpcGiftAnswer,
+  directOfferingAnswer,
   directRecipeAnswer,
+  directToolAnswer,
   tryDirectAnswer,
 };

@@ -177,7 +177,7 @@ export async function streamSearch(query, image, history, gameState, onChunk, to
   }
   if (!res.body) {                      // very old browsers — fall back to full text
     onChunk(await res.text());
-    return;
+    return { searchLogId: res.headers.get('X-Search-Log-Id') };
   }
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -186,6 +186,30 @@ export async function streamSearch(query, image, history, gameState, onChunk, to
     if (done) break;
     if (value) onChunk(decoder.decode(value, { stream: true }));
   }
+  return { searchLogId: res.headers.get('X-Search-Log-Id') };
+}
+
+export async function submitSearchFeedback(searchLogId, rating, note, token) {
+  const request = (tok) => {
+    const headers = { 'Content-Type': 'application/json' };
+    if (tok) headers['Authorization'] = `Bearer ${tok}`;
+    return fetch(`${API_BASE}/search/feedback`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ searchLogId, rating, note }),
+    });
+  };
+  let res = await request(token);
+  if (res.status === 401 && token) {
+    const fresh = await refreshAccessToken();
+    if (fresh) res = await request(fresh);
+  }
+  if (!res.ok) {
+    let msg = `Failed to save feedback (${res.status})`;
+    try { const j = await res.json(); if (j?.error) msg = j.error; } catch { /* ignore */ }
+    throw new Error(msg);
+  }
+  return res.json();
 }
 
 export async function fetchPlans(token) {

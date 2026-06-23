@@ -319,4 +319,69 @@ router.get('/ai-metrics', requireAdmin, async (req, res) => {
   }
 });
 
+// GET /api/admin/prompt-analytics
+// Higher-level prompt quality/cost signals for deciding what to optimize next.
+router.get('/prompt-analytics', requireAdmin, async (req, res) => {
+  try {
+    const [topQuestionsRes, costlyRes, feedbackRes, feedbackSummaryRes, directSavingsRes] = await Promise.all([
+      pool.query(
+        `SELECT LOWER(TRIM(query)) AS query, COUNT(*)::int AS count,
+                MAX(created_at) AS last_seen,
+                COUNT(*) FILTER (WHERE source = 'direct')::int AS direct_count,
+                COUNT(*) FILTER (WHERE source = 'cache')::int AS cache_count,
+                COUNT(*) FILTER (WHERE source = 'ai')::int AS ai_count
+         FROM search_logs
+         WHERE created_at >= NOW() - INTERVAL '30 days'
+         GROUP BY LOWER(TRIM(query))
+         ORDER BY count DESC, last_seen DESC
+         LIMIT 20`,
+      ),
+      pool.query(
+        `SELECT sl.id, sl.query, sl.source, sl.created_at,
+                arm.duration_ms, arm.context_chars, arm.retrieved_docs, arm.response_chars, arm.status
+         FROM ai_request_metrics arm
+         LEFT JOIN search_logs sl ON sl.id = arm.search_log_id
+         WHERE arm.created_at >= NOW() - INTERVAL '7 days'
+         ORDER BY arm.context_chars DESC NULLS LAST, arm.duration_ms DESC NULLS LAST
+         LIMIT 20`,
+      ),
+      pool.query(
+        `SELECT f.id, f.rating, f.note, f.created_at, sl.query, sl.response, sl.source
+         FROM ai_answer_feedback f
+         LEFT JOIN search_logs sl ON sl.id = f.search_log_id
+         ORDER BY f.created_at DESC
+         LIMIT 30`,
+      ),
+      pool.query(
+        `SELECT rating, COUNT(*)::int AS count
+         FROM ai_answer_feedback
+         WHERE created_at >= NOW() - INTERVAL '30 days'
+         GROUP BY rating
+         ORDER BY count DESC`,
+      ),
+      pool.query(
+        `SELECT source, COUNT(*)::int AS count
+         FROM search_logs
+         WHERE created_at >= NOW() - INTERVAL '30 days'
+         GROUP BY source
+         ORDER BY count DESC`,
+      ),
+    ]);
+
+    res.json({
+      topQuestions: topQuestionsRes.rows,
+      costlyPrompts: costlyRes.rows,
+      recentFeedback: feedbackRes.rows,
+      feedbackSummary: feedbackSummaryRes.rows,
+      sourceMix30d: directSavingsRes.rows,
+    });
+  } catch (err) {
+    console.error('GET /api/admin/prompt-analytics failed:', err.message);
+    if (err.code === '42P01') {
+      return res.status(503).json({ error: 'Prompt analytics table missing - run node migrate.js first.' });
+    }
+    res.status(500).json({ error: 'Failed to load prompt analytics' });
+  }
+});
+
 module.exports = router;
